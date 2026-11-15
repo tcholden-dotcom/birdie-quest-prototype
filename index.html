@@ -362,18 +362,18 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   --glass-hi:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(0,0,0,.14),inset 0 0 0 1px rgba(255,255,255,.22);
   --glass-shadow:0 8px 22px rgba(0,0,0,.22),0 2px 6px rgba(0,0,0,.12);
 }
-.btn,.iconbtn,.filters button,.seg button,.mg-item .play,.mg-head .mini,.mg-fab,.fab-rec,.post .pa button,.clip .acts .ci,.bundle .usd,.nav button .ni,.cform .btn,.av-pick,.hs{
+.btn,.iconbtn,.filters button,.seg button,.mg-item .play,.mg-head .mini,.mg-fab,.fab-rec,.post .pa button,.clip .acts .ci,.bundle .usd,.nav button .ni,.cform .btn,.av-pick,.hs,.fmt-card,.fchip,.fl-rm,.inv{
   position:relative;isolation:isolate;
   -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
   transition:transform .18s cubic-bezier(.3,1.4,.5,1),filter .18s,background .25s,box-shadow .25s;
 }
 .mg-fab,.fab-rec{position:absolute}
-.btn::before,.iconbtn::before,.filters button::before,.seg button::before,.mg-item .play::before,.mg-head .mini::before,.mg-fab::before,.fab-rec::before,.post .pa button::before,.clip .acts .ci::before,.bundle .usd::before,.nav button .ni::before,.av-pick::before,.hs::before{
+.btn::before,.iconbtn::before,.filters button::before,.seg button::before,.mg-item .play::before,.mg-head .mini::before,.mg-fab::before,.fab-rec::before,.post .pa button::before,.clip .acts .ci::before,.bundle .usd::before,.nav button .ni::before,.av-pick::before,.hs::before,.fmt-card::before,.fchip::before,.fl-rm::before,.inv::before{
   content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;
   background:linear-gradient(180deg,rgba(255,255,255,.42) 0%,rgba(255,255,255,.12) 38%,rgba(255,255,255,0) 52%),
              radial-gradient(120% 60% at 50% 120%,rgba(255,255,255,.18),transparent 60%);
 }
-.btn:active,.iconbtn:active,.filters button:active,.seg button:active,.mg-item .play:active,.mg-head .mini:active,.mg-fab:active,.fab-rec:active,.post .pa button:active,.clip .acts button:active .ci,.bundle:active .usd,.nav button:active .ni,.av-pick:active,.hs:active{
+.btn:active,.iconbtn:active,.filters button:active,.seg button:active,.mg-item .play:active,.mg-head .mini:active,.mg-fab:active,.fab-rec:active,.post .pa button:active,.clip .acts button:active .ci,.bundle:active .usd,.nav button:active .ni,.av-pick:active,.hs:active,.fmt-card:active,.fchip:active,.fl-rm:active,.inv:active{
   transform:scale(.96);filter:brightness(1.15);
 }
 /* neutral clear glass */
@@ -573,6 +573,62 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .hs-row{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
 .hs{flex:none;padding:8px 12px;border-radius:14px;font-size:12px;font-weight:900;background:rgba(255,255,255,.14);box-shadow:var(--glass-hi);border:2px solid transparent}
 .hs.on{border-color:var(--gold);background:rgba(255,210,63,.22)}
+/* ---------- round setup + friends ---------- */
+.fmt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 14px}
+.fmt-card{position:relative;isolation:isolate;text-align:left;border-radius:20px;padding:12px 12px 11px;background:rgba(255,255,255,.14);
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  box-shadow:var(--glass-hi),var(--glass-shadow);border:3px solid transparent;color:#fff}
+.fmt-card.on{border-color:var(--gold);background:rgba(255,210,63,.2)}
+.fmt-card .fe{font-size:22px;display:block;margin-bottom:2px}
+.fmt-card b{display:block;font-size:14px;font-weight:900;letter-spacing:-.1px}
+.fmt-card span{display:block;font-size:11px;font-weight:800;color:var(--muted);line-height:1.3;margin-top:3px}
+.su-label{font-size:13px;font-weight:900;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;margin:2px 0 8px}
+.su-you,.fchip{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border-radius:16px;padding:7px 8px;margin-bottom:7px;
+  background:rgba(255,255,255,.12);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  box-shadow:var(--glass-hi);border:2px solid transparent;color:#fff}
+.fchip.on{border-color:var(--gold);background:rgba(255,210,63,.2)}
+.su-you .uav,.fchip .uav{width:36px;height:36px}
+.su-you b,.fchip b{font-size:14px;font-weight:900}
+.su-you small,.fchip small{display:block;font-size:11px;font-weight:800;color:var(--muted)}
+.fchip .tm{margin-left:auto;font-size:10px;font-weight:900;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.16)}
+.fchip .tm.B{background:rgba(255,210,63,.35);color:#3d2a00}
+.su-count{font-size:12px;font-weight:800;color:var(--muted);margin:0 0 10px}
+.su-in{width:100%;border:0;border-radius:16px;padding:12px 14px;font:inherit;font-weight:800;font-size:15px;color:#0b3b20;background:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.5),0 4px 0 rgba(0,0,0,.12);margin:0 0 10px}
+.su-code{display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:18px;padding:12px 14px;margin:0 0 12px;
+  background:rgba(255,255,255,.12);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:var(--glass-hi)}
+.su-code b{font-size:18px;letter-spacing:.8px}
+.fl-row{display:flex;align-items:center;gap:10px;border-radius:20px;padding:10px;margin-bottom:8px;
+  background:rgba(255,255,255,.12);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  box-shadow:var(--glass-hi),var(--glass-shadow)}
+.fl-row .uav{width:44px;height:44px}
+.fl-row .nm{flex:1;min-width:0}
+.fl-row .nm b{display:block;font-size:15px;font-weight:900}
+.fl-row .nm small{font-size:11px;font-weight:800;color:var(--muted)}
+.fl-row .inv{flex:none;padding:8px 10px;border-radius:14px;font-size:12px;font-weight:900}
+.fl-rm{width:36px;height:36px;flex:none;border-radius:12px;font-size:18px;font-weight:900;background:rgba(255,77,94,.2);color:#fff}
+.fmt-badge{display:inline-block;font-size:10px;font-weight:900;letter-spacing:.3px;padding:3px 8px;border-radius:8px;background:#e8f7ff;color:#0b5d2e;margin:6px 6px 0 0;vertical-align:middle}
+.rpals{display:flex;gap:4px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.rpals .uav{width:26px;height:26px;border-width:2px}
+.rpals em{font-style:normal;font-size:11px;font-weight:800;color:#4b7a5e}
+.rhead{margin-top:8px;font-size:14px;font-weight:900;color:var(--green)}
+.su-win{text-align:center;font-size:22px;font-weight:900;margin:6px 0 12px;text-shadow:0 2px 0 rgba(0,0,0,.15)}
+.su-board{border-radius:20px;overflow:hidden;margin:0 0 12px;background:rgba(255,255,255,.12);box-shadow:var(--glass-hi)}
+.su-board .row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.su-board .row:last-child{border-bottom:0}
+.su-board .row.win{background:rgba(255,210,63,.18)}
+.su-board .rk{width:20px;font-weight:900;font-size:13px;color:var(--gold)}
+.su-board .uav{width:32px;height:32px}
+.su-board b{flex:1;font-size:14px;font-weight:900}
+.su-board .scv{font-weight:900;font-size:16px}
+.su-holes{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin:0 0 12px}
+.su-holes i{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:900;background:rgba(255,255,255,.14)}
+.su-holes i.y{background:var(--gold);color:#3d2a00}
+.su-holes i.o{background:rgba(255,77,94,.55)}
+.su-holes i.h{background:rgba(255,255,255,.22)}
+.pf-row{display:flex;align-items:center;gap:8px;margin:12px 0 4px;flex-wrap:wrap;justify-content:center}
+.pf-row .uav{width:34px;height:34px}
+.pf-row span{font-size:12px;font-weight:800;color:var(--muted)}
+
 
 </style>
 </head>
@@ -627,7 +683,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <div class="stat"><b style="color:var(--pts)" id="bestRoundStat">39</b><span>Best round</span></div>
         <div class="stat"><b>23</b><span>Rounds played</span></div>
       </div>
-      <button class="btn green" style="width:100%" onclick="window.__bq.logRound()">＋ Start a New Round</button>
+      <button class="btn green" style="width:100%" id="startRoundBtn">＋ Start a New Round</button>
       <div class="sec-title">🏆 Personal Bests</div>
       <div class="rrow"><div class="rs" id="pbDrive">212</div><div><b>Longest Drive</b><span>yards · Eagle Ridge #4</span></div></div>
       <div class="rrow"><div class="rs" id="pbCtp">4ft</div><div><b>Closest to the Pin</b><span>Riverside Par 3 · Hole 6</span></div></div>
@@ -707,6 +763,9 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   <section class="screen" id="s-social">
     <div class="hdr"><h1>Social</h1><span class="fo-badge">🔒 Friends only</span></div>
     <div class="scroll" id="socialScroll">
+      <div class="sec-title" style="margin-top:4px">👥 Friends <span class="free-tag">FRIENDS ONLY</span></div>
+      <div id="friendsList"></div>
+      <button class="btn white" style="width:100%;margin:4px 0 10px" id="addFriendBtn">＋ Add a Friend</button>
       <div class="shorts" id="shorts"></div>
       <div class="parent-note"><span style="font-size:26px">👪</span><span>Only your friends can see your clips and posts. <b>A parent toggle</b> controls who can see them, and new friends need a parent OK.</span></div>
       <div class="sec-title">👟 Friend Activity</div>
@@ -725,6 +784,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <div class="plat"></div>
         <h2>Anders</h2>
         <div class="handle">@AndersAces · Pebble Creek Juniors</div>
+        <div id="profFriends"></div>
       </div>
       <div class="pstats">
         <div class="stat pts"><b class="ptsval">2,450</b><span>Total points</span></div>
@@ -1818,6 +1878,314 @@ $('#badges').innerHTML=BADGES.map((b,i)=>'<div class="badge" style="'+(i===BADGE
 function renderRecent(){$('#recentRounds').innerHTML=ROUNDS.slice(0,3).map((r,i)=>{const t=totals(r);return '<div class="rrow" style="cursor:pointer" data-i="'+i+'"><div class="rs">'+t.s+'</div><div><b>'+r.c+'</b><span>'+r.d+'</span></div><div class="tp" style="color:'+(t.d<=3?'var(--pts)':'#ffb37a')+'">'+(t.d>0?'+':'')+t.d+'</div></div>'}).join('');
 $$('#recentRounds .rrow').forEach(r=>r.onclick=()=>{go('rounds','tab');setTimeout(()=>setR(+r.dataset.i),60)});}
 renderRecent();renderScoreboard();
+/* ================= FRIENDS + ROUND FORMATS (localStorage bq_friends, bq_rounds) ================= */
+const FR_KEY='bq_friends', RD_KEY='bq_rounds';
+const FMT={
+ stroke:{id:'stroke',e:'🏌️',n:'Stroke Play',d:'Lowest total strokes wins.'},
+ match:{id:'match',e:'⚔️',n:'Match Play',d:'Win holes, not total strokes.'},
+ skins:{id:'skins',e:'🪙',n:'Skins',d:'Each hole is worth a skin. Ties carry over.'},
+ scramble:{id:'scramble',e:'🤝',n:'Scramble',d:'Everyone hits, then the team plays the best shot.'}
+};
+const KNOWN_BUDDIES=[
+ {id:'fox',u:'FairwayFox',code:'BQ-FOX1',av:'fox'},
+ {id:'pup',u:'PutterPup',code:'BQ-PUP2',av:'pup'},
+ {id:'otter',u:'EagleOtter',code:'BQ-OTTR',av:'otter'},
+ {id:'bear',u:'BirdieBear',code:'BQ-BEAR',av:'bear'}
+];
+function newBuddyCode(){const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='BQ-';for(let i=0;i<4;i++)s+=a[Math.floor(Math.random()*a.length)];return s}
+function defaultFriends(){return {code:'BQ-AND1',list:KNOWN_BUDDIES.map(b=>Object.assign({},b))}}
+let FR;
+function loadFriends(){
+ try{FR=JSON.parse(localStorage.getItem(FR_KEY)||'null')}catch(e){FR=null}
+ if(!FR||typeof FR!=='object'||!Array.isArray(FR.list))FR=defaultFriends();
+ if(!FR.code)FR.code='BQ-AND1';
+}
+function saveFriends(){try{localStorage.setItem(FR_KEY,JSON.stringify(FR))}catch(e){}}
+loadFriends();
+function buddyCfg(b){return (b&&b.av&&typeof avCfg==='function')?avCfg(b.av):Object.assign({},DEFAULT)}
+function mePlayer(){return {id:'me',u:'Anders',n:'Anders',av:(A&&A.id)||'anders',cfg:A}}
+function rollHoles(par){return par.map(p=>{const r=Math.random();return Math.max(2,p+(r<.12?-1:r<.45?0:r<.82?1:2))})}
+
+function renderFriends(){
+ const list=$('#friendsList'); if(!list)return;
+ if(!FR.list.length){list.innerHTML='<div class="parent-note">No friends yet. Add someone you know with a username or friend code.</div>';}
+ else list.innerHTML=FR.list.map(b=>'<div class="fl-row" data-id="'+b.id+'"><span class="uav">'+avatarSVG(buddyCfg(b),'front')+'</span><div class="nm"><b>@'+b.u+'</b><small>'+b.code+'</small></div><button class="btn small inv" data-inv="'+b.id+'">Invite to Round</button><button class="fl-rm" data-rm="'+b.id+'" aria-label="Remove '+b.u+'">×</button></div>').join('');
+ $$('#friendsList [data-inv]').forEach(b=>b.onclick=()=>inviteToRound(b.dataset.inv));
+ $$('#friendsList [data-rm]').forEach(b=>b.onclick=()=>removeFriend(b.dataset.rm));
+ const pf=$('#profFriends');
+ if(pf){
+  const n=FR.list.length;
+  pf.innerHTML='<div class="pf-row">'+(n?FR.list.slice(0,6).map(b=>'<span class="uav" title="@'+b.u+'">'+avatarSVG(buddyCfg(b),'front')+'</span>').join('')+'<span>'+n+' friend'+(n===1?'':'s')+' · 🔒 Friends only</span>':'<span>🔒 Friends only · add friends in Social</span>')+'</div>';
+ }
+}
+function addFriendSheet(){
+ openSheet('<h2>➕ Add a Friend</h2>'+
+  '<div class="parent-note"><span style="font-size:24px">🔒</span><span>Friends only — no public strangers list. This is a demo, so typing a name or a friend code adds someone. New friends would normally need a parent OK.</span></div>'+
+  '<div class="su-code"><span>My friend code</span><b id="myCode">'+FR.code+'</b></div>'+
+  '<input class="su-in" id="frq" maxlength="18" autocomplete="off" placeholder="Username or friend code" aria-label="Username or friend code">'+
+  '<button class="btn green" style="width:100%" id="doAddFriend">Add Friend</button>'+
+  '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeSheet()">Cancel</button>');
+ const inp=$('#frq'); if(inp)inp.focus();
+ $('#doAddFriend').onclick=()=>{
+  const q=($('#frq').value||'').trim().replace(/^@/,'');
+  if(!q){toast('Type a username or friend code');return}
+  const name=q.replace(/[^A-Za-z0-9_ ]/g,'').replace(/\s+/g,' ').slice(0,16);
+  if(!name){toast('Use letters or numbers');return}
+  const low=name.toLowerCase();
+  if(low==='anders'||low===FR.code.toLowerCase()){toast("That's you!");return}
+  const known=KNOWN_BUDDIES.find(b=>b.u.toLowerCase()===low||b.code.toLowerCase()===low||b.id===low);
+  const already=FR.list.find(b=>b.u.toLowerCase()===low||b.code.toLowerCase()===low||(known&&b.id===known.id));
+  if(already){toast('✨ You and @'+already.u+' are already friends');return}
+  let buddy;
+  if(known) buddy=Object.assign({},known);
+  else {
+   const used=new Set(FR.list.map(b=>b.av));
+   const pool=AVATARS.filter(a=>!used.has(a.id));
+   const av=(pool.length?pool[Math.floor(Math.random()*pool.length)]:AVATARS[Math.floor(Math.random()*AVATARS.length)]).id;
+   const u=name.replace(/\s+/g,'');
+   buddy={id:'f-'+Date.now().toString(36),u:u,code:newBuddyCode(),av:av};
+  }
+  FR.list.push(buddy);saveFriends();renderFriends();closeSheet();toast('🎉 @'+buddy.u+' is now your friend!');
+ };
+}
+function removeFriend(id){
+ const b=FR.list.find(x=>x.id===id); if(!b)return;
+ openSheet('<h2>Remove @'+b.u+'?</h2><p style="font-weight:800;color:var(--muted)">They will leave your friends list. You can add them again later.</p>'+
+  '<button class="btn green" style="width:100%" id="doRm">Remove Friend</button>'+
+  '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeSheet()">Keep them</button>');
+ $('#doRm').onclick=()=>{FR.list=FR.list.filter(x=>x.id!==id);saveFriends();renderFriends();closeSheet();toast('👋 @'+b.u+' was removed')};
+}
+function inviteToRound(id){
+ const b=FR.list.find(x=>x.id===id); if(!b)return;
+ closeSheet(); go('rounds','tab');
+ setTimeout(()=>setupRound({preselect:[id]}),220);
+ toast('📨 Invite sent to @'+b.u+' (demo)');
+}
+
+let SU={format:'stroke',pick:[],team:{}};
+function setupRound(opts){
+ opts=opts||{};
+ SU={format:opts.format||'stroke',pick:(opts.preselect||[]).slice(),team:{}};
+ (SU.pick||[]).forEach((id,i)=>{SU.team[id]=(i%2===0)?'A':'B'});
+ renderSetup();
+}
+function selectedBuddies(){return FR.list.filter(b=>SU.pick.indexOf(b.id)>=0)}
+function renderSetup(){
+ const fmt=FMT[SU.format]||FMT.stroke;
+ const maxF=SU.format==='match'?1:3;
+ const picked=selectedBuddies();
+ if(SU.format==='match'&&SU.pick.length>1){SU.pick=SU.pick.slice(0,1)}
+ const n=1+SU.pick.length;
+ let html='<h2>⛳ Set Up Your Round</h2>';
+ html+='<div class="su-label">Game format</div><div class="fmt-grid">';
+ ['scramble','match','stroke','skins'].forEach(k=>{
+  const f=FMT[k]; html+='<button class="fmt-card'+(SU.format===k?' on':'')+'" data-f="'+k+'"><span class="fe">'+f.e+'</span><b>'+f.n+'</b><span>'+f.d+'</span></button>';
+ });
+ html+='</div><div class="su-label">Who\'s playing</div>';
+ html+='<div class="su-you"><span class="uav">'+avatarSVG(A,'front')+'</span><div><b>Anders</b><small>You · always playing</small></div></div>';
+ if(!FR.list.length) html+='<div class="parent-note">Add a friend in Social first, or start Stroke Play on your own.</div>';
+ FR.list.forEach(b=>{
+  const on=SU.pick.indexOf(b.id)>=0;
+  const full=!on&&SU.pick.length>=maxF;
+  html+='<button class="fchip'+(on?' on':'')+'" data-id="'+b.id+'" '+(full?'disabled':'')+'><span class="uav">'+avatarSVG(buddyCfg(b),'front')+'</span><div style="flex:1"><b>@'+b.u+'</b><small>'+(full?'Party is full (4 max)':(SU.format==='match'&&!on&&SU.pick.length?'Match Play is you vs 1 friend':b.code))+'</small></div>'+
+   (SU.format==='scramble'&&on?'<span class="tm '+(SU.team[b.id]||'A')+'">'+(SU.team[b.id]==='B'?'🟡 Gold':'🟢 Green')+'</span>':'')+'</button>';
+ });
+ if(SU.format==='scramble'){
+  html+='<div class="su-count">Scramble: tap a friend, then tap them again to switch Team Green / Team Gold. You are on Team Green.</div>';
+ } else if(SU.format==='match'){
+  html+='<div class="su-count">Pick 1 friend to play against. '+(picked[0]?'You vs @'+picked[0].u:'Tap a friend, or Start and we\'ll pick one.')+'</div>';
+ } else {
+  html+='<div class="su-count">'+n+' of 4 players · friends only</div>';
+ }
+ html+='<button class="btn green" style="width:100%" id="startPlayBtn">▶ Start '+fmt.n+'</button>';
+ html+='<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeSheet()">Cancel</button>';
+ openSheet(html);
+ $$('#sheet .fmt-card').forEach(b=>b.onclick=()=>{SU.format=b.dataset.f;if(SU.format==='match')SU.pick=SU.pick.slice(0,1);renderSetup()});
+ $$('#sheet .fchip').forEach(b=>b.onclick=()=>{
+  if(b.disabled)return;
+  const id=b.dataset.id, i=SU.pick.indexOf(id);
+  if(i>=0){
+   if(SU.format==='scramble'){SU.team[id]=SU.team[id]==='B'?'A':'B';}
+   else SU.pick.splice(i,1);
+  } else {
+   if(SU.format==='match') SU.pick=[id];
+   else if(SU.pick.length<maxF){SU.pick.push(id);SU.team[id]='A'}
+  }
+  renderSetup();
+ });
+ $('#startPlayBtn').onclick=startPlay;
+}
+
+function startPlay(){
+ const parSrc=BASE_ROUNDS[Math.floor(Math.random()*BASE_ROUNDS.length)];
+ const par=parSrc.par.slice(), course=parSrc.c;
+ const now=new Date(), date=now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+ let players=[mePlayer()].concat(selectedBuddies().map(b=>({id:b.id,u:b.u,n:b.u,av:b.av,cfg:buddyCfg(b)})));
+ if(SU.format==='match'&&players.length<2){
+  const fb=FR.list[0]||KNOWN_BUDDIES[0];
+  if(!players.some(p=>p.id===fb.id)) players.push({id:fb.id,u:fb.u,n:fb.u,av:fb.av,cfg:buddyCfg(fb)});
+  toast('⚔️ You vs @'+fb.u);
+ }
+ if((SU.format==='skins'||SU.format==='scramble')&&players.length<2){
+  const fb=FR.list[0]||KNOWN_BUDDIES[0];
+  if(!players.some(p=>p.id===fb.id)) players.push({id:fb.id,u:fb.u,n:fb.u,av:fb.av,cfg:buddyCfg(fb)});
+ }
+ const fmt=SU.format;
+ let rec={c:course,d:date,par:par,s:[],tee:'Logged round',format:fmt,logged:true,players:players.map(p=>({id:p.id,u:p.u,av:p.av})),headline:'',pts:80,result:{}};
+ let youWin=false, isBest=false, html='';
+
+ if(fmt==='stroke'){
+  const rows=players.map(p=>{const s=rollHoles(par),t=s.reduce((a,b)=>a+b,0);return {p,s,t,d:t-par.reduce((a,b)=>a+b,0)}});
+  rows.sort((a,b)=>a.t-b.t);
+  rec.s= (rows.find(r=>r.p.id==='me')||rows[0]).s.slice();
+  rec.result={board:rows.map(r=>({id:r.p.id,u:r.p.u,t:r.t,d:r.d}))};
+  const me=rows.find(r=>r.p.id==='me');
+  const winner=rows[0];
+  youWin=winner.p.id==='me';
+  rec.headline=youWin?(players.length===1?'You shot '+me.t+'!': 'You win with '+me.t+'!') : (winner.p.n||winner.p.u)+' wins with '+winner.t;
+  rec.pts=youWin?180:(rows.findIndex(r=>r.p.id==='me')===1?120:80);
+  if(me){const t=totals({s:me.s,par:par}); isBest=!SC.round||t.d<SC.round.d||(t.d===SC.round.d&&t.s<SC.round.s); if(isBest)SC.round={s:t.s,d:t.d,c:course,date:date};}
+  html=strokeResults(rows,rec,isBest);
+ } else if(fmt==='match'){
+  const you=players[0], opp=players[1]||players[0];
+  const ys=rollHoles(par), os=rollHoles(par);
+  rec.s=ys.slice();
+  let lead=0, end=par.length, holes=[];
+  for(let i=0;i<par.length;i++){
+   const d=ys[i]-os[i]; if(d<0)lead++; else if(d>0)lead--;
+   holes.push(d<0?'y':d>0?'o':'h');
+   const left=par.length-1-i;
+   if(Math.abs(lead)>left){end=i+1;break}
+  }
+  const remain=par.length-end;
+  let headline;
+  if(lead===0) headline='All square vs @'+opp.u+'!';
+  else if(remain===0) headline=(lead>0?'You':'@'+opp.u)+' win'+(lead>0?'':'s')+' '+Math.abs(lead)+' up';
+  else headline=(lead>0?'You':'@'+opp.u)+' win'+(lead>0?'':'s')+' '+Math.abs(lead)+' & '+remain;
+  youWin=lead>0;
+  rec.headline=headline;
+  rec.result={opp:opp.u,ys:ys,os:os,holes:holes,lead:lead,end:end};
+  rec.pts=youWin?200:(lead===0?110:80);
+  html=matchResults(you,opp,rec,holes,headline);
+ } else if(fmt==='skins'){
+  const rows=players.map(p=>({p,s:rollHoles(par),skins:0}));
+  let pot=1; const holeW=[];
+  for(let i=0;i<par.length;i++){
+   const best=Math.min.apply(null,rows.map(r=>r.s[i]));
+   const w=rows.filter(r=>r.s[i]===best);
+   if(w.length===1){w[0].skins+=pot;holeW.push({i,pot,w:w[0].p.u});pot=1;}
+   else {holeW.push({i,pot,w:null});pot++;}
+  }
+  rows.sort((a,b)=>b.skins-a.skins);
+  rec.s=(rows.find(r=>r.p.id==='me')||rows[0]).s.slice();
+  rec.result={board:rows.map(r=>({id:r.p.id,u:r.p.u,skins:r.skins})),holes:holeW};
+  const top=rows[0].skins, winners=rows.filter(r=>r.skins===top);
+  youWin=winners.some(r=>r.p.id==='me')&&(winners.length===1||rows[0].p.id==='me');
+  rec.headline=winners.length>1&&winners[0].skins===rows.filter(r=>r.p.id!==winners[0].p.id)[0]?.skins && winners.length>1
+   ? 'Tie at '+top+' skin'+(top===1?'':'s')+'!'
+   : (rows[0].p.id==='me'?'You':'@'+rows[0].p.u)+' '+(rows[0].p.id==='me'?'win':'wins')+' with '+top+' skin'+(top===1?'':'s')+'!';
+  rec.pts=youWin?180:80;
+  html=skinsResults(rows,rec);
+ } else { // scramble
+  SU.team.me='A';
+  players.forEach(p=>{if(p.id!=='me'&&!SU.team[p.id])SU.team[p.id]='B'});
+  let teamA=players.filter(p=>p.id==='me'||SU.team[p.id]!=='B');
+  let teamB=players.filter(p=>p.id!=='me'&&SU.team[p.id]==='B');
+  if(!teamB.length){ // move last non-you to B, or add a house buddy
+   if(teamA.length>1){const mv=teamA.pop();SU.team[mv.id]='B';teamB=[mv];}
+   else {const fb=FR.list.find(b=>!players.some(p=>p.id===b.id))||KNOWN_BUDDIES[0]; const p={id:fb.id,u:fb.u,n:fb.u,av:fb.av,cfg:buddyCfg(fb)}; teamB=[p]; players.push(p); rec.players=players.map(x=>({id:x.id,u:x.u,av:x.av}));}
+  }
+  const pack=members=>{
+   const all=members.map(m=>rollHoles(par));
+   const s=par.map((_,i)=>Math.min.apply(null,all.map(r=>r[i])));
+   return {members,s,t:s.reduce((a,b)=>a+b,0),d:s.reduce((a,b)=>a+b,0)-par.reduce((a,b)=>a+b,0)};
+  };
+  const Ateam=pack(teamA), Bteam=pack(teamB);
+  rec.s=Ateam.s.slice();
+  rec.result={A:{t:Ateam.t,d:Ateam.d,names:teamA.map(m=>m.u||m.n)},B:{t:Bteam.t,d:Bteam.d,names:teamB.map(m=>m.u||m.n)}};
+  youWin=Ateam.t<Bteam.t;
+  const tie=Ateam.t===Bteam.t;
+  rec.headline=tie?'Both teams shot '+Ateam.t+' — it\'s a tie!':(youWin?'Team Green wins with '+Ateam.t+'!':'Team Gold wins with '+Bteam.t+'!');
+  rec.pts=youWin?200:(tie?120:90);
+  html=scrambleResults(Ateam,Bteam,rec,tie);
+ }
+
+ ROUNDS.unshift(rec);
+ saveRoundHistory();
+ renderRoundsList();renderRecent();renderScoreboard();
+ setPoints(points+rec.pts);
+ openSheet(html);
+ const again=$('#againRound'); if(again)again.onclick=()=>setupRound({format:fmt,preselect:SU.pick.slice()});
+ if(youWin||isBest)celebrate();
+}
+
+function saveRoundHistory(){
+ const logged=ROUNDS.filter(r=>r.logged||r.format);
+ try{localStorage.setItem(RD_KEY,JSON.stringify(logged.slice(0,20)))}catch(e){}
+ SC.logged=logged.slice(0,10);
+ saveScores();
+}
+function loadRoundHistory(){
+ let extra=null;
+ try{extra=JSON.parse(localStorage.getItem(RD_KEY)||'null')}catch(e){extra=null}
+ if(!Array.isArray(extra)||!extra.length)return;
+ extra.slice().reverse().forEach(r=>{
+  const dupe=ROUNDS.some(x=>x.d===r.d&&x.c===r.c&&(x.format||'')===(r.format||'')&&JSON.stringify(x.s)===JSON.stringify(r.s));
+  if(!dupe)ROUNDS.unshift(r);
+ });
+}
+
+function ptsLine(rec,isBest){return '<div class="res-best">+'+(rec.pts||0)+' points'+(isBest?' · 🎉 New best round!':'')+'</div>'}
+function resultChrome(title,body,rec,isBest){
+ return '<h2>'+title+'</h2><div class="su-count" style="text-align:center">'+FMT[rec.format].e+' '+FMT[rec.format].n+' · '+rec.c+' · '+rec.d+'</div>'+
+  '<div class="su-win">'+rec.headline+'</div>'+body+ptsLine(rec,isBest)+
+  (isBest?'<div class="newbest show">🎉 New Best Round!</div>':'')+
+  '<div class="res-row"><button class="btn green" id="againRound">🔁 Play Again</button><button class="btn ghost" onclick="closeSheet()">Done</button></div>';
+}
+function avOf(p){return avatarSVG(p.cfg||(p.av?avCfg(p.av):A),'front')}
+function strokeResults(rows,rec,isBest){
+ const body='<div class="su-board">'+rows.map((r,i)=>'<div class="row'+(i===0?' win':'')+'"><span class="rk">'+(i+1)+'</span><span class="uav">'+avOf(r.p)+'</span><b>'+(r.p.id==='me'?'Anders (you)':'@'+r.p.u)+'</b><span class="scv">'+r.t+' <small>'+sgn(r.d)+'</small></span></div>').join('')+'</div>';
+ return resultChrome(rows[0].p.id==='me'?'🏆 You won!':'⛳ Results',body,rec,isBest);
+}
+function matchResults(you,opp,rec,holes,headline){
+ const body='<div class="su-holes">'+holes.map((h,i)=>'<i class="'+h+'" title="Hole '+(i+1)+'">'+(h==='y'?'W':h==='o'?'L':'½')+'</i>').join('')+'</div>'+
+  '<div class="su-board"><div class="row'+(rec.result.lead>0?' win':'')+'"><span class="uav">'+avOf(you)+'</span><b>Anders (you)</b></div>'+
+  '<div class="row'+(rec.result.lead<0?' win':'')+'"><span class="uav">'+avOf(opp)+'</span><b>@'+opp.u+'</b></div></div>';
+ return resultChrome('⚔️ Match Play',body,rec,false);
+}
+function skinsResults(rows,rec){
+ const body='<div class="su-board">'+rows.map((r,i)=>'<div class="row'+(i===0?' win':'')+'"><span class="rk">🪙</span><span class="uav">'+avOf(r.p)+'</span><b>'+(r.p.id==='me'?'Anders (you)':'@'+r.p.u)+'</b><span class="scv">'+r.skins+' skin'+(r.skins===1?'':'s')+'</span></div>').join('')+'</div>';
+ return resultChrome('🪙 Skins',body,rec,false);
+}
+function scrambleResults(Ateam,Bteam,rec,tie){
+ const row=(label,team,win)=>'<div class="row'+(win?' win':'')+'"><span class="rk">'+label+'</span><b>'+team.members.map(m=>m.id==='me'?'Anders':'@'+(m.u||m.n)).join(', ')+'</b><span class="scv">'+team.t+' <small>'+sgn(team.d)+'</small></span></div>';
+ const body='<div class="su-board">'+row('🟢',Ateam,!tie&&Ateam.t<=Bteam.t)+row('🟡',Bteam,!tie&&Bteam.t<Ateam.t)+'</div>';
+ return resultChrome('🤝 Scramble',body,rec,false);
+}
+
+function enhanceRoundCard(){
+ const _old=roundCard;
+ roundCard=function(r){
+  let html=_old(r);
+  if(r.format&&FMT[r.format]){
+   const badge='<span class="fmt-badge">'+FMT[r.format].e+' '+FMT[r.format].n+'</span>';
+   const pals=r.players&&r.players.length?'<div class="rpals">'+r.players.map(p=>'<span class="uav">'+avatarSVG(p.id==='me'?A:avCfg(p.av||'anders'),'front')+'</span>').join('')+'<em>'+(r.headline||'')+'</em></div>':'';
+   html=html.replace('<div class="date">', badge+'<div class="date">');
+   if(pals) html=html.replace('<div class="sc">', pals+'<div class="sc">');
+  }
+  return html;
+ };
+}
+
+const _addFr=$('#addFriendBtn'); if(_addFr)_addFr.onclick=addFriendSheet;
+const _st=$('#startRoundBtn'); if(_st)_st.onclick=()=>setupRound();
+enhanceRoundCard();
+loadRoundHistory();
+renderRoundsList();
+renderFriends();
+if(typeof renderRecent==='function')renderRecent();
+window.__bq=Object.assign(window.__bq||{},{logRound:()=>setupRound(),setupRound:setupRound,inviteToRound:inviteToRound,addFriendSheet:addFriendSheet});
+
 const SETTINGS={parent:true,friends:true,notif:true,sound:true};
 function settingsSheet(){
  const row=(k,ic,t,s)=>'<div class="set-row"><div class="si">'+ic+'</div><div class="st">'+t+'<small>'+s+'</small></div><button class="tog '+(SETTINGS[k]?'on':'')+'" data-k="'+k+'" aria-label="'+t+'"></button></div>';
@@ -1865,9 +2233,9 @@ function classify(el){
  if(el.matches('.nav button'))return['tick',NAVP[el.dataset.tab]];
  if(el.matches('#randBtn'))return['dice'];
  if(el.matches('.back,#mgMin,#mgFab,#recBtn,.mg-head .mini'))return['tock'];
- if(el.matches('.seg button,.filters button'))return['swoosh'];
+ if(el.matches('.seg button,.filters button,.fmt-card,.fchip'))return['swoosh'];
  if(el.matches('#shorts .like,.plike'))return el.classList.contains('liked')?['tick']:['chime'];
- if(el.matches('#buyBtn,#eqBtn,#saveCur,#savePresetBtn,#presetGrid [data-i],.gear,.av-pick'))return['chime'];
+ if(el.matches('#buyBtn,#eqBtn,#saveCur,#savePresetBtn,#presetGrid [data-i],.gear,.av-pick,#doAddFriend,#startPlayBtn,#startRoundBtn,.inv'))return['chime'];
  if(el.matches('.tog,.sw,.iconbtn,.pfp,.pcm'))return['tick'];
  if(el.matches('.btn,.mg-item .play,.item,.bundle,.quest,.pin,.drop,.rrow'))return['pop'];
  return['tick'];

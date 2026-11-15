@@ -460,6 +460,83 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .confetti i{position:absolute;top:-14px;width:9px;height:14px;border-radius:3px;animation:fall 1.5s cubic-bezier(.2,.6,.4,1) forwards}
 @keyframes fall{0%{transform:translateY(0) rotate(0)}100%{transform:translateY(900px) rotate(720deg);opacity:.2}}
 .danger{background:linear-gradient(180deg,rgba(255,110,125,.85),rgba(225,40,60,.8))!important}
+/* ===== Practice Log ===== */
+.home-btns .btn.slim{min-height:0;padding:10px 16px;gap:10px}
+.home-btns .btn.slim .em{font-size:22px}
+.home-btns .btn.slim .t{font-size:16px}
+.glass-card{border-radius:22px;padding:14px;background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 0 0 1px rgba(255,255,255,.14),0 6px 16px rgba(0,0,0,.18)}
+.pl-week .top{display:flex;justify-content:space-between;align-items:center;font-weight:900}
+.pl-week .top span{color:var(--muted);font-size:13px}
+.pl-week .bar{height:14px;margin:8px 0 6px}
+.pl-week .meta{display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;color:var(--muted)}
+.pl-week .meta b{color:#fff}
+.pl-tools{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:12px 0 4px;padding:2px 2px 6px}
+.pl-tools::-webkit-scrollbar{display:none}
+.pl-tools .btn{flex:none;font-size:13px;padding:8px 12px;border-radius:14px}
+.pl-days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:8px 0 12px}
+.pl-day{border-radius:16px;padding:6px 0 7px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:900;color:rgba(255,255,255,.8);
+  background:rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),inset 0 0 0 1px rgba(255,255,255,.1);position:relative;isolation:isolate;transition:transform .15s}
+.pl-day:active{transform:scale(.94)}
+.pl-day svg{width:34px;height:34px}
+.pl-day .dn{position:absolute;top:21px;font-size:11px;color:#fff}
+.pl-day.today{box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 0 2px var(--gold)}
+.pl-day.sel{background:linear-gradient(180deg,rgba(90,200,255,.6),rgba(30,155,230,.5));color:#fff}
+.pl-day .tdy{font-size:8.5px;color:var(--gold);letter-spacing:.4px}
+.pl-dayhead{display:flex;align-items:center;justify-content:space-between;margin:4px 0 8px}
+.pl-dayhead b{font-size:19px;font-weight:900}
+.pl-dayhead span{font-size:13px;font-weight:800;color:var(--muted)}
+.pl-row{display:flex;align-items:center;gap:8px;padding:10px;border-radius:18px;margin-bottom:8px;background:rgba(255,255,255,.10);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 0 0 1px rgba(255,255,255,.1);transition:background .25s}
+.pl-row.done{background:rgba(109,255,143,.16)}
+.pl-row .pl-check{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:18px;font-weight:900;color:#0b5d2e;
+  background:rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 0 0 2px rgba(255,255,255,.4);transition:transform .15s,background .2s}
+.pl-row .pl-check:active{transform:scale(.9)}
+.pl-row.done .pl-check{background:linear-gradient(180deg,#8dffab,#3fd46b);box-shadow:inset 0 1px 0 #fff,0 3px 8px rgba(0,0,0,.2)}
+.pl-row .pe{font-size:24px;flex:none}
+.pl-row .pn{flex:1;min-width:0}
+.pl-row .pn b{display:block;font-size:14.5px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-row.done .pn b{text-decoration:line-through;text-decoration-thickness:2px;opacity:.85}
+.pl-row .pn span{font-size:12px;font-weight:800;color:var(--muted)}
+.pl-row .iconbtn{width:30px;height:30px;border-radius:10px;font-size:13px;font-weight:900;flex:none}
+.pl-row .plus{width:auto;padding:0 9px;font-size:13px;background:linear-gradient(180deg,rgba(90,200,255,.7),rgba(30,155,230,.6))}
+.pl-row .ord{display:flex;flex-direction:column;gap:3px}
+.pl-row .ord .iconbtn{width:24px;height:16px;border-radius:6px;font-size:9px}
+.pl-empty{text-align:center;padding:22px 10px;color:var(--muted);font-weight:800;border:2px dashed rgba(255,255,255,.25);border-radius:20px;margin-bottom:10px}
+.pl-lib{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.pl-libitem{text-align:left;border-radius:18px;padding:10px;background:rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.12);transition:transform .15s}
+.pl-libitem:active{transform:scale(.96)}
+.pl-libitem.on{box-shadow:inset 0 0 0 3px var(--gold);background:rgba(255,210,63,.16)}
+.pl-libitem .e{font-size:24px}
+.pl-libitem b{display:block;font-size:13px;font-weight:900;margin-top:2px}
+.pl-libitem span{font-size:11px;font-weight:800;color:var(--muted)}
+.pl-cfg{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:6px 0 14px}
+.stepper{display:flex;align-items:center;gap:10px}
+.stepper .iconbtn{width:40px;height:40px;font-size:22px;font-weight:900}
+.stepper .sv{min-width:64px;text-align:center;font-size:26px;font-weight:900;color:var(--pts)}
+.stepper .sv small{display:block;font-size:11px;color:var(--muted)}
+.pl-input{width:100%;border:0;border-radius:14px;padding:12px;font-family:inherit;font-weight:800;font-size:15px;outline:none;margin-bottom:10px;background:rgba(255,255,255,.92);color:#0b3b20}
+.pl-units{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.pl-units button{padding:7px 12px;border-radius:12px;font-weight:900;font-size:13px;background:rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.pl-units button.on{background:linear-gradient(180deg,rgba(90,200,255,.8),rgba(30,155,230,.7))}
+.pl-tpl{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border-radius:20px;padding:12px;margin-bottom:10px;background:rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.12)}
+.pl-tpl .e{font-size:30px;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:rgba(255,255,255,.15);flex:none}
+.pl-tpl b{font-size:16px;font-weight:900;display:block}
+.pl-tpl span{font-size:12px;font-weight:800;color:var(--muted)}
+.free-tag{display:inline-block;font-size:10px;font-weight:900;letter-spacing:.5px;padding:3px 7px;border-radius:8px;background:rgba(109,255,143,.25);color:var(--pts);vertical-align:middle}
+.pro-link{display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin-top:14px}
+
+.pl-day .rw{position:relative;width:34px;height:34px;display:block}
+.pl-day .rw svg{display:block}
+.pl-day .dn{position:absolute;inset:0;top:0;display:grid;place-items:center;font-size:11px;color:#fff}
+.pl-foot{position:sticky;bottom:0;margin:0 -20px -6px;padding:14px 20px 6px;background:linear-gradient(180deg,rgba(11,94,46,0),#0b5e2e 22%);z-index:2}
+.pl-foot .pl-cfg{margin-top:0}
+/* home: make room for the practice row */
+.home-btns .btn.half{flex-direction:row;gap:10px;min-height:0;padding:12px 12px}
+.home-btns .btn.half .em{font-size:26px}
+.home-btns .btn.half .txt{text-align:left}
+.globe-wrap{transform:scale(.9);transform-origin:50% 100%}
+.home-btns .btn.half .t{font-size:17px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -492,8 +569,9 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
     </div>
     <div class="home-btns">
       <button class="btn wide" onclick="go('minigames','push')"><span class="em">🎯</span><span class="txt"><span class="t">Mini-Games</span><span class="s">Closest to the Pin, Longest Drive & more</span></span><span class="go">›</span></button>
-      <button class="btn gold" onclick="go('quests','push')"><span class="em">🗺️</span><span class="t">Side Quests</span><span class="s">3 active</span></button>
-      <button class="btn white" onclick="go('profile','push')"><span class="em">🏅</span><span class="t">Profile</span><span class="s">Lv 12 · 68%</span></button>
+      <button class="btn gold half" onclick="go('quests','push')"><span class="em">🗺️</span><span class="txt"><span class="t">Side Quests</span><span class="s">3 active</span></span></button>
+      <button class="btn white half" onclick="go('profile','push')"><span class="em">🏅</span><span class="txt"><span class="t">Profile</span><span class="s">Lv 12 · 68%</span></span></button>
+      <button class="btn green wide slim" onclick="go('practice','push')"><span class="em">📝</span><span class="txt"><span class="t">My Practice Week</span><span class="s" id="plHomeSub">Build your at-home routine</span></span><span class="go">›</span></button>
     </div>
   </section>
 
@@ -619,12 +697,31 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <div class="lb"><div class="lt">Birdie Hunter <span>68%</span></div><div class="bar"><i style="width:68%"></i></div><div class="lt" style="margin-top:6px"><span>680 / 1,000 XP → 🦅 Eagle Elite</span></div></div>
         <div class="hcp"><b>18.4</b><span>HANDICAP</span></div>
       </div>
+      <button class="btn green pro-link" onclick="go('practice','push')"><span style="font-size:24px">📝</span><span style="flex:1">My Practice Week</span><span>›</span></button>
       <div class="sec-title">🏆 Scoreboard</div>
       <div class="sb-grid" id="profSb"></div>
       <div class="sec-title">🏅 Badges</div>
       <div class="badges" id="badges"></div>
       <div class="sec-title">📅 Recent Rounds</div>
       <div id="recentRounds"></div>
+    </div>
+  </section>
+
+  <!-- PRACTICE LOG -->
+  <section class="screen" id="s-practice">
+    <div class="hdr"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h1 style="font-size:23px">My Practice Week</h1><span class="free-tag">FREE</span></div>
+    <div class="scroll">
+      <div class="glass-card pl-week" id="plWeek"></div>
+      <div class="pl-tools">
+        <button class="btn gold" id="plTpl">📋 Templates</button>
+        <button class="btn ghost" id="plCopy">📑 Copy Mon → weekdays</button>
+        <button class="btn ghost" id="plFresh">🔄 Start fresh week</button>
+        <button class="btn ghost" id="plClear">🗑️ Clear week</button>
+      </div>
+      <div class="pl-days" id="plDays"></div>
+      <div class="pl-dayhead"><b id="plDayName">Monday</b><span id="plDayProg"></span></div>
+      <div id="plList"></div>
+      <button class="btn green" style="width:100%" id="plAdd">＋ Add a Drill</button>
     </div>
   </section>
 
@@ -1309,6 +1406,126 @@ document.addEventListener('click',e=>{
  const el=e.target.closest('button,.rrow');if(!el||el.disabled||!$('#phone').contains(el))return;
  const c=classify(el);sfx(c[0],c[1]);
 },true);
+/* ================= PRACTICE LOG (localStorage 'bq_practice') ================= */
+const PL_KEY='bq_practice';
+const DAYN=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const DRILLS=[
+ {id:'towel',e:'🧺',n:'Towel Chip Landing',t:10,u:'reps',c:'Chipping'},
+ {id:'bucket',e:'🪣',n:'Bucket Chip-In',t:5,u:'makes',c:'Chipping'},
+ {id:'ladder',e:'🪜',n:'Ladder Chipping',t:3,u:'rounds',c:'Chipping'},
+ {id:'cushion',e:'🛋️',n:'Flop Over the Cushion',t:10,u:'reps',c:'Chipping'},
+ {id:'wedge',e:'📏',n:'Wedge Distance Ladder',t:3,u:'rounds',c:'Chipping'},
+ {id:'coin',e:'🪙',n:'Coin Putting',t:10,u:'putts',c:'Putting'},
+ {id:'gate',e:'🚪',n:'Gate Putting',t:20,u:'putts',c:'Putting'},
+ {id:'circle',e:'⭕',n:'3-Foot Circle',t:10,u:'in a row',c:'Putting'},
+ {id:'teeputt',e:'📍',n:'Putt to a Tee',t:10,u:'putts',c:'Putting'},
+ {id:'mirror',e:'🪞',n:'Mirror Swing Check',t:2,u:'min',c:'Swing'},
+ {id:'balance',e:'🧘',n:'Balance Swings',t:15,u:'reps',c:'Swing'},
+ {id:'grip',e:'✊',n:'Grip Pressure Drill',t:3,u:'min',c:'Swing'}
+];
+const TEMPLATES=[
+ {id:'chip',e:'🏆',n:'Chipping Champ',d:'Chip-ins, ladders and flop shots every day',days:[['towel','ladder'],['bucket','cushion'],['towel','wedge'],['bucket','ladder'],['cushion','towel'],['wedge','bucket','ladder'],['mirror']]},
+ {id:'putt',e:'⛳',n:'Putting Pro',d:'Gates, coins and the 3-foot circle',days:[['coin','gate'],['circle','teeputt'],['gate','coin'],['circle','gate'],['teeputt','coin'],['gate','circle','coin'],['mirror']]},
+ {id:'mix',e:'🎲',n:'Mix It Up',d:'A little chipping, putting and swing',days:[['towel','coin'],['balance','gate'],['bucket','circle'],['mirror','teeputt'],['ladder','coin'],['cushion','gate','balance'],['grip']]}
+];
+const drillById=id=>DRILLS.find(d=>d.id===id);
+let plUid=Date.now();
+const mkItem=(d,t)=>({k:'i'+(plUid++),e:d.e,n:d.n,t:t||d.t,u:d.u,cnt:0});
+function mondayISO(){const n=new Date(),d=(n.getDay()+6)%7,m=new Date(n.getFullYear(),n.getMonth(),n.getDate()-d);return m.toISOString().slice(0,10)}
+const todayIdx=()=>(new Date().getDay()+6)%7;
+function templatePlan(tid){const tp=TEMPLATES.find(t=>t.id===tid);return tp.days.map(ids=>ids.map(id=>mkItem(drillById(id))))}
+let PL=null;try{PL=JSON.parse(localStorage.getItem(PL_KEY)||'null')}catch(_){PL=null}
+if(!PL||!Array.isArray(PL.plan)||PL.plan.length!==7)PL={plan:templatePlan('mix'),week:mondayISO(),awarded:[]};
+PL.awarded=PL.awarded||[];
+if(PL.week!==mondayISO()){PL.plan.forEach(d=>d.forEach(it=>it.cnt=0));PL.awarded=[];PL.week=mondayISO()}
+let plSel=todayIdx();
+function plSave(){try{localStorage.setItem(PL_KEY,JSON.stringify(PL))}catch(_){}}
+plSave();
+const isDone=it=>it.cnt>=it.t;
+const dayPct=d=>d.length?d.reduce((a,it)=>a+Math.min(1,it.cnt/it.t),0)/d.length:0;
+const dayComplete=d=>d.length>0&&d.every(isDone);
+function plStreak(){let i=todayIdx();if(!dayComplete(PL.plan[i]))i--;let n=0;while(i>=0&&dayComplete(PL.plan[i])){n++;i--}return n}
+function ring(p,col){const C=2*Math.PI*14;return '<svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="14" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="4"/>'+(p>0?'<circle cx="17" cy="17" r="14" fill="none" stroke="'+col+'" stroke-width="4" stroke-linecap="round" stroke-dasharray="'+(C*p)+' '+C+'" transform="rotate(-90 17 17)"/>':'')+'</svg>'}
+function renderPractice(){
+ const all=[].concat.apply([],PL.plan),tot=all.length,done=all.filter(isDone).length;
+ const pct=tot?Math.round(all.reduce((a,it)=>a+Math.min(1,it.cnt/it.t),0)/tot*100):0;
+ $('#plWeek').innerHTML='<div class="top">This Week <span>'+done+' / '+tot+' drills</span></div><div class="bar"><i style="width:'+pct+'%"></i></div>'+
+  '<div class="meta"><span><b>'+pct+'%</b> complete</span><span>🔥 <b>'+plStreak()+'</b>-day streak</span><span>✅ <b>'+PL.plan.filter(dayComplete).length+'</b>/7 days</span></div>';
+ const ti=todayIdx();
+ $('#plDays').innerHTML=PL.plan.map((d,i)=>{const p=dayPct(d),c=dayComplete(d);
+  return '<button class="pl-day'+(i===ti?' today':'')+(i===plSel?' sel':'')+'" data-d="'+i+'">'+DAYN[i].slice(0,3)+'<span class="rw">'+ring(p,c?'#6dff8f':'#ffd23f')+'<span class="dn">'+(c?'✓':d.length)+'</span></span>'+(i===ti?'<span class="tdy">TODAY</span>':'')+'</button>'}).join('');
+ $$('#plDays .pl-day').forEach(b=>b.onclick=()=>{plSel=+b.dataset.d;renderPractice()});
+ const day=PL.plan[plSel];
+ $('#plDayName').textContent=DAYN[plSel]+(plSel===ti?' · Today':'');
+ $('#plDayProg').textContent=day.filter(isDone).length+' / '+day.length+' done';
+ $('#plList').innerHTML=day.length?day.map((it,j)=>{const counter=it.u!=='min';
+  return '<div class="pl-row'+(isDone(it)?' done':'')+'"><button class="pl-check" data-j="'+j+'" aria-label="Complete">'+(isDone(it)?'✓':'')+'</button><span class="pe">'+it.e+'</span>'+
+   '<div class="pn"><b>'+it.n+'</b><span>'+(counter?Math.min(it.cnt,it.t)+' / ':'')+it.t+' '+it.u+'</span></div>'+
+   (counter&&!isDone(it)?'<button class="iconbtn plus" data-p="'+j+'">+1</button>':'')+
+   '<div class="ord"><button class="iconbtn" data-up="'+j+'" aria-label="Move up">▲</button><button class="iconbtn" data-dn="'+j+'" aria-label="Move down">▼</button></div>'+
+   '<button class="iconbtn" data-rm="'+j+'" aria-label="Remove">✕</button></div>'}).join(''):'<div class="pl-empty">Rest day 😴<br>Tap “Add a Drill” to plan something.</div>';
+ $$('#plList .pl-check').forEach(b=>b.onclick=()=>{const it=day[+b.dataset.j];const was=isDone(it);it.cnt=was?0:it.t;afterChange(!was)});
+ $$('#plList [data-p]').forEach(b=>b.onclick=()=>{const it=day[+b.dataset.p];it.cnt=Math.min(it.t,it.cnt+1);afterChange(isDone(it))});
+ $$('#plList [data-up]').forEach(b=>b.onclick=()=>{const j=+b.dataset.up;if(j>0){[day[j-1],day[j]]=[day[j],day[j-1]];plSave();renderPractice()}});
+ $$('#plList [data-dn]').forEach(b=>b.onclick=()=>{const j=+b.dataset.dn;if(j<day.length-1){[day[j+1],day[j]]=[day[j],day[j+1]];plSave();renderPractice()}});
+ $$('#plList [data-rm]').forEach(b=>b.onclick=()=>{day.splice(+b.dataset.rm,1);plSave();renderPractice()});
+ const hc=$('#plHomeSub');if(hc){const td=PL.plan[ti];hc.textContent=td.length?(td.filter(isDone).length+'/'+td.length+' drills today · '+pct+'% this week'):'Rest day · '+pct+'% this week'}
+}
+function afterChange(completedOne){
+ const day=PL.plan[plSel];plSave();renderPractice();
+ if(completedOne){
+  if(dayComplete(day)&&PL.awarded.indexOf(plSel)<0){PL.awarded.push(plSel);plSave();setPoints(points+50);confetti();setTimeout(()=>window.__sfx&&window.__sfx('chime'),110);toast('🎉 '+DAYN[plSel]+' complete! +50 pts')}
+  else setTimeout(()=>window.__sfx&&window.__sfx('chime'),110);
+ }
+}
+function addSheet(){
+ let pick=null,target=0,mode='lib',cu={n:'',t:10,u:'reps'};
+ const draw=()=>{
+  let h='<h2>＋ Add to '+DAYN[plSel]+'</h2><div class="seg" id="plAddSeg"><button class="'+(mode==='lib'?'on':'')+'" data-m="lib">📚 Drill Library</button><button class="'+(mode==='custom'?'on':'')+'" data-m="custom">✏️ Custom Drill</button></div>';
+  if(mode==='lib'){
+   h+='<div class="pl-lib">'+DRILLS.map(d=>'<button class="pl-libitem'+(pick&&pick.id===d.id?' on':'')+'" data-id="'+d.id+'"><div class="e">'+d.e+'</div><b>'+d.n+'</b><span>'+d.c+' · '+d.t+' '+d.u+'</span></button>').join('')+'</div>';
+   h+='<div class="pl-foot">';
+   if(pick)h+='<div class="pl-cfg"><div><b>'+pick.e+' '+pick.n+'</b><div style="font-size:12px;color:var(--muted);font-weight:800">Set your target</div></div><div class="stepper"><button class="iconbtn" id="stM">−</button><div class="sv">'+target+'<small>'+pick.u+'</small></div><button class="iconbtn" id="stP">+</button></div></div>';
+   h+='<button class="btn gold" style="width:100%" id="plDoAdd" '+(pick?'':'disabled')+'>'+(pick?'Add to '+DAYN[plSel]:'Pick a drill above')+'</button></div>';
+  } else {
+   h+='<input class="pl-input" id="cuName" maxlength="32" placeholder="Drill name (e.g. Chip into laundry basket)" value="'+cu.n.replace(/"/g,'&quot;')+'">'+
+    '<div style="font-weight:900;margin-bottom:6px">Unit</div><div class="pl-units">'+['reps','makes','putts','rounds','min'].map(u=>'<button class="'+(cu.u===u?'on':'')+'" data-u="'+u+'">'+u+'</button>').join('')+'</div>'+
+    '<div class="pl-cfg"><b>Target</b><div class="stepper"><button class="iconbtn" id="stM">−</button><div class="sv">'+cu.t+'<small>'+cu.u+'</small></div><button class="iconbtn" id="stP">+</button></div></div>'+
+    '<button class="btn gold" style="width:100%" id="plDoCustom">Add Custom Drill</button>';
+  }
+  openSheet(h);
+  $$('#plAddSeg button').forEach(b=>b.onclick=()=>{const ni=$('#cuName');if(ni)cu.n=ni.value;mode=b.dataset.m;draw()});
+  if(mode==='lib'){
+   $$('.pl-libitem').forEach(b=>b.onclick=()=>{pick=drillById(b.dataset.id);target=pick.t;draw()});
+   const step=pick?(pick.t>=10?5:1):1;
+   if(pick){$('#stM').onclick=()=>{target=Math.max(1,target-step);draw()};$('#stP').onclick=()=>{target=Math.min(200,target+step);draw()}}
+   const ad=$('#plDoAdd');if(ad&&pick)ad.onclick=()=>{PL.plan[plSel].push(mkItem(pick,target));plSave();closeSheet();renderPractice();toast(pick.e+' Added to '+DAYN[plSel])};
+  } else {
+   const ni=$('#cuName');ni.oninput=()=>cu.n=ni.value;
+   $$('.pl-units button').forEach(b=>b.onclick=()=>{cu.n=ni.value;cu.u=b.dataset.u;draw()});
+   $('#stM').onclick=()=>{cu.n=ni.value;cu.t=Math.max(1,cu.t-(cu.t>10?5:1));draw()};$('#stP').onclick=()=>{cu.n=ni.value;cu.t=Math.min(200,cu.t+(cu.t>=10?5:1));draw()};
+   $('#plDoCustom').onclick=()=>{const n=ni.value.trim();if(!n){toast('✏️ Give your drill a name first');ni.focus();return}
+    PL.plan[plSel].push(mkItem({e:'⭐',n:n.replace(/</g,'&lt;'),t:cu.t,u:cu.u},cu.t));plSave();closeSheet();renderPractice();toast('⭐ Custom drill added to '+DAYN[plSel])};
+  }
+ };
+ draw();
+}
+function tplSheet(){
+ openSheet('<h2>📋 Starter Templates</h2><p>Fill your whole week in one tap. This replaces your current plan, and you can still change any day after.</p>'+
+  TEMPLATES.map(t=>'<button class="pl-tpl" data-t="'+t.id+'"><span class="e">'+t.e+'</span><span><b>'+t.n+'</b><span>'+t.d+'</span></span></button>').join('')+
+  '<button class="btn ghost" style="width:100%" onclick="closeSheet()">Cancel</button>');
+ $$('.pl-tpl').forEach(b=>b.onclick=()=>{const t=TEMPLATES.find(x=>x.id===b.dataset.t);PL.plan=templatePlan(t.id);PL.awarded=[];plSave();closeSheet();renderPractice();toast(t.e+' '+t.n+' week loaded!')});
+}
+function armBtn(btn,label,fn){if(!btn.dataset.arm){btn.dataset.arm='1';const old=btn.textContent;btn.textContent=label;btn.classList.add('danger');
+ setTimeout(()=>{if(btn.dataset.arm){delete btn.dataset.arm;btn.textContent=old;btn.classList.remove('danger')}},3000);return}
+ delete btn.dataset.arm;btn.classList.remove('danger');fn()}
+$('#plAdd').onclick=addSheet;
+$('#plTpl').onclick=tplSheet;
+$('#plCopy').onclick=()=>{const mon=PL.plan[0];for(let i=1;i<5;i++)PL.plan[i]=mon.map(it=>Object.assign({},it,{k:'i'+(plUid++),cnt:0}));plSave();renderPractice();toast('📑 Monday copied to Tue–Fri')};
+const plFreshB=$('#plFresh'),plClearB=$('#plClear');
+plFreshB.onclick=()=>armBtn(plFreshB,'Tap to confirm',()=>{plFreshB.textContent='🔄 Start fresh week';PL.plan.forEach(d=>d.forEach(it=>it.cnt=0));PL.awarded=[];PL.week=mondayISO();plSave();renderPractice();toast('🔄 Fresh week! Plan kept, checkmarks cleared')});
+plClearB.onclick=()=>armBtn(plClearB,'Tap to confirm',()=>{plClearB.textContent='🗑️ Clear week';PL.plan=[[],[],[],[],[],[],[]];PL.awarded=[];plSave();renderPractice();toast('🗑️ Week cleared')});
+renderPractice();
 /* ================= INIT ================= */
 function renderAll(){renderAvatars();renderShop();renderGear();renderPresets();tickCountdown()}
 renderAll();renderPosts();setPoints(points);

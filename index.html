@@ -356,6 +356,81 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .tog::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;transition:transform .25s cubic-bezier(.3,1.4,.5,1);box-shadow:0 2px 4px rgba(0,0,0,.3)}
 .tog.on{background:var(--pts)}
 .tog.on::after{transform:translateX(24px)}
+/* ===== iOS 26-style Liquid Glass buttons ===== */
+:root{
+  --glass-blur:blur(20px) saturate(180%);
+  --glass-hi:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(0,0,0,.14),inset 0 0 0 1px rgba(255,255,255,.22);
+  --glass-shadow:0 8px 22px rgba(0,0,0,.22),0 2px 6px rgba(0,0,0,.12);
+}
+.btn,.iconbtn,.filters button,.seg button,.mg-item .play,.mg-head .mini,.mg-fab,.fab-rec,.post .pa button,.clip .acts .ci,.bundle .usd,.nav button .ni,.cform .btn{
+  position:relative;isolation:isolate;
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  transition:transform .18s cubic-bezier(.3,1.4,.5,1),filter .18s,background .25s,box-shadow .25s;
+}
+.mg-fab,.fab-rec{position:absolute}
+.btn::before,.iconbtn::before,.filters button::before,.seg button::before,.mg-item .play::before,.mg-head .mini::before,.mg-fab::before,.fab-rec::before,.post .pa button::before,.clip .acts .ci::before,.bundle .usd::before,.nav button .ni::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.42) 0%,rgba(255,255,255,.12) 38%,rgba(255,255,255,0) 52%),
+             radial-gradient(120% 60% at 50% 120%,rgba(255,255,255,.18),transparent 60%);
+}
+.btn:active,.iconbtn:active,.filters button:active,.seg button:active,.mg-item .play:active,.mg-head .mini:active,.mg-fab:active,.fab-rec:active,.post .pa button:active,.clip .acts button:active .ci,.bundle:active .usd,.nav button:active .ni{
+  transform:scale(.96);filter:brightness(1.15);
+}
+/* neutral clear glass */
+.iconbtn,.btn.ghost,.filters button,.post .pa button,.clip .acts .ci,.mg-head .mini{
+  background:rgba(255,255,255,.16);box-shadow:var(--glass-hi),var(--glass-shadow);color:#fff;
+}
+.iconbtn:active,.btn.ghost:active,.filters button:active,.post .pa button:active{box-shadow:var(--glass-hi),0 3px 10px rgba(0,0,0,.2)}
+.map-hdr .iconbtn.back{background:rgba(4,40,20,.45)!important}
+/* tinted glass: keeps each button's color recognizable */
+.btn{background:linear-gradient(180deg,rgba(90,200,255,.78),rgba(30,155,230,.72));box-shadow:var(--glass-hi),var(--glass-shadow);text-shadow:0 1px 2px rgba(0,40,80,.35)}
+.btn:active{box-shadow:var(--glass-hi),0 3px 10px rgba(0,0,0,.2)}
+.btn.gold{background:linear-gradient(180deg,rgba(255,224,110,.9),rgba(240,180,20,.82));color:#3d2a00;box-shadow:var(--glass-hi),var(--glass-shadow)}
+.btn.gold:active{box-shadow:var(--glass-hi),0 3px 10px rgba(0,0,0,.2)}
+.btn.white{background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(235,248,240,.78));color:#0b5d2e;box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,60,30,.12),inset 0 0 0 1px rgba(255,255,255,.5),var(--glass-shadow)}
+.btn.white:active{box-shadow:inset 0 1px 0 #fff,0 3px 10px rgba(0,0,0,.2)}
+.btn.green{background:linear-gradient(180deg,rgba(60,200,110,.75),rgba(16,140,70,.75));box-shadow:var(--glass-hi),var(--glass-shadow)}
+.btn.green:active{box-shadow:var(--glass-hi),0 3px 10px rgba(0,0,0,.2)}
+.btn.ghost{background:rgba(255,255,255,.14)}
+.filters button.on{background:linear-gradient(180deg,rgba(90,200,255,.8),rgba(30,155,230,.72));box-shadow:var(--glass-hi),var(--glass-shadow)}
+/* segmented toggles: glass track + bright glass thumb */
+.seg{background:rgba(255,255,255,.10);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),inset 0 0 0 1px rgba(255,255,255,.12),inset 0 2px 8px rgba(0,0,0,.18)}
+.seg button{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+.seg button:not(.on)::before{opacity:0}
+.seg button.on{background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(240,250,245,.8));color:#0b5d2e;box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.6),0 4px 12px rgba(0,0,0,.18)}
+/* buttons on white cards (mini-games card): tinted green / blue glass */
+.mg-item .play{background:linear-gradient(180deg,rgba(40,190,100,.92),rgba(14,130,64,.9));box-shadow:inset 0 1px 0 rgba(255,255,255,.65),inset 0 -1px 0 rgba(0,0,0,.18),inset 0 0 0 1px rgba(255,255,255,.25),0 4px 10px rgba(14,110,55,.35)}
+.mg-head .mini{background:linear-gradient(180deg,rgba(63,184,255,.22),rgba(63,184,255,.34));color:#0b6fb0;box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 0 0 1px rgba(30,155,230,.35),0 3px 8px rgba(30,120,200,.25)}
+.mg-fab{background:linear-gradient(180deg,rgba(255,224,110,.82),rgba(240,170,10,.78));box-shadow:var(--glass-hi),0 10px 26px rgba(0,0,0,.35)}
+.mg-fab.show:active{transform:scale(.94)}
+.fab-rec{background:linear-gradient(180deg,rgba(255,110,125,.85),rgba(225,40,60,.82));box-shadow:var(--glass-hi),0 10px 26px rgba(0,0,0,.35)}
+.fab-rec:active{box-shadow:var(--glass-hi),0 4px 12px rgba(0,0,0,.3)}
+.post .pa button.liked{background:linear-gradient(180deg,rgba(255,110,125,.8),rgba(225,40,60,.75))}
+.clip .acts .ci{background:rgba(255,255,255,.22)}
+.clip .acts button.liked .ci{background:linear-gradient(180deg,rgba(255,110,125,.85),rgba(225,40,60,.8))}
+.bundle .usd{background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(235,248,240,.8));box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.5),0 6px 16px rgba(0,0,0,.2)}
+/* floating frosted-glass nav pill */
+.nav{left:12px;right:12px;bottom:calc(8px + env(safe-area-inset-bottom,0px));height:66px;padding:6px 6px;border-radius:32px;border:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.08));
+  -webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(0,0,0,.15),inset 0 0 0 1px rgba(255,255,255,.18),0 12px 30px rgba(0,0,0,.35)}
+.nav button{font-size:11px;color:rgba(255,255,255,.75)}
+.nav button .ni{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+.nav button .ni::before{opacity:0;transition:opacity .25s}
+.nav button.on .ni{background:linear-gradient(180deg,rgba(90,200,255,.62),rgba(30,155,230,.5));box-shadow:var(--glass-hi),0 4px 12px rgba(0,0,0,.2);transform:translateY(-2px)}
+.nav button.on .ni::before{opacity:1}
+.nav button.home .ni{background:rgba(255,255,255,.14);box-shadow:var(--glass-hi);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur)}
+.nav button.home .ni::before{opacity:.8}
+.nav button.home.on .ni{background:linear-gradient(180deg,rgba(255,224,110,.78),rgba(240,175,15,.68));color:#3d2a00;box-shadow:var(--glass-hi),0 4px 14px rgba(0,0,0,.25)}
+/* let content flow behind the floating glass nav */
+.screen{bottom:0}
+.scroll{padding-bottom:calc(var(--navH) + 28px)}
+.home-btns{padding-bottom:calc(var(--navH) + 18px)}
+.mg-card{bottom:calc(var(--navH) + 12px)}
+.mg-fab{bottom:calc(var(--navH) + 16px)}
+.fab-rec{bottom:calc(var(--navH) + 16px)}
+.btn.gold{background:linear-gradient(180deg,rgba(255,232,130,.94),rgba(255,198,40,.88))}
+.nav button.home.on .ni{background:linear-gradient(180deg,rgba(255,232,130,.85),rgba(255,195,35,.75))}
 </style>
 </head>
 <body>
@@ -477,7 +552,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   <section class="screen" id="s-quests">
     <div class="hdr"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h1>Side Quests</h1><span class="chip pts"><i class="ball"></i><span class="ptsval">2,450</span></span></div>
     <div style="padding:0 16px"><div class="seg" id="qSeg"><button class="on" data-v="map">🗺️ Map</button><button data-v="list">📋 List</button></div></div>
-    <div class="scroll" id="qMapWrap" style="display:flex;flex-direction:column;padding-bottom:16px"><div class="qmap" id="qmap"></div></div>
+    <div class="scroll" id="qMapWrap" style="display:flex;flex-direction:column;padding-bottom:calc(var(--navH) + 12px)"><div class="qmap" id="qmap"></div></div>
     <div class="scroll" id="qList" style="display:none"></div>
   </section>
 

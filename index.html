@@ -431,6 +431,35 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .fab-rec{bottom:calc(var(--navH) + 16px)}
 .btn.gold{background:linear-gradient(180deg,rgba(255,232,130,.94),rgba(255,198,40,.88))}
 .nav button.home.on .ni{background:linear-gradient(180deg,rgba(255,232,130,.85),rgba(255,195,35,.75))}
+/* ===== Scoreboard ===== */
+.mg-sb{margin:0 14px 8px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:none}
+.mg-sb::-webkit-scrollbar{display:none}
+.mg-sb .sbc{flex:none;display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:14px;font-size:12px;font-weight:900;color:#0b5d2e;
+  background:linear-gradient(180deg,rgba(63,184,255,.16),rgba(20,149,74,.14));box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 0 0 1px rgba(20,149,74,.22);white-space:nowrap}
+.mg-sb .sbc small{font-size:10px;color:#4b7a5e;font-weight:800}
+.mg-sb .sbt{flex:none;align-self:center;font-size:11px;font-weight:900;color:#4b7a5e;letter-spacing:.4px;text-transform:uppercase;padding-right:2px}
+.sb-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sb-tile{position:relative;border-radius:20px;padding:12px;background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 0 0 1px rgba(255,255,255,.14),0 6px 16px rgba(0,0,0,.18);overflow:hidden}
+.sb-tile .l{font-size:12px;font-weight:800;color:var(--muted)}
+.sb-tile .v{font-size:24px;font-weight:900;color:var(--pts);margin-top:2px}
+.sb-tile .v small{font-size:13px;color:var(--pts);opacity:.85}
+.sb-tile.wide{grid-column:1/-1;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(255,210,63,.28),rgba(63,184,255,.18))}
+.sb-tile.wide .big{font-size:40px;font-weight:900;line-height:1}
+.sb-tile.wide .tp{margin-left:auto;font-size:20px;font-weight:900;padding:6px 10px;border-radius:12px;background:rgba(0,0,0,.2);color:var(--pts)}
+.res-big{text-align:center;margin:8px 0 4px}
+.res-big .num{font-size:72px;font-weight:900;line-height:1;color:#fff;text-shadow:0 4px 0 rgba(0,0,0,.18)}
+.res-big .unit{font-size:20px;font-weight:900;color:var(--skyL)}
+.res-best{text-align:center;font-weight:800;color:var(--muted);margin-bottom:14px}
+.newbest{display:none;margin:6px auto 12px;width:max-content;padding:8px 16px;border-radius:16px;font-weight:900;font-size:18px;color:#3d2a00;
+  background:linear-gradient(180deg,rgba(255,232,130,.95),rgba(255,195,35,.9));box-shadow:inset 0 1px 0 #fff,0 6px 18px rgba(0,0,0,.25)}
+.newbest.show{display:block;animation:pop .45s}
+.res-row{display:flex;gap:10px}.res-row .btn{flex:1}
+.sheet .rcard{width:auto;transform:none;opacity:1;margin:6px 0 14px}
+.confetti{position:absolute;inset:0;pointer-events:none;z-index:120;overflow:hidden}
+.confetti i{position:absolute;top:-14px;width:9px;height:14px;border-radius:3px;animation:fall 1.5s cubic-bezier(.2,.6,.4,1) forwards}
+@keyframes fall{0%{transform:translateY(0) rotate(0)}100%{transform:translateY(900px) rotate(720deg);opacity:.2}}
+.danger{background:linear-gradient(180deg,rgba(255,110,125,.85),rgba(225,40,60,.8))!important}
 </style>
 </head>
 <body>
@@ -480,13 +509,13 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
       </div>
       <div class="stats3">
         <div class="stat"><b>42.8</b><span>Avg (9 holes)</span></div>
-        <div class="stat"><b style="color:var(--pts)">39</b><span>Best round</span></div>
+        <div class="stat"><b style="color:var(--pts)" id="bestRoundStat">39</b><span>Best round</span></div>
         <div class="stat"><b>23</b><span>Rounds played</span></div>
       </div>
-      <button class="btn green" style="width:100%" onclick="toast('⛳ GPS round started! (demo)')">＋ Start a New Round</button>
+      <button class="btn green" style="width:100%" onclick="window.__bq.logRound()">＋ Start a New Round</button>
       <div class="sec-title">🏆 Personal Bests</div>
-      <div class="rrow"><div class="rs">212</div><div><b>Longest Drive</b><span>yards · Eagle Ridge #4</span></div></div>
-      <div class="rrow"><div class="rs">4ft</div><div><b>Closest to the Pin</b><span>Riverside Par 3 · Hole 6</span></div></div>
+      <div class="rrow"><div class="rs" id="pbDrive">212</div><div><b>Longest Drive</b><span>yards · Eagle Ridge #4</span></div></div>
+      <div class="rrow"><div class="rs" id="pbCtp">4ft</div><div><b>Closest to the Pin</b><span>Riverside Par 3 · Hole 6</span></div></div>
       <div class="rrow"><div class="rs">3</div><div><b>Most Birdies</b><span>in one round · Eagle Ridge</span></div></div>
     </div>
   </section>
@@ -503,6 +532,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
     <div class="mg-card" id="mgCard">
       <div class="mg-head"><b>🎮 Mini-Games</b><button class="mini" id="mgMin" aria-label="Minimize"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M6 12h12"/></svg></button></div>
       <div class="mg-how"><b>🎯 How Closest to the Pin works</b>Hit your shot, and GPS measures how close you land to the pin. Closest shot wins!</div>
+      <div class="mg-sb" id="mgSb"></div>
       <div class="mg-list" id="mgList"></div>
     </div>
     <button class="mg-fab" id="mgFab" aria-label="Open mini-games">🎮<span class="nb">4</span></button>
@@ -589,6 +619,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <div class="lb"><div class="lt">Birdie Hunter <span>68%</span></div><div class="bar"><i style="width:68%"></i></div><div class="lt" style="margin-top:6px"><span>680 / 1,000 XP → 🦅 Eagle Elite</span></div></div>
         <div class="hcp"><b>18.4</b><span>HANDICAP</span></div>
       </div>
+      <div class="sec-title">🏆 Scoreboard</div>
+      <div class="sb-grid" id="profSb"></div>
       <div class="sec-title">🏅 Badges</div>
       <div class="badges" id="badges"></div>
       <div class="sec-title">📅 Recent Rounds</div>
@@ -962,9 +994,81 @@ $$('#mgList .play').forEach(b=>b.addEventListener('click',()=>{const g=GAMES[b.d
  $$('#mgList .mg-item').forEach(it=>it.classList.toggle('sel',it.dataset.i===b.dataset.i));
  const ag=$('#activeGame');ag.innerHTML=g.e+' '+g.n+' · LIVE';ag.classList.remove('show');void ag.offsetWidth;ag.classList.add('show');
  $('#targetRing').setAttribute('opacity',b.dataset.i==='0'?'1':'0');
- toast(g.e+' '+g.n+' started! Hit your shot. (demo)')}));
+ playGame(+b.dataset.i)}));
 $('#mgMin').onclick=()=>{$('#mgCard').classList.add('min');$('#mgFab').classList.add('show')};
 $('#mgFab').onclick=()=>{$('#mgCard').classList.remove('min');$('#mgFab').classList.remove('show')};
+/* ================= SCOREBOARD (localStorage 'bq_scores') ================= */
+const SB_KEY='bq_scores';
+const BASE_ROUNDS=ROUNDS.slice();
+const GKEYS=['ctp','drive','putt','fw'];
+const GDEF={
+ ctp:{lower:true,unit:'ft',sb:'ft',roll:()=>Math.round(2+Math.pow(Math.random(),1.4)*38),fmt:v=>v+' ft'},
+ drive:{lower:false,unit:'yds',sb:'yds',roll:()=>Math.round(120+Math.random()*140),fmt:v=>v+' yds'},
+ putt:{lower:false,unit:'in a row',sb:'in a row',roll:()=>Math.min(10,Math.floor(Math.pow(Math.random(),1.6)*8)),fmt:v=>v+' in a row'},
+ fw:{lower:false,unit:'of 9 fairways',sb:'/9',roll:()=>Math.round(2+Math.random()*7),fmt:v=>v+'/9'}
+};
+function bestOf(list){let b=null;list.forEach(r=>{const t=totals(r);if(!b||t.d<b.d||(t.d===b.d&&t.s<b.s))b={s:t.s,d:t.d,c:r.c,date:r.d}});return b}
+function defaultScores(){return {round:bestOf(BASE_ROUNDS),ctp:4,drive:212,putt:3,fw:5,logged:[]}}
+let SC;
+try{SC=JSON.parse(localStorage.getItem(SB_KEY)||'null')}catch(_){SC=null}
+if(!SC||typeof SC!=='object')SC=defaultScores();
+SC=Object.assign(defaultScores(),SC);
+function saveScores(){try{localStorage.setItem(SB_KEY,JSON.stringify(SC))}catch(_){}}
+saveScores();
+// restore logged rounds into the rounds list
+if(SC.logged&&SC.logged.length){ROUNDS.unshift.apply(ROUNDS,SC.logged)}
+function renderRoundsList(){track.innerHTML=ROUNDS.map(roundCard).join('');$('#rdots').innerHTML=ROUNDS.map(()=>'<i></i>').join('');setR(0)}
+const sgn=d=>(d>0?'+':'')+d;
+function renderScoreboard(){
+ GAMES[0].d='Land it nearest the flag · Best: '+SC.ctp+' ft';
+ GAMES[1].d='Bomb it down the fairway · Best: '+SC.drive+' yds';
+ GAMES[2].d='Sink putts in a row from 10 ft · Best: '+SC.putt;
+ GAMES[3].d='Hit fairways this round · Best: '+SC.fw+'/9';
+ $$('#mgList .mg-item').forEach((it,i)=>{const sp=it.querySelector('.nm span');if(sp)sp.textContent=GAMES[i].d});
+ $('#mgSb').innerHTML='<span class="sbt">🏆 Bests</span>'+GKEYS.map((k,i)=>'<span class="sbc">'+GAMES[i].e+' '+(k==='fw'?SC.fw+'<small>/9</small>':SC[k]+' <small>'+GDEF[k].sb+'</small>')+'</span>').join('')+
+  '<span class="sbc">🏌️ Round '+SC.round.s+' <small>('+sgn(SC.round.d)+')</small></span>';
+ $('#profSb').innerHTML='<div class="sb-tile wide"><div class="big">'+SC.round.s+'</div><div><div class="l">Best Round</div><b>'+SC.round.c+'</b><div class="l">'+SC.round.date+'</div></div><div class="tp">'+sgn(SC.round.d)+'</div></div>'+
+  GKEYS.map((k,i)=>'<div class="sb-tile"><div class="l">'+GAMES[i].e+' '+GAMES[i].n+'</div><div class="v">'+(k==='fw'?SC.fw+'<small>/9</small>':SC[k]+' <small>'+GDEF[k].sb+'</small>')+'</div></div>').join('');
+ const bs=$('#bestRoundStat');if(bs)bs.textContent=SC.round.s;
+ const pd=$('#pbDrive');if(pd)pd.textContent=SC.drive;
+ const pc=$('#pbCtp');if(pc)pc.textContent=SC.ctp+'ft';
+}
+function confetti(){const c=document.createElement('div');c.className='confetti';const cols=['#ffd23f','#3fb8ff','#6dff8f','#ff6fae','#ff8a3d','#fff'];
+ c.innerHTML=Array.from({length:44},()=>'<i style="left:'+(Math.random()*100)+'%;background:'+cols[Math.floor(Math.random()*cols.length)]+';animation-delay:'+(Math.random()*.35)+'s;animation-duration:'+(1.1+Math.random()*.8)+'s"></i>').join('');
+ $('#phone').appendChild(c);setTimeout(()=>c.remove(),2400)}
+function celebrate(){confetti();setTimeout(()=>{if(window.__sfx)window.__sfx('chime')},120)}
+function playGame(i){
+ const k=GKEYS[i],g=GAMES[i],def=GDEF[k],v=def.roll(),prev=SC[k];
+ const isBest=def.lower?v<prev:v>prev;
+ if(isBest){SC[k]=v;saveScores();renderScoreboard()}
+ openSheet('<div style="text-align:center;font-size:13px;font-weight:900;color:var(--skyL);text-transform:uppercase;letter-spacing:.5px">'+g.e+' '+g.n+' · Result</div>'+
+  '<div class="res-big"><div class="num" id="resNum">0</div><div class="unit">'+def.unit+'</div></div>'+
+  '<div class="newbest" id="newBest">🎉 New Best!</div>'+
+  '<div class="res-best">'+(isBest?'Old best: '+def.fmt(prev):'Your best: '+def.fmt(SC[k]))+' · +'+(isBest?g.pts:Math.round(g.pts/3))+' pts (demo)</div>'+
+  '<div class="res-row"><button class="btn" id="againBtn">🔁 Play Again</button><button class="btn ghost" onclick="closeSheet()">Done</button></div>');
+ const el=$('#resNum'),t0=performance.now(),dur=650;
+ (function step(now){const p=Math.min(1,(now-t0)/dur);el.textContent=Math.round(v*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);else if(isBest){$('#newBest').classList.add('show');celebrate()}})(t0);
+ $('#againBtn').onclick=()=>playGame(i);
+}
+function logRound(){
+ const tpl=BASE_ROUNDS[Math.floor(Math.random()*BASE_ROUNDS.length)];
+ const s=tpl.par.map(p=>{const r=Math.random();return Math.max(2,p+(r<.12?-1:r<.45?0:r<.82?1:2))});
+ const now=new Date(),d=now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+ const r={c:tpl.c,d:d,par:tpl.par.slice(),s:s,tee:'Logged round'};
+ ROUNDS.unshift(r);SC.logged=[r].concat(SC.logged||[]).slice(0,10);
+ const t=totals(r),isBest=t.d<SC.round.d||(t.d===SC.round.d&&t.s<SC.round.s);
+ const prev=SC.round;
+ if(isBest)SC.round={s:t.s,d:t.d,c:r.c,date:d};
+ saveScores();renderRoundsList();renderRecent();renderScoreboard();
+ openSheet('<h2>⛳ Round Logged!</h2>'+roundCard(r).replace('class="rcard"','class="rcard cur"')+
+  '<div class="newbest'+(isBest?' show':'')+'">🎉 New Best Round!</div>'+
+  '<div class="res-best">'+(isBest?'Old best: '+prev.s+' ('+sgn(prev.d)+')':'Best round: '+SC.round.s+' ('+sgn(SC.round.d)+')')+'</div>'+
+  '<div class="res-row"><button class="btn green" id="againRound">＋ Log Another</button><button class="btn ghost" onclick="closeSheet()">Done</button></div>');
+ $('#againRound').onclick=logRound;
+ if(isBest)celebrate();
+}
+function resetScores(){SC.logged=[];ROUNDS.length=0;BASE_ROUNDS.forEach(r=>ROUNDS.push(r));SC=defaultScores();saveScores();renderRoundsList();renderRecent();renderScoreboard()}
+window.__bq={logRound:logRound,playGame:playGame,resetScores:resetScores};
 
 /* ================= SHOP ================= */
 let shopFilter='all';
@@ -1144,14 +1248,18 @@ $('#recBtn').onclick=()=>{openSheet('<h2>🎬 Record a Clip</h2><div class="rec-
 /* ================= PROFILE ================= */
 const BADGES=[['🐦','First Birdie','#3fb8ff'],['🔥','7-Day Streak','#ff8a3d'],['🎯','Pin Seeker','#ff4d5e'],['🚀','200+ Drive','#9b6bff'],['🗺️','Explorer','#14954a'],['⛳','10 Rounds','#ffd23f'],['🦅','Eagle?','rgba(255,255,255,.15)']];
 $('#badges').innerHTML=BADGES.map((b,i)=>'<div class="badge" style="'+(i===BADGES.length-1?'opacity:.5':'')+'"><div class="bi" style="background:'+b[2]+'">'+(i===BADGES.length-1?'🔒':b[0])+'</div>'+b[1]+'</div>').join('');
-$('#recentRounds').innerHTML=ROUNDS.slice(0,3).map((r,i)=>{const t=totals(r);return '<div class="rrow" style="cursor:pointer" data-i="'+i+'"><div class="rs">'+t.s+'</div><div><b>'+r.c+'</b><span>'+r.d+'</span></div><div class="tp" style="color:'+(t.d<=3?'var(--pts)':'#ffb37a')+'">'+(t.d>0?'+':'')+t.d+'</div></div>'}).join('');
-$$('#recentRounds .rrow').forEach(r=>r.onclick=()=>{go('rounds','tab');setTimeout(()=>setR(+r.dataset.i),60)});
+function renderRecent(){$('#recentRounds').innerHTML=ROUNDS.slice(0,3).map((r,i)=>{const t=totals(r);return '<div class="rrow" style="cursor:pointer" data-i="'+i+'"><div class="rs">'+t.s+'</div><div><b>'+r.c+'</b><span>'+r.d+'</span></div><div class="tp" style="color:'+(t.d<=3?'var(--pts)':'#ffb37a')+'">'+(t.d>0?'+':'')+t.d+'</div></div>'}).join('');
+$$('#recentRounds .rrow').forEach(r=>r.onclick=()=>{go('rounds','tab');setTimeout(()=>setR(+r.dataset.i),60)});}
+renderRecent();renderScoreboard();
 const SETTINGS={parent:true,friends:true,notif:true,sound:true};
 function settingsSheet(){
  const row=(k,ic,t,s)=>'<div class="set-row"><div class="si">'+ic+'</div><div class="st">'+t+'<small>'+s+'</small></div><button class="tog '+(SETTINGS[k]?'on':'')+'" data-k="'+k+'" aria-label="'+t+'"></button></div>';
  openSheet('<h2>⚙️ Settings</h2>'+row('parent','👪','Parent Controls','Parent PIN needed to buy points or add friends')+row('friends','🔒','Friends-only posts','Managed by Parent Controls')+row('notif','🔔','Notifications','Quest + friend challenge alerts')+row('sound','🔊','Sounds','Swing whooshes & cheers')+
   '<div class="set-row"><div class="si">📏</div><div class="st">Distance units<small>Yards</small></div><span style="color:var(--muted);font-weight:900">›</span></div>'+
+  '<div class="set-row"><div class="si">🏆</div><div class="st">Reset scores<small>Clears your bests and logged rounds</small></div><button class="btn small ghost" id="resetSc">Reset</button></div>'+
   '<button class="btn ghost" style="width:100%;margin-top:16px" onclick="closeSheet()">Done</button>');
+ const rb=$('#resetSc');rb.onclick=()=>{if(!rb.dataset.arm){rb.dataset.arm='1';rb.textContent='Tap to confirm';rb.classList.add('danger');setTimeout(()=>{if(rb.isConnected&&rb.dataset.arm){delete rb.dataset.arm;rb.textContent='Reset';rb.classList.remove('danger')}},3500);return}
+  delete rb.dataset.arm;resetScores();rb.textContent='Done ✓';rb.classList.remove('danger');toast('🏆 Scores reset to starting bests')};
  $$('#sheet .tog').forEach(t=>t.onclick=()=>{const k=t.dataset.k;
   if(k==='friends'&&SETTINGS.parent){toast('👪 Ask a parent: this is locked by Parent Controls');return}
   SETTINGS[k]=!SETTINGS[k];t.classList.toggle('on',SETTINGS[k]);

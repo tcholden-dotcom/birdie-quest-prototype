@@ -537,6 +537,20 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .home-btns .btn.half .txt{text-align:left}
 .globe-wrap{transform:scale(.9);transform-origin:50% 100%}
 .home-btns .btn.half .t{font-size:17px;white-space:nowrap}
+
+/* home fits short phone screens: practice row always reachable */
+#s-home{overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+#s-home>*{flex-shrink:0}
+@media (max-height:760px){
+ .globe-area{min-height:210px}
+ .globe-wrap,.globe-wrap canvas{width:180px;height:180px}
+ .globe-avatar{bottom:170px;width:80px;margin-left:-40px}
+ .globe-avatar svg{width:80px}
+ .home-btns{gap:10px}
+ .home-btns .btn{min-height:62px;padding:10px 10px}
+ .home-btns .btn.wide{padding:10px 16px}
+}
+.home-btns>.btn:first-child{order:-2}.home-btns .btn.slim{order:-1}
 </style>
 </head>
 <body>

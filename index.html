@@ -635,16 +635,15 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 #openBagBtn .bag-mini{width:28px;height:28px;flex:none}
 .bag-count{display:flex;align-items:center;justify-content:space-between;margin:2px 0 10px;font-size:12px;font-weight:800;color:var(--muted)}
 .bag-count b{color:#fff;font-size:13px}
-.bag-stage{position:relative;margin:0 auto 4px;width:100%;max-width:340px;padding-top:8px;transition:padding-top .45s cubic-bezier(.2,1.15,.3,1)}
-.bag-art{display:block;width:86%;max-width:290px;height:auto;margin:0 auto;overflow:visible;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35))}
+.bag-stage{position:relative;margin:0 auto 2px;width:100%;max-width:340px;padding-top:2px}
+.bag-art{display:block;width:100%;max-width:340px;height:auto;margin:0 auto;overflow:visible;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35))}
 .bag-club{cursor:pointer}
 .bag-club:focus{outline:none}
 .bag-club:focus-visible{filter:drop-shadow(0 0 6px #ffe08a)}
-.bag-club-motion{transform-box:fill-box;transform-origin:50% 100%;transition:transform .48s cubic-bezier(.2,1.15,.3,1),opacity .36s ease}
-.bag-view.raised{padding-top:62px}
-.bag-view.raised .bag-club .bag-club-motion{opacity:0;transform:translateY(24px) scale(.82);pointer-events:none}
+.bag-club-motion{transform-box:fill-box;transform-origin:50% 50%;transition:transform .48s cubic-bezier(.2,1.15,.3,1),opacity .36s ease,filter .36s ease}
+.bag-view.raised .bag-club .bag-club-motion{opacity:0.12;transform:scale(.82);pointer-events:none;filter:none}
 .bag-view.raised .bag-club.on{pointer-events:auto}
-.bag-view.raised .bag-club.on .bag-club-motion{opacity:1;transform:translateY(-56px) scale(1.22);pointer-events:auto;filter:drop-shadow(0 14px 12px rgba(0,0,0,.4))}
+.bag-view.raised .bag-club.on .bag-club-motion{opacity:1;transform:scale(1.7) translateY(-6px);pointer-events:auto;filter:drop-shadow(0 18px 14px rgba(0,0,0,.6))}
 #bagPutBack{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);display:none;z-index:3;padding:8px 14px;font-size:12px;font-weight:900;white-space:nowrap}
 .bag-view.raised #bagPutBack{display:block}
 .slot-list{display:flex;flex-direction:column;gap:7px}
@@ -818,7 +817,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
     <div class="hdr"><button class="iconbtn back" id="bagBack" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h1>My Bag</h1></div>
     <div class="scroll" id="bagScroll">
       <div class="bag-stage bag-view" id="bagView">
-        <svg class="bag-art" id="bagArt" viewBox="0 0 260 300" role="img" aria-label="Your 14-club golf bag"></svg>
+        <svg class="bag-art" id="bagArt" viewBox="-16 0 312 372" role="img" aria-label="Your 14-club golf bag, viewed from above"></svg>
         <button class="btn white" id="bagPutBack">↩ Put it back</button>
       </div>
       <div class="bag-count" id="bagCount"></div>
@@ -2460,56 +2459,188 @@ function coverOnClub(cover,kind,x,y){
  return '<g transform="translate('+(x-15)+','+(y-12)+') scale(.58)">'+coverSVG(cover,48,40)+'</g>';
 }
 
-function bagBodySVG(){
- return '<defs>'
-  +'<linearGradient id="bagLeather" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f8a48"/><stop offset=".45" stop-color="#146b36"/><stop offset="1" stop-color="#0c3f22"/></linearGradient>'
-  +'<linearGradient id="bagShine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient>'
-  +'<linearGradient id="bagPocket" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a5c32"/><stop offset="1" stop-color="#0d3a20"/></linearGradient>'
-  +'</defs>'
-  +'<ellipse cx="130" cy="294" rx="54" ry="8" fill="#000" opacity=".25"/>'
-  +'<path d="M96 126 C104 112 156 112 164 126 L178 272 C170 290 90 290 82 272 Z" fill="url(#bagLeather)" stroke="#0a2a18" stroke-width="2"/>'
-  +'<path d="M96 126 C104 112 156 112 164 126 L172 200 C140 208 110 200 88 188 Z" fill="url(#bagShine)"/>'
-  +'<path d="M92 122 C102 110 158 110 168 122 L172 138 C160 128 100 128 88 138 Z" fill="#0d3a20" stroke="#0a2a18" stroke-width="1"/>'
-  +'<ellipse cx="130" cy="126" rx="40" ry="11" fill="#07180f" stroke="#2f9e55" stroke-width="2"/>'
-  +'<ellipse cx="130" cy="124" rx="34" ry="7" fill="#040c08"/>'
-  +'<path d="M98 196 C116 184 144 184 162 198 L166 242 C146 256 114 256 94 240 Z" fill="url(#bagPocket)" stroke="#0a2a18" stroke-width="1.4"/>'
-  +'<path d="M108 208 h44" stroke="#ffd23f" stroke-width="3" stroke-linecap="round"/>'
-  +'<text x="130" y="232" text-anchor="middle" font-size="10" font-weight="900" fill="#ffd23f" font-family="ui-rounded,system-ui">BIRDIE</text>'
-  +'<path d="M168 152 C206 136 210 214 180 236" fill="none" stroke="#0a2a18" stroke-width="6" stroke-linecap="round"/>'
-  +'<path d="M168 152 C206 136 210 214 180 236" fill="none" stroke="#c9a24a" stroke-width="2.2" stroke-linecap="round"/>'
-  +'<rect x="122" y="268" width="16" height="7" rx="2" fill="#c9a24a"/>'
-  +'<path d="M88 250 L78 288 M172 250 L182 288" stroke="#0a2a18" stroke-width="3" stroke-linecap="round" opacity=".55"/>';
+function slotPos(i){
+ return BAG_SLOTS[i];
 }
-
-function oneClubSVG(slot,i){
- const t=(i-6.5)/6.5;
- const x=130+t*46;
- const tilt=t*15;
- const c=slot?CLUBS[slot.id]:null;
- const len=c?(c.kind==='wood'?100:c.kind==='putter'?72:c.kind==='hybrid'?92:84):64;
- const gripCol=c?(c.kind==='putter'?'#1a1a1a':(i%2?'#2a1a16':'#1a1412')):'#333';
- const headY=-len;
- let inner='';
- const hit='<rect class="club-hit" x="-14" y="'+(-(len||64)-18)+'" width="28" height="'+((len||64)+28)+'" fill="transparent"/>';
- if(!slot){
-  inner=hit+'<circle cx="0" cy="-14" r="5" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1.4" stroke-dasharray="2 2"/>';
- }else{
-  inner=hit+'<rect x="-2" y="'+(-len)+'" width="4" height="'+(len-6)+'" rx="1.5" fill="#c5d0da"/>'
-   +'<rect x="-3.2" y="-18" width="6.4" height="22" rx="2.4" fill="'+gripCol+'"/>'
-   +'<rect x="-3.2" y="-6" width="6.4" height="2" fill="#c9a24a"/>'
-   +coverOnClub(slot.cover,c.kind,0,headY);
+const BAG_SLOTS=[
+ {x:96.1,y:65.5,kind:'round',r:17.6,notch:-125},
+ {x:140,y:51.5,kind:'round',r:17.8,notch:-90},
+ {x:183.9,y:65.5,kind:'round',r:17.6,notch:-55},
+ {x:74.5,y:112,kind:'round',r:17.2,notch:180},
+ {x:68.4,y:161.8,kind:'round',r:17.2,notch:180},
+ {x:71.8,y:211.9,kind:'round',r:17.2,notch:188},
+ {x:205.5,y:112,kind:'round',r:17.2,notch:0},
+ {x:211.6,y:161.8,kind:'round',r:17.2,notch:0},
+ {x:208.2,y:211.9,kind:'round',r:17.2,notch:-8},
+ {x:140,y:94.5,kind:'hex',r:19.2},
+ {x:116.2,y:134.5,kind:'hex',r:19.2},
+ {x:163.8,y:134.5,kind:'hex',r:19.2},
+ {x:140,y:171.5,kind:'hex',r:19.2},
+ {x:140,y:237,kind:'putter',r:0}
+];
+function clubMark(id){
+ if(!id)return '';
+ if(/^\d/.test(id)&&id.slice(-1)==='i')return id.charAt(0);
+ return {driver:'Dr','3w':'3W','5w':'5W','3h':'3H','4h':'4H',pw:'PW',gw:'GW',sw:'SW',lw:'LW',putter:'P'}[id]||'';
+}
+function coverTopSVG(id,r){
+ r=r||16; const u='ct'+(++_covU);
+ if(!id||id==='none')return '';
+ if(id==='tiger') return '<circle r="'+r+'" fill="#f08a14" stroke="#5a2a08" stroke-width="1.1"/><circle r="'+(r*0.78)+'" fill="none" stroke="#1a1008" stroke-width="2"/><path d="M'+(-r*0.7)+' '+(-r*0.15)+' q '+(r*0.7)+' '+(r*0.7)+' '+(r*1.4)+' 0" fill="none" stroke="#1a1008" stroke-width="2.2" stroke-linecap="round"/><path d="M'+(-r*0.55)+' '+(r*0.35)+' q '+(r*0.55)+' '+(r*0.5)+' '+(r*1.1)+' 0" fill="none" stroke="#1a1008" stroke-width="2" stroke-linecap="round"/><ellipse cx="'+(-r*0.25)+'" cy="'+(-r*0.35)+'" rx="'+(r*0.35)+'" ry="'+(r*0.2)+'" fill="#ffd39a" opacity=".35"/>';
+ if(id==='pom') return '<circle r="'+r+'" fill="#3d6bd6" stroke="#1a326e" stroke-width="1.1"/><circle r="'+(r*0.72)+'" fill="none" stroke="#8eb4ff" stroke-width="1.2" opacity=".8"/><path d="M'+(-r*0.7)+' 0 h'+(r*1.4)+' M0 '+(-r*0.7)+' v'+(r*1.4)+'" stroke="#8eb4ff" stroke-width="1" opacity=".55"/><circle r="'+(r*0.42)+'" fill="#f4f0e8" stroke="#c9c2b4" stroke-width="1"/><circle cx="'+(-r*0.12)+'" cy="'+(-r*0.1)+'" r="'+(r*0.08)+'" fill="#d4cec4"/><circle cx="'+(r*0.12)+'" cy="'+(-r*0.08)+'" r="'+(r*0.07)+'" fill="#d4cec4"/>';
+ if(id==='fox') return '<circle r="'+r+'" fill="#e07a2a" stroke="#7a3408" stroke-width="1.1"/><path d="M'+(-r*0.72)+' '+(-r*0.15)+' L'+(-r*0.95)+' '+(-r*1.02)+' L'+(-r*0.2)+' '+(-r*0.55)+' Z" fill="#e07a2a" stroke="#7a3408" stroke-width="1"/><path d="M'+(r*0.72)+' '+(-r*0.15)+' L'+(r*0.95)+' '+(-r*1.02)+' L'+(r*0.2)+' '+(-r*0.55)+' Z" fill="#e07a2a" stroke="#7a3408" stroke-width="1"/><path d="M'+(-r*0.62)+' '+(-r*0.22)+' L'+(-r*0.78)+' '+(-r*0.82)+' L'+(-r*0.32)+' '+(-r*0.4)+' Z" fill="#f4d4a8"/><path d="M'+(r*0.62)+' '+(-r*0.22)+' L'+(r*0.78)+' '+(-r*0.82)+' L'+(r*0.32)+' '+(-r*0.4)+' Z" fill="#f4d4a8"/><ellipse cy="'+(r*0.22)+'" rx="'+(r*0.48)+'" ry="'+(r*0.38)+'" fill="#f4d4a8"/><circle cx="'+(-r*0.28)+'" cy="'+(-r*0.08)+'" r="'+(r*0.1)+'" fill="#22100a"/><circle cx="'+(r*0.28)+'" cy="'+(-r*0.08)+'" r="'+(r*0.1)+'" fill="#22100a"/><ellipse cy="'+(r*0.18)+'" rx="'+(r*0.1)+'" ry="'+(r*0.08)+'" fill="#22100a"/><path d="M'+(-r*0.22)+' '+(r*0.42)+' q '+(r*0.22)+' '+(r*0.2)+' '+(r*0.44)+' 0" fill="none" stroke="#22100a" stroke-width="1.1" stroke-linecap="round"/>';
+ if(id==='pup') return '<circle r="'+r+'" fill="#e8c48a" stroke="#8a5a28" stroke-width="1.1"/><ellipse cx="'+(-r*0.85)+'" cy="0" rx="'+(r*0.38)+'" ry="'+(r*0.55)+'" fill="#c99658" stroke="#8a5a28" stroke-width=".9"/><ellipse cx="'+(r*0.85)+'" cy="0" rx="'+(r*0.38)+'" ry="'+(r*0.55)+'" fill="#c99658" stroke="#8a5a28" stroke-width=".9"/><circle cx="'+(-r*0.28)+'" cy="'+(-r*0.06)+'" r="'+(r*0.1)+'" fill="#2a180c"/><circle cx="'+(r*0.28)+'" cy="'+(-r*0.06)+'" r="'+(r*0.1)+'" fill="#2a180c"/><ellipse cy="'+(r*0.16)+'" rx="'+(r*0.1)+'" ry="'+(r*0.08)+'" fill="#2a180c"/><path d="M'+(-r*0.22)+' '+(r*0.4)+' q '+(r*0.22)+' '+(r*0.22)+' '+(r*0.44)+' 0" fill="none" stroke="#2a180c" stroke-width="1.1" stroke-linecap="round"/>';
+ if(id==='team') return '<defs><linearGradient id="'+u+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f9e55"/><stop offset="1" stop-color="#146032"/></linearGradient></defs><circle r="'+r+'" fill="url(#'+u+')" stroke="#0d3a20" stroke-width="1.1"/><path d="M'+(-r)+' 0 h'+(r*2)+'" stroke="#ffd23f" stroke-width="'+(r*0.32)+'"/><path d="M'+(-r)+' 0 h'+(r*2)+'" stroke="#fff" stroke-width="'+(r*0.1)+'"/><circle r="'+(r*0.36)+'" fill="#ffd23f" stroke="#0d3a20" stroke-width=".8"/><text text-anchor="middle" dy="3.2" font-size="'+(r*0.32)+'" font-weight="900" fill="#146032" font-family="ui-rounded,system-ui">BQ</text>';
+ if(id==='flag') return '<circle r="'+r+'" fill="#f4f6fa" stroke="#9aa3b0" stroke-width="1.1"/><circle cx="'+(-r*0.35)+'" cy="'+(-r*0.25)+'" r="'+(r*0.2)+'" fill="#2f9e55"/><rect x="-1" y="'+(-r*0.55)+'" width="2" height="'+(r*0.95)+'" fill="#5a4630"/><path d="M1 '+(-r*0.52)+' l '+(r*0.7)+' '+(r*0.22)+' l '+(-r*0.7)+' '+(r*0.22)+' Z" fill="#ff4d5e"/>';
+ if(id==='blade') return '<rect x="'+(-r*1.35)+'" y="'+(-r*0.42)+'" width="'+(r*2.7)+'" height="'+(r*0.84)+'" rx="'+(r*0.2)+'" fill="#1e3a2a" stroke="#0d2418" stroke-width="1"/><rect x="'+(-r*1.35)+'" y="'+(-r*0.42)+'" width="'+(r*2.7)+'" height="'+(r*0.22)+'" rx="'+(r*0.1)+'" fill="#2f9e55"/><circle r="'+(r*0.16)+'" fill="#c5d0da"/>';
+ if(id==='mallet') return '<ellipse rx="'+(r*1.2)+'" ry="'+(r*0.88)+'" fill="#1e3a2a" stroke="#0d2418" stroke-width="1"/><ellipse rx="'+(r*0.62)+'" ry="'+(r*0.42)+'" fill="none" stroke="#2f9e55" stroke-width="1.4"/><circle r="'+(r*0.16)+'" fill="#c5d0da"/>';
+ return '';
+}
+function woodHeadTop(kind){
+ const rx=kind==='hybrid'?13.5:16, ry=kind==='hybrid'?11:13, col=kind==='hybrid'?'#3a1218':'#1c1c1c';
+ return '<ellipse rx="'+rx+'" ry="'+ry+'" fill="'+col+'" stroke="#000" stroke-width=".9" transform="rotate(-12)"/><ellipse cx="4" rx="'+(rx*0.42)+'" ry="'+(ry*0.72)+'" fill="#c9d4de" stroke="#8a96a2" stroke-width=".5" transform="rotate(-12)"/><path d="M-5 -5 q7 -4 13 2" fill="none" stroke="#ffd23f" stroke-width="1" stroke-linecap="round"/>';
+}
+function ironHeadTop(mark,wedge,rot){
+ const dark=wedge?'#8a93a0':'#c5d0da', face=wedge?'#d5dde4':'#e8eef3';
+ const t=rot?(' transform="rotate('+Number(rot).toFixed(1)+')"'):'';
+ return '<g'+t+'><ellipse cx="0" cy="9" rx="3.2" ry="2.8" fill="#b8c2cc" stroke="#6a7380" stroke-width=".5"/><path d="M-7.2 5.4 L-9.4 -7.2 Q0 -12.6 9.4 -7.2 L7.2 5.4 Q0 8.5 -7.2 5.4 Z" fill="'+dark+'" stroke="#6a7380" stroke-width=".7"/><path d="M-5.4 2.2 L-6.7 -4.5 Q0 -8.5 6.7 -4.5 L5.4 2.2 Q0 4.5 -5.4 2.2 Z" fill="'+face+'" opacity=".92"/></g><text text-anchor="middle" y="-.2" font-size="7.4" font-weight="900" fill="#3a4250" font-family="ui-rounded,system-ui">'+mark+'</text>';
+}
+function clubTopGraphic(slot){
+ const c=CLUBS[slot.id], cover=slot.cover;
+ const r=c.kind==='wood'?15.2:c.kind==='hybrid'?13.5:c.kind==='putter'?18:13;
+ if(cover&&cover!=='none'&&COVERS[cover]) return coverTopSVG(cover,r);
+ if(c.kind==='wood'||c.kind==='hybrid') return woodHeadTop(c.kind);
+ if(c.kind==='putter'){
+  if(slot.model==='mallet') return '<ellipse rx="24" ry="16" fill="#1a1a1a" stroke="#000" stroke-width=".8"/><ellipse rx="12" ry="7.5" fill="none" stroke="#2f9e55" stroke-width="1.4"/><rect x="-2.2" y="-4" width="4.4" height="10" rx="1" fill="#c5d0da"/>';
+  return '<rect x="-26" y="-8" width="52" height="15" rx="2.2" fill="#1a1a1a" stroke="#000" stroke-width=".7"/><rect x="-2" y="-9" width="4" height="8" fill="#c5d0da"/>';
  }
- return '<g class="bag-club'+(bagRaised===i?' on':'')+'" data-i="'+i+'" role="button" tabindex="0" aria-label="'+(slot?('Slot '+(i+1)+', '+clubName(slot.id)):'Empty slot '+(i+1))+'" transform="translate('+x+',124) rotate('+tilt.toFixed(1)+')"><g class="bag-club-motion">'+inner+'</g></g>';
+ return ironHeadTop(clubMark(slot.id),c.kind==='wedge'); /* rot applied by caller on head only */
 }
-
+function hexD(r,rot){
+ rot=rot==null?-Math.PI/2:rot;
+ const pts=[];
+ for(let i=0;i<6;i++){const a=rot+i*Math.PI/3;pts.push((r*Math.cos(a)).toFixed(2)+','+(r*Math.sin(a)).toFixed(2));}
+ return 'M'+pts.join('L')+'Z';
+}
+function keyholeD(r,notch){
+ const a=notch*Math.PI/180, nr=r*0.32, d=r+nr*0.55;
+ const nx=Math.cos(a)*d, ny=Math.sin(a)*d;
+ return '<circle r="'+r+'" fill="#0a0a0a"/><circle cx="'+nx.toFixed(2)+'" cy="'+ny.toFixed(2)+'" r="'+nr.toFixed(2)+'" fill="#0a0a0a"/>';
+}
+function bevelRound(r,notch){
+ const a=(notch==null?-90:notch)*Math.PI/180;
+ const lip=r+3.1, nr=r*0.32, nd=r+nr*0.55, nLip=nr+2.1;
+ const nx=Math.cos(a)*nd, ny=Math.sin(a)*nd;
+ return '<g class="slot-bevel">'
+  +'<circle r="'+lip+'" fill="#6a6c6e"/>'
+  +'<circle cx="'+nx.toFixed(2)+'" cy="'+ny.toFixed(2)+'" r="'+nLip.toFixed(2)+'" fill="#6a6c6e"/>'
+  +'<circle cx="0.7" cy="1.1" r="'+(lip-0.5)+'" fill="#2a2c2e"/>'
+  +'<circle cx="'+(nx+0.55).toFixed(2)+'" cy="'+(ny+0.85).toFixed(2)+'" r="'+(nLip-0.5).toFixed(2)+'" fill="#2a2c2e"/>'
+  +'<circle r="'+r+'" fill="#0a0a0a"/>'
+  +'<circle cx="'+nx.toFixed(2)+'" cy="'+ny.toFixed(2)+'" r="'+nr.toFixed(2)+'" fill="#0a0a0a"/>'
+  +'<circle r="'+r+'" fill="none" stroke="#1c1c1c" stroke-width="1"/>'
+  +'<path d="M '+(-r*0.62)+' '+(-r*0.62)+' a '+r+' '+r+' 0 0 1 '+(r*0.9)+' '+(-r*0.15)+'" fill="none" stroke="#8a8c8e" stroke-width="1.1" opacity=".35" stroke-linecap="round"/>'
+  +'</g>';
+}
+function bevelHex(r){
+ const lip=r+3.2;
+ return '<g class="slot-bevel">'
+  +'<path d="'+hexD(lip)+'" fill="#6a6c6e"/>'
+  +'<path d="'+hexD(lip-0.4)+'" fill="#2a2c2e" transform="translate(0.6,1)"/>'
+  +'<path d="'+hexD(r)+'" fill="#0a0a0a"/>'
+  +'<path d="'+hexD(r)+'" fill="none" stroke="#1c1c1c" stroke-width="1"/>'
+  +'<path d="'+hexD(r-0.8)+'" fill="none" stroke="#8a8c8e" stroke-width="0.8" opacity=".22"/>'
+  +'</g>';
+}
+function bevelPutter(){
+ return '<g class="slot-bevel">'
+  +'<path d="M-40,-36 Q0,-44 40,-36 L56,26 Q0,38 -56,26 Z" fill="#6a6c6e"/>'
+  +'<path d="M-38,-34 Q0,-41 38,-34 L54,25 Q0,36 -54,25 Z" fill="#2a2c2e" transform="translate(0.6,1.1)"/>'
+  +'<path d="M-36,-32 Q0,-38 36,-32 L52,24 Q0,34 -52,24 Z" fill="#0a0a0a"/>'
+  +'<path d="M-36,-32 Q0,-38 36,-32 L52,24 Q0,34 -52,24 Z" fill="none" stroke="#1c1c1c" stroke-width="1"/>'
+  +'</g>';
+}
+function bagOutline(){
+ return 'M140 30 C 176 30 208 40 222 62 C 242 90 254 122 255 158 C 255 198 248 232 230 258 C 214 276 182 282 140 282 C 98 282 66 276 50 258 C 32 232 25 198 25 158 C 26 122 38 90 58 62 C 72 40 104 30 140 30 Z';
+}
+function bagWellSVG(){
+ let holes='';
+ BAG_SLOTS.forEach((p,i)=>{
+  let body='';
+  if(p.kind==='round') body=bevelRound(p.r,p.notch);
+  else if(p.kind==='hex') body=bevelHex(p.r);
+  else body=bevelPutter();
+  holes+='<g transform="translate('+p.x+','+p.y+')">'+body+'</g>';
+ });
+ /* raised diamond honeycomb around the 4 hexes + plus junction */
+ const frame='<path d="M140 70 L 190 134.5 L 140 198 L 90 134.5 Z" fill="none" stroke="#3a3c3e" stroke-width="11" stroke-linejoin="round"/>'
+  +'<path d="M140 70 L 190 134.5 L 140 198 L 90 134.5 Z" fill="none" stroke="#6a6c6e" stroke-width="7.5" stroke-linejoin="round"/>'
+  +'<path d="M140 70 L 190 134.5 L 140 198 L 90 134.5 Z" fill="none" stroke="#8a8c8e" stroke-width="1.4" stroke-linejoin="round" opacity=".45"/>'
+  +'<path d="M140 114 L 140 155 M 118.5 134.5 L 161.5 134.5" fill="none" stroke="#3a3c3e" stroke-width="8" stroke-linecap="butt"/>'
+  +'<path d="M140 115 L 140 154 M 119.5 134.5 L 160.5 134.5" fill="none" stroke="#6e7072" stroke-width="5" stroke-linecap="butt"/>'
+  +'<path d="M140 116 L 140 153 M 120.5 134.5 L 159.5 134.5" fill="none" stroke="#8a8c8e" stroke-width="1.1" opacity=".35" stroke-linecap="butt"/>';
+ return '<defs>'
+  +'<linearGradient id="plasticG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6a6c6e"/><stop offset=".38" stop-color="#4e5052"/><stop offset="1" stop-color="#2f3133"/></linearGradient>'
+  +'<linearGradient id="plasticShine" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient>'
+  +'<linearGradient id="handleG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a6c6e"/><stop offset=".45" stop-color="#4a4c4e"/><stop offset="1" stop-color="#2c2e30"/></linearGradient>'
+  +'<pattern id="meshPat" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0 h8 M0 0 v8" stroke="#3a3a32" stroke-width="1"/><rect width="8" height="8" fill="none" stroke="#1a1a14" stroke-width=".4"/></pattern>'
+  +'<filter id="bagSoft" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="4"/></filter>'
+  +'</defs>'
+  +'<ellipse cx="140" cy="200" rx="118" ry="150" fill="#000" opacity=".22" filter="url(#bagSoft)"/>'
+  /* fabric body + distinct side pockets */
+  +'<path d="M70 46 C 108 16 172 16 210 46 L 236 150 C 248 200 236 268 200 304 L 80 304 C 44 268 32 200 44 150 Z" fill="#141414"/>'
+  +'<path d="M8 168 C 8 140 28 128 46 136 C 52 168 52 216 46 248 C 28 256 8 240 8 208 Z" fill="#1a1a1a" stroke="#0c0c0c" stroke-width="1"/>'
+  +'<path d="M272 168 C 272 140 252 128 234 136 C 228 168 228 216 234 248 C 252 256 272 240 272 208 Z" fill="#1a1a1a" stroke="#0c0c0c" stroke-width="1"/>'
+  /* mesh pocket under handle */
+  +'<path d="M78 275 L 202 275 L 210 338 C 180 348 100 348 70 338 Z" fill="#161616"/>'
+  +'<path d="M80 278 L 200 278 L 206 334 C 176 342 104 342 74 334 Z" fill="url(#meshPat)" opacity=".85"/>'
+  /* hang loop + D-ring */
+  +'<path d="M133 30 C 133 14 147 14 147 30" fill="none" stroke="#1a1a1a" stroke-width="5.2" stroke-linecap="round"/>'
+  +'<path d="M133 30 C 133 14 147 14 147 30" fill="none" stroke="#3a3a3a" stroke-width="2.2" stroke-linecap="round"/>'
+  +'<ellipse cx="140" cy="13" rx="7" ry="5" fill="#2a2a2a" stroke="#cfd3d6" stroke-width="1.8"/>'
+  +'<ellipse cx="140" cy="13" rx="4.2" ry="2.8" fill="#141414"/>'
+  /* molded top */
+  +'<path d="'+bagOutline()+'" fill="url(#plasticG)" stroke="#1c1c1e" stroke-width="1.4"/>'
+  +'<path d="'+bagOutline()+'" fill="url(#plasticShine)"/>'
+  +'<path d="'+bagOutline()+'" fill="none" stroke="#7a7c7e" stroke-width="1.1" opacity=".35"/>'
+  +frame
+  +holes
+  /* handle */
+  +'<path d="M96 276 C 96 276 96 322 140 326 C 184 322 184 276 184 276" fill="none" stroke="#1a1a1a" stroke-width="20" stroke-linecap="round"/>'
+  +'<path d="M96 276 C 96 276 96 322 140 326 C 184 322 184 276 184 276" fill="none" stroke="url(#handleG)" stroke-width="16" stroke-linecap="round"/>'
+  +'<path d="M100 276 C 100 276 100 316 140 320 C 180 316 180 276 180 276" fill="none" stroke="#8a8c8e" stroke-width="2.2" stroke-linecap="round" opacity=".45"/>';
+}
+function bagBodySVG(){return bagWellSVG();}
+function bagRimSVG(){return '';}
+function oneClubSVG(slot,i){
+ const p=slotPos(i);
+ const hitR=p.kind==='putter'?40:(p.r+6);
+ const hit=p.kind==='putter'
+  ?'<path class="club-hit" d="M-36,-32 Q0,-38 36,-32 L52,24 Q0,34 -52,24 Z" fill="transparent"/>'
+  :'<circle class="club-hit" r="'+hitR+'" fill="transparent"/>';
+ let inner=hit;
+ if(slot){
+  const c=CLUBS[slot.id];
+  const ang=p.kind==='putter'?0:Math.atan2(p.y-150,p.x-140)*180/Math.PI+90;
+  if((c.kind==='iron'||c.kind==='wedge') && !(slot.cover&&slot.cover!=='none')){
+   inner+='<g class="club-top">'+ironHeadTop(clubMark(slot.id),c.kind==='wedge',ang)+'</g>';
+  } else {
+   inner+='<g class="club-top">'+clubTopGraphic(slot)+'</g>';
+  }
+ }
+ return '<g class="bag-club'+(bagRaised===i?' on':'')+'" data-i="'+i+'" role="button" tabindex="0" aria-label="'+(slot?('Slot '+(i+1)+', '+clubName(slot.id)):'Empty slot '+(i+1))+'" transform="translate('+p.x+','+p.y+')"><g class="bag-club-motion">'+inner+'</g></g>';
+}
+function miniBagIcon(){
+ return '<ellipse cx="16" cy="15" rx="11" ry="13" fill="#4a4c4e" stroke="#1a1a1a" stroke-width="1.2"/><circle cx="16" cy="8.5" r="2" fill="#111"/><circle cx="10.5" cy="14" r="1.8" fill="#111"/><circle cx="21.5" cy="14" r="1.8" fill="#111"/><path d="M16 11.5 l3.2 3.6 -3.2 3.6 -3.2-3.6 Z" fill="#111"/><rect x="11" y="22" width="10" height="3.2" rx="1.2" fill="#4a4c4e"/>';
+}
 
 function renderBag(){
  const stage=$('#bagView'), art=$('#bagArt'), list=$('#bagSlots'), cnt=$('#bagCount');
  if(!art||!list)return;
  const raisedLayer=[], rest=[];
  BAG.slots.forEach((s,i)=>{const g=oneClubSVG(s,i);if(bagRaised===i)raisedLayer.push(g);else rest.push(g)});
- art.innerHTML=rest.join('')+bagBodySVG()+(raisedLayer.join('')||'');
- if(cnt) cnt.innerHTML='<b>'+filledCount()+' / 14 clubs</b><span>14-club rule · tap a club to pull it out</span>';
+ art.innerHTML=bagWellSVG()+rest.join('')+(raisedLayer.join('')||'');
+ if(cnt) cnt.innerHTML='<b>'+filledCount()+' / 14 clubs</b><span>14-club rule · look down · tap a club to lift it out</span>';
  list.innerHTML=BAG.slots.map((s,i)=>{
   const st=s?slotStats(s):null, c=s?CLUBS[s.id]:null;
   const cov=s?coverSVG(s.cover||'none',36,32):'';
@@ -2526,9 +2657,6 @@ function renderBag(){
  const pb=$('#bagPutBack'); if(pb) pb.style.display=bagRaised!=null?'block':'none';
  const btn=$('#openBagBtn');
  if(btn){const n=filledCount();btn.innerHTML='<span class="bag-mini"><svg viewBox="0 0 32 32" width="28" height="28">'+miniBagIcon()+'</svg></span> My Bag · '+n+' / 14 clubs';}
-}
-function miniBagIcon(){
- return '<path d="M10 8h12l3 20H7z" fill="#1f7a42" stroke="#0a2a18" stroke-width="1.4"/><ellipse cx="16" cy="8" rx="6" ry="2.4" fill="#07180f"/><path d="M12 2v7M16 1v8M20 2v7" stroke="#c5d0da" stroke-width="1.4"/>';
 }
 
 function raiseClub(i){

@@ -658,22 +658,28 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .slot-row.on{border-color:var(--gold);background:rgba(255,210,63,.18)}
 .slot-empty-btn{margin-left:auto;flex:none;font-size:11px;padding:4px 8px}
 
-.bag-data{position:absolute;left:0;right:0;top:0;bottom:var(--navH);z-index:8;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(180deg,rgba(2,18,10,.08) 0%,rgba(2,18,10,.2) 28%,rgba(2,18,10,.55) 100%);opacity:0;pointer-events:none;transition:opacity .28s}
+.bag-data{position:absolute;left:0;right:0;top:0;bottom:var(--navH);z-index:8;display:flex;flex-direction:column;background:#061c0e;opacity:0;pointer-events:none;transition:opacity .28s}
 .bag-data.show{opacity:1;pointer-events:auto}
-.bag-panel{margin:0 12px 10px;padding:12px 14px 14px;border-radius:22px;border:1px solid var(--glass-hi);background:rgba(8,36,20,.86);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:0 18px 40px rgba(0,0,0,.4),var(--glass-shadow);transform:translateY(24px);transition:transform .34s cubic-bezier(.2,1.1,.3,1);max-height:calc(100% - 88px);min-height:0;overflow:auto}
+.bag-hero{flex:1 1 50%;height:50%;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 78%,#1f6a3a,#072010 68%);overflow:hidden}
+.bag-hero-art{display:block;width:auto;height:88%;max-width:94%;overflow:visible;filter:drop-shadow(0 18px 16px rgba(0,0,0,.45))}
+.bag-hero-back{position:absolute;top:8px;left:12px;z-index:2}
+.bag-hero-name{position:absolute;top:14px;left:64px;right:16px;z-index:2;font-weight:900;font-size:18px;letter-spacing:-.3px;text-shadow:0 2px 0 rgba(0,0,0,.25);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+@keyframes bagHeroRise{from{transform:translateY(40px) scale(.78);opacity:0}to{transform:none;opacity:1}}
+.bag-data.show .bag-hero-art .hero-motion{transform-origin:50% 100%;animation:bagHeroRise .55s cubic-bezier(.2,1.15,.3,1) both}
+.bag-panel{flex:1 1 50%;height:50%;min-height:0;margin:0;padding:12px 14px 0;border-radius:24px 24px 0 0;border:1px solid var(--glass-hi);border-bottom:0;background:rgba(8,36,20,.9);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:0 -10px 40px rgba(0,0,0,.35),var(--glass-shadow);transform:translateY(28px);transition:transform .34s cubic-bezier(.2,1.1,.3,1);overflow:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .bag-data.show .bag-panel{transform:none}
-.bag-panel h2{margin:0 0 1px;font-size:18px}
+.bag-panel h2{margin:0 0 1px;font-size:18px;line-height:1.15}
 .bag-panel .sub{font-size:11px;color:var(--muted);font-weight:700;margin-bottom:8px}
-.stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:0 0 8px}
-.stat{border-radius:14px;padding:8px 6px;text-align:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1)}
+.stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:0 0 6px}
+.stat{border-radius:14px;padding:7px 6px;text-align:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1)}
 .stat b{display:block;font-size:17px;font-weight:900;color:var(--gold)}
 .stat small{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.3px;text-transform:uppercase}
-.yd-edit{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+.yd-edit{display:flex;align-items:center;gap:8px;margin:0 0 6px}
 .yd-edit label{font-size:12px;font-weight:800;color:var(--muted)}
 .yd-edit input{flex:1;min-width:0;border:1px solid var(--glass-hi);background:rgba(255,255,255,.1);color:#fff;font-weight:900;font-size:16px;border-radius:12px;padding:8px 10px;width:80px}
 .spark-wrap{margin:0 0 6px}
 .spark-wrap .cap{font-size:11px;font-weight:800;color:var(--muted);margin-bottom:4px}
-#clubSpark{width:100%;height:34px;display:block}
+#clubSpark{width:100%;height:30px;display:block}
 .cover-row,.model-row{display:flex;gap:8px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
 .model-row{padding-bottom:8px}
 .cover-sw,.model-sw{flex:none;border-radius:14px;border:1px solid var(--glass-hi);background:rgba(255,255,255,.08);padding:6px;color:#fff;font-weight:800;font-size:11px}
@@ -681,7 +687,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .cover-sw svg{display:block;width:40px;height:32px;margin:0 auto 1px}
 .cover-sw.on,.model-sw.on{border-color:var(--gold);background:rgba(255,210,63,.2)}
 .model-sw{padding:8px 12px}
-.bag-actions{display:flex;gap:8px;margin-top:8px;position:sticky;bottom:0;padding:8px 0 2px;background:linear-gradient(180deg,rgba(8,36,20,0),rgba(8,36,20,.96) 36%,rgba(8,36,20,.98));z-index:3}
+.bag-actions{display:flex;gap:8px;margin-top:10px;position:sticky;bottom:0;padding:10px 0 8px;background:rgba(8,36,20,.96);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);z-index:3}
 .bag-actions .btn{flex:1}
 .sec-lab{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin:2px 0 6px}
 
@@ -823,7 +829,12 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
       <div class="bag-count" id="bagCount"></div>
       <div class="slot-list" id="bagSlots"></div>
     </div>
-    <div class="bag-data" id="bagData">
+    <div class="bag-data" id="bagData" aria-hidden="true">
+      <div class="bag-hero" id="bagHero">
+        <button class="iconbtn bag-hero-back" id="bagHeroBack" aria-label="Back to bag"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="bag-hero-name" id="bagHeroName"></div>
+        <svg class="bag-hero-art" id="bagHeroArt" viewBox="0 0 220 280" role="img" aria-label="Selected club"></svg>
+      </div>
       <div class="bag-panel" id="bagPanel"></div>
     </div>
   </section>
@@ -2696,15 +2707,17 @@ function cover3DSVG(id,len,uid){
  return '<g class="cover-3d">'+art+'</g>';
 }
 
-function clubGraphic(slot,i){
+function clubGraphic(slot,i,opts){
+ opts=opts||{};
  const p=BAG_SLOTS[i], c=CLUBS[slot.id];
- const uid=String(i)+(slot.id||'');
- if(slot.cover&&slot.cover!=='none'&&COVERS[slot.cover]) return cover3DSVG(slot.cover,p.len||50,uid);
+ const uid=opts.uid||(String(i)+(slot.id||''));
+ const pose=opts.pose||p.pose||'toe';
+ const clen=opts.len||p.len||50;
+ if(slot.cover&&slot.cover!=='none'&&COVERS[slot.cover]) return cover3DSVG(slot.cover,clen,uid);
  if(c.kind==='wood') return woodHeadSVG(slot.id==='driver'?'driver':slot.id==='3w'?'3w':'5w',uid,slot.model);
- if(c.kind==='hybrid') return ironHeadSVG(ironNum(slot.id)||'4', false, p.pose||'sole', uid);
-
+ if(c.kind==='hybrid') return ironHeadSVG(ironNum(slot.id)||'4', false, pose||'sole', uid);
  if(c.kind==='putter') return putterHeadSVG(slot.model,uid);
- return ironHeadSVG(ironNum(slot.id)||clubMark(slot.id), c.kind==='wedge', p.pose||'toe', uid);
+ return ironHeadSVG(ironNum(slot.id)||clubMark(slot.id), c.kind==='wedge', pose, uid);
 }
 function ironNumOverlay(n){
  if(!n)return '';
@@ -2867,12 +2880,12 @@ function renderBag(){
 function raiseClub(i){
  const s=BAG.slots[i];
  if(!s){openAssign(i);return}
- if(bagRaised===i){openBagData();return}
- bagRaised=i;bagDataOpen=false;closeBagData(true);
+ if(bagRaised===i&&bagDataOpen)return;
+ bagRaised=i;
  renderBag();
- const st=$('#bagView'), sc=$('#bagScroll');
- if(sc&&st) sc.scrollTo({top:0,behavior:'smooth'});
- if(typeof sfx==='function') sfx('rise');
+ const sc=$('#bagScroll');
+ if(sc) sc.scrollTo({top:0,behavior:'smooth'});
+ openBagData._sfx='rise';openBagData();
 }
 function lowerClub(){
  bagRaised=null;closeBagData();
@@ -2881,7 +2894,7 @@ function lowerClub(){
 }
 function closeBagData(quiet){
  const p=$('#bagData');if(!p)return;
- p.classList.remove('show');bagDataOpen=false;
+ p.classList.remove('show');p.setAttribute('aria-hidden','true');bagDataOpen=false;
  if(!quiet) {}
 }
 function openBagData(){
@@ -2899,14 +2912,36 @@ function openBagData(){
   +'<div class="spark-wrap"><div class="cap">Recent shots (demo history)</div>'+sparkSVG(s.shots,st.long)+'</div>'
   +'<div class="sec-lab">Head cover</div><div class="cover-row">'+covers.map(k=>'<button class="cover-sw'+(s.cover===k?' on':'')+'" data-cover="'+k+'">'+coverSVG(k,48,40)+esc(COVERS[k].n)+'</button>').join('')+'</div>'
   +'<div class="sec-lab">Club model</div><div class="model-row">'+c.models.map(m=>'<button class="model-sw'+(s.model===m.id?' on':'')+'" data-model="'+m.id+'">'+esc(m.n)+'</button>').join('')+'</div>'
-  +'<div class="bag-actions"><button class="btn" id="switchClub">Switch club</button><button class="btn ghost" id="closeClubData">Put it back</button></div>';
- p.classList.add('show');bagDataOpen=true;
- if(typeof sfx==='function') sfx('pop');
+  +'<div class="bag-actions"><button class="btn" id="switchClub">Switch club</button><button class="btn ghost" id="closeClubData">Back to bag</button></div>';
+ renderClubHero(s,bagRaised);
+ const hn=$('#bagHeroName');if(hn) hn.textContent=c.n;
+ p.classList.add('show');p.setAttribute('aria-hidden','false');bagDataOpen=true;
+ if(typeof sfx==='function') sfx(openBagData._sfx||'pop');
+ openBagData._sfx=null;
  const inp=$('#clubTarget');
  inp.onchange=inp.onblur=()=>{
   const v=Math.max(0,Math.min(400,+inp.value||0));
   BAG.slots[bagRaised].target=v;saveBag();renderBag();openBagData();
  };
+}
+function renderClubHero(slot,i){
+ const art=$('#bagHeroArt');if(!art)return;
+ const c=CLUBS[slot.id], p=BAG_SLOTS[i];
+ const uid='h'+i+(slot.id||'');
+ const isP=c.kind==='putter', isW=c.kind==='wood';
+ const len=isP?36:(isW?158:148);
+ const lean=isP?-16:8;
+ const thick=isW?3.8:isP?2.6:2.9;
+ const cx=110, cy=isP?200:258;
+ const head=clubGraphic(slot,i,{uid:uid,pose:p.pose,len:Math.max(len*0.7,70)});
+ const shadow='<ellipse cx="'+cx+'" cy="'+(cy+6)+'" rx="'+(isP?48:22)+'" ry="8" fill="#000" opacity=".32"/>';
+ const body='<g class="hero-motion">'+shadow
+  +'<g transform="translate('+cx+','+cy+') rotate('+lean+')">'
+  +(isP&&!(slot.cover&&slot.cover!=='none')?'':shaftSVG(len,thick)+ferruleSVG(-len+5, thick+0.7))
+  +'<g transform="translate(0,'+(-len)+') scale('+(isW?1.15:isP?1.25:1.2)+')">'+head+'</g>'
+  +'</g></g>';
+ art.setAttribute('aria-label',clubName(slot.id)+', viewed up close');
+ art.innerHTML=body;
 }
 function sparkSVG(shots,long){
  const w=300,h=46,arr=shots&&shots.length?shots.slice():[0];
@@ -2989,8 +3024,7 @@ function bagEnter(){renderBag()}
 
 function bagIntercept(e){
  if(typeof cur!=='undefined'&&cur!=='bag')return;
- if(bagDataOpen){e.stopPropagation();e.preventDefault();closeBagData();return true}
- if(bagRaised!=null){e.stopPropagation();e.preventDefault();lowerClub();return true}
+ if(bagDataOpen||bagRaised!=null){e.stopPropagation();e.preventDefault();lowerClub();return true}
  return false;
 }
 
@@ -3018,12 +3052,13 @@ function bindBag(){
  const pb=$('#bagPutBack');if(pb)pb.onclick=lowerClub;
  const data=$('#bagData');
  if(data) data.addEventListener('click',e=>{
-  if(e.target.id==='bagData'){closeBagData();return}
-  if(e.target.closest('#closeClubData')){lowerClub();return}
+  if(e.target.id==='bagData'){lowerClub();return}
+  if(e.target.closest('#closeClubData,#bagHeroBack')){lowerClub();return}
   if(e.target.closest('#switchClub')){if(bagRaised!=null)openAssign(bagRaised,true);return}
   const cov=e.target.closest('[data-cover]');if(cov&&bagRaised!=null){setCover(bagRaised,cov.dataset.cover);return}
   const md=e.target.closest('[data-model]');if(md&&bagRaised!=null){setModel(bagRaised,md.dataset.model);return}
  });
+ const hb=$('#bagHeroBack');if(hb) hb.onclick=e=>{e.preventDefault();e.stopPropagation();lowerClub()};
  const bb=$('#bagBack');
  if(bb) bb.addEventListener('click',e=>{if(bagIntercept(e))return},{capture:true});
  document.addEventListener('keydown',e=>{

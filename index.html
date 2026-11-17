@@ -107,6 +107,17 @@ button{font-family:inherit;color:inherit;border:0;background:none;cursor:pointer
 .streak-pill small{display:block;font-size:11px;color:var(--muted);font-weight:800}
 .level-pill{position:absolute;top:14px;left:16px;background:rgba(0,0,0,.25);border-radius:16px;padding:8px 12px;font-weight:900;font-size:14px;line-height:1.1}
 .level-pill small{display:block;font-size:11px;color:var(--muted);font-weight:800}
+
+.home-tiles{flex:none;display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:8px 16px 4px}
+.home-tile{display:flex;align-items:center;gap:10px;min-height:86px;padding:12px 14px;border-radius:22px;text-align:left;color:#fff;font-weight:900;background:rgba(255,255,255,.14);border:1px solid var(--glass-hi);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:var(--glass-shadow),var(--glass-hi);position:relative}
+.home-tile:active{transform:translateY(3px)}
+.home-tile .ico{width:52px;height:52px;border-radius:16px;flex:none;display:grid;place-items:center;background:rgba(255,255,255,.18);overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.home-tile .ico svg.shop-ico{width:30px;height:30px}
+.home-tile .ico.av{border-radius:50%;border:2px solid rgba(255,255,255,.55);background:linear-gradient(160deg,var(--skyL),var(--sky));box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.home-tile .ico.av svg{width:100%;height:auto;transform:translateY(1px) scale(1.95);transform-origin:50% 24%}
+.home-tile .txt{flex:1;min-width:0}
+.home-tile .t{display:block;font-size:18px;letter-spacing:-.2px;text-shadow:0 2px 0 rgba(0,0,0,.15)}
+.home-tile .s{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-top:1px}
 .home-btns{flex:none;display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:6px 16px 18px}
 .home-btns .btn{flex-direction:column;gap:2px;padding:14px 10px;min-height:76px}
 .home-btns .btn.wide{grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:14px;padding:14px 18px}
@@ -790,6 +801,10 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
  .home-btns{gap:10px}
  .home-btns .btn{min-height:62px;padding:10px 10px}
  .home-btns .btn.wide{padding:10px 16px}
+ .home-tiles{gap:10px;padding:4px 16px 2px}
+ .home-tile{min-height:68px;padding:8px 12px}
+ .home-tile .ico{width:44px;height:44px}
+ .home-tile .t{font-size:16px}
 }
 .home-btns>.btn:first-child{order:-2}.home-btns .btn.slim{order:-1}
 
@@ -967,6 +982,16 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <div class="globe-hint">👆 drag to spin the world</div>
       </div>
     </div>
+    <div class="home-tiles">
+      <button class="home-tile" id="homeShop" type="button" onclick="go('shop','push')">
+        <span class="ico" aria-hidden="true"><svg class="shop-ico" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/><circle cx="17.5" cy="6.2" r="3.1" fill="#ffd23f" stroke="#e8a800" stroke-width="1.4"/><path d="M17.5 5.1v2.3" stroke="#7a5a00" stroke-width="1.3"/></svg></span>
+        <span class="txt"><span class="t">Shop</span><span class="s">Coins &amp; gear</span></span>
+      </button>
+      <button class="home-tile" id="homeAvatar" type="button" onclick="go('avatar','push')">
+        <span class="ico av" data-avatar="head"></span>
+        <span class="txt"><span class="t">Avatar</span><span class="s">Looks &amp; bag</span></span>
+      </button>
+    </div>
     <div class="home-btns">
       <button class="btn wide" onclick="go('minigames','push')"><span class="em">🎯</span><span class="txt"><span class="t">Mini-Games</span><span class="s">Closest to the Pin, Longest Drive & more</span></span><span class="go">›</span></button>
       <button class="btn gold half" onclick="go('quests','push')"><span class="em">🗺️</span><span class="txt"><span class="t">Side Quests</span><span class="s">3 active</span></span></button>
@@ -1018,7 +1043,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
   <!-- SHOP -->
   <section class="screen" id="s-shop">
-    <div class="hdr"><h1>Shop</h1><span class="chip pts"><i class="ball"></i><span class="ptsval">2,450</span></span><button class="pfp" data-avatar="head" onclick="go('profile','push')"></button></div>
+    <div class="hdr"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h1>Shop</h1><span class="chip pts"><i class="ball"></i><span class="ptsval">2,450</span></span></div>
     <div class="scroll" id="shopScroll">
       <div class="seg" id="shopSeg"><button class="on" data-v="items">🧢 Items</button><button data-v="bundles">💰 Point Bundles</button></div>
       <div id="shopItems">
@@ -1037,7 +1062,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
   <!-- AVATAR -->
   <section class="screen" id="s-avatar">
-    <div class="hdr"><h1>My Avatar</h1><button class="btn gold small" id="randBtn">🎲 Randomize</button></div>
+    <div class="hdr"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h1>My Avatar</h1><button class="btn gold small" id="randBtn">🎲 Randomize</button></div>
     <div class="scroll">
       <div class="stage" id="stage">
         <div class="plat"></div>
@@ -1220,9 +1245,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
   <nav class="nav" id="nav">
     <button data-tab="rounds"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V3"/><path d="M6 4h11l-2.5 4L17 12H6"/></svg></span>Rounds</button>
-    <button data-tab="shop"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg></span>Shop</button>
     <button data-tab="home" class="home on"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span>Home</button>
-    <button data-tab="avatar"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span>Avatar</button>
     <button data-tab="social" id="navSocial"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></svg></span>Social<span class="nav-badge" id="navSocialBadge"></span></button>
   </nav>
 
@@ -1786,11 +1809,12 @@ function renderAvatars(){
 }
 
 /* ================= NAV / UI ================= */
-const ROOTS=['home','rounds','shop','avatar','social'];
+const ROOTS=['home','rounds','social'];
 let stack=['home'], cur='home';
 function go(id,mode){
  if(id===cur)return;
  mode=mode||'tab';
+ if((id==='shop'||id==='avatar')&&mode==='tab') mode='push';
  const from=$('#s-'+cur), to=$('#s-'+id);
  if(mode==='tab'){stack=[id]} else if(mode==='push'){stack.push(id)}
  const enter={push:'translateX(100%)',back:'translateX(-30%)',tab:'scale(.96)'}[mode];
@@ -3816,7 +3840,7 @@ function classify(el){
  if(el.matches('#buyBtn,#eqBtn,#saveCur,#savePresetBtn,#presetGrid [data-i],.gear,.av-pick,#doAddFriend,#startPlayBtn,#startRoundBtn,.inv,#openBagBtn'))return['chime'];
  if(el.matches('.slot-row,.cover-sw,.model-sw,#bagPutBack'))return['swoosh'];
  if(el.matches('.tog,.sw,.iconbtn,.pfp,.pcm,.so-tab,.so-act,.so-plus-opt,.so-photo,.so-bell,.so-chat,.act-rail-btn,.so-nitem,.sc-row,.ask,.post-del,.clip-del,.lite-close,#uploadShortBtn,#mediaPrevRm,#mediaPrevRep,.msg-row,.msg-plus,.msg-send,.msg-info,.fl-star,.nm-pick,.inv-accept,.inv-decline'))return['tick'];
- if(el.matches('.btn,.mg-item .play,.item,.bundle,.quest,.pin,.drop,.rrow'))return['pop'];
+ if(el.matches('.btn,.home-tile,.mg-item .play,.item,.bundle,.quest,.pin,.drop,.rrow'))return['pop'];
  return['tick'];
 }
 document.addEventListener('click',e=>{

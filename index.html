@@ -536,6 +536,28 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .so-compose{min-height:110px;resize:none;line-height:1.4}
 .so-photo{width:100%;border-radius:18px;padding:16px 14px;margin:0 0 12px;background:rgba(255,255,255,.12);border:2px dashed rgba(255,255,255,.4);color:#fff;font-weight:800;font-size:14px}
 .so-photo.on{border-style:solid;min-height:88px;font-size:42px;background:linear-gradient(135deg,#7fd6ff,#4cc95e)}
+.so-file{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
+.so-prev{position:relative;border-radius:18px;overflow:hidden;margin:0 0 12px;background:#04160c;border:1px solid var(--glass-hi);min-height:120px}
+.so-prev img,.so-prev video{display:block;width:100%;max-height:220px;object-fit:contain;background:#000}
+.so-prev-acts{position:absolute;top:8px;right:8px;display:flex;gap:6px}
+.so-prev-acts button{padding:7px 10px;border-radius:12px;font-size:12px;font-weight:900;background:rgba(0,0,0,.55);color:#fff;-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur)}
+.so-or{text-align:center;font-weight:900;color:var(--muted);margin:12px 0 10px;font-size:13px;letter-spacing:.4px;text-transform:uppercase}
+.post .pimg-real,.post .pvid{height:auto;min-height:160px;padding:0;background:#04160c;overflow:hidden;cursor:pointer;position:relative}
+.post .pimg-real img{display:block;width:100%;max-height:260px;object-fit:cover}
+.post .pvid video{display:block;width:100%;max-height:260px;object-fit:cover;background:#000}
+.post .pvid .playmark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.45);display:grid;place-items:center;font-size:22px;pointer-events:none}
+.post-del,.clip-del{flex:none;margin-left:auto;padding:6px 10px;border-radius:12px;font-size:12px;font-weight:900;background:rgba(255,77,94,.22);color:#fff}
+.post .ph{position:relative}
+.clip-vid video.fl-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#04160c}
+.clip-vid .mute-hint{position:absolute;top:44px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:900;background:rgba(0,0,0,.35);padding:4px 9px;border-radius:9px;z-index:2}
+.clip-vid .swipe{right:auto;left:50%;transform:translateX(-50%)}
+.clip-del{position:absolute;top:12px;right:12px;z-index:3;margin:0}
+
+.clip-del{position:absolute;top:12px;right:12px;z-index:3}
+.media-lite{display:none;position:absolute;inset:0;z-index:96;background:rgba(0,0,0,.86);align-items:center;justify-content:center;flex-direction:column}
+.media-lite.show{display:flex}
+.media-lite img,.media-lite video{max-width:94%;max-height:80%;object-fit:contain;border-radius:16px}
+.media-lite .lite-close{margin-top:14px;padding:10px 16px;border-radius:14px;font-weight:900;background:rgba(255,255,255,.16);color:#fff}
 @media (max-height:700px){
   .so-landing{padding:8px 10px;margin-bottom:8px;gap:8px}
   .so-landing .uav{width:44px;height:44px}
@@ -1083,6 +1105,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
   <div class="toast" id="toast"></div>
   <div class="sheetwrap" id="sheetWrap"><div class="sheet" id="sheet"></div></div>
+  <div class="media-lite" id="mediaLite" role="dialog" aria-label="Media preview"><img id="liteImg" alt=""><video id="liteVid" controls playsinline></video><button class="lite-close" id="liteClose" type="button">Close</button></div>
 </div>
 <script>
 (function(){
@@ -1668,7 +1691,7 @@ function back(){ if(stack.length>1){stack.pop();go(stack[stack.length-1],'back')
 window.go=go;
 $$('.nav button').forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.tab===cur&&stack.length===1)return; go(b.dataset.tab,'tab')}));
 $$('.back').forEach(b=>b.addEventListener('click',back));
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){ if($('#sheetWrap').classList.contains('show'))closeSheet(); else if($('#soPlusWrap')&&$('#soPlusWrap').classList.contains('show'))closePlusMenu(); else back(); }});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){ if($('#mediaLite')&&$('#mediaLite').classList.contains('show'))closeMediaLite(); else if($('#sheetWrap').classList.contains('show'))closeSheet(); else if($('#soPlusWrap')&&$('#soPlusWrap').classList.contains('show'))closePlusMenu(); else back(); }});
 
 let toastT;
 function toast(msg){const t=$('#toast');t.innerHTML=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200)}
@@ -2095,8 +2118,134 @@ const CLIPS=[
  {u:'EagleOtter',c:'Longest Drive challenge: 212 yds 🚀',l:201,g:'linear-gradient(180deg,#5b5bd6 0%,#a8b8ff 55%,#4cc95e 55%,#2a7f38 100%)',arc:'M30 310 Q 200 -40 360 250'},
  {u:'BirdieBear',c:'Chip-in for birdie!! 🐻🐦',l:97,g:'linear-gradient(180deg,#ff8fb8 0%,#ffd1e3 55%,#7bd66a 55%,#3c9a4a 100%)',arc:'M70 300 Q 160 150 290 270'}
 ];
+const MEDIA_DB_NAME='bq_media', MEDIA_STORE='files', CLIP_KEY='bq_clips';
+const MEDIA_MAX_PX=1080, MEDIA_MAX_VIDEO_BYTES=25*1024*1024, MEDIA_MAX_VIDEO_SEC=60;
+let USER_CLIPS=[];
+let _mediaDb=null;
+function openMediaDB(){
+ return new Promise((res,rej)=>{
+  if(_mediaDb){res(_mediaDb);return;}
+  if(!window.indexedDB){rej(new Error('no idb'));return;}
+  const req=indexedDB.open(MEDIA_DB_NAME,1);
+  req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(MEDIA_STORE)) req.result.createObjectStore(MEDIA_STORE)};
+  req.onsuccess=()=>{_mediaDb=req.result;res(_mediaDb)};
+  req.onerror=()=>rej(req.error);
+ });
+}
+function saveMedia(id,blob){
+ return openMediaDB().then(db=>new Promise((res,rej)=>{
+  const tx=db.transaction(MEDIA_STORE,'readwrite');
+  tx.objectStore(MEDIA_STORE).put(blob,id);
+  tx.oncomplete=()=>res(id);
+  tx.onerror=()=>rej(tx.error);
+ }));
+}
+function getMedia(id){
+ return openMediaDB().then(db=>new Promise((res,rej)=>{
+  const tx=db.transaction(MEDIA_STORE,'readonly');
+  const q=tx.objectStore(MEDIA_STORE).get(id);
+  q.onsuccess=()=>res(q.result||null);
+  q.onerror=()=>rej(q.error);
+ }));
+}
+function deleteMedia(id){
+ return openMediaDB().then(db=>new Promise((res,rej)=>{
+  const tx=db.transaction(MEDIA_STORE,'readwrite');
+  tx.objectStore(MEDIA_STORE).delete(id);
+  tx.oncomplete=()=>res();
+  tx.onerror=()=>rej(tx.error);
+ })).catch(()=>{});
+}
+function mediaStillUsed(id){
+ if(!id)return false;
+ if(USER_CLIPS.some(c=>c.mediaId===id))return true;
+ if(typeof POSTS!=='undefined'&&POSTS.some(p=>p.mediaId===id))return true;
+ return false;
+}
+function maybeDeleteMedia(id){ if(id&&!mediaStillUsed(id)) deleteMedia(id); }
+function newMediaId(){return 'm-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7)}
+function resizeImageFile(file){
+ return new Promise((res,rej)=>{
+  const img=new Image();
+  const url=URL.createObjectURL(file);
+  img.onload=()=>{
+   let w=img.naturalWidth||img.width,h=img.naturalHeight||img.height;
+   if(!w||!h){URL.revokeObjectURL(url);rej(new Error('bad image'));return;}
+   if(w>MEDIA_MAX_PX||h>MEDIA_MAX_PX){const sc=MEDIA_MAX_PX/Math.max(w,h);w=Math.round(w*sc);h=Math.round(h*sc)}
+   const c=document.createElement('canvas');
+   c.width=w;c.height=h;
+   const ctx=c.getContext('2d');
+   ctx.fillStyle='#000';ctx.fillRect(0,0,w,h);
+   ctx.drawImage(img,0,0,w,h);
+   URL.revokeObjectURL(url);
+   c.toBlob(b=>{ if(!b){rej(new Error('resize failed'));return;} res(b); },'image/jpeg',0.85);
+  };
+  img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('format'))};
+  img.src=url;
+ });
+}
+function readVideoMeta(file){
+ return new Promise((res,rej)=>{
+  const v=document.createElement('video');
+  v.preload='metadata';
+  const url=URL.createObjectURL(file);
+  const done=()=>{try{URL.revokeObjectURL(url)}catch(e){}};
+  v.onloadedmetadata=()=>{const d=v.duration,w=v.videoWidth,h=v.videoHeight;done();res({duration:d,w:w,h:h})};
+  v.onerror=()=>{done();rej(new Error('bad video'))};
+  setTimeout(()=>{if(!isFinite(v.duration)){done();rej(new Error('timeout'))}},8000);
+  v.src=url;
+ });
+}
+function isImageFile(f){return f&&(/^image\//.test(f.type)||/\.(jpe?g|png|gif|webp|heic|heif|bmp)$/i.test(f.name||''))}
+function isVideoFile(f){return f&&(/^video\//.test(f.type)||/\.(mp4|mov|m4v|webm|qt)$/i.test(f.name||''))}
+async function prepareMediaFile(file){
+ if(!file) throw new Error('No file');
+ if(isVideoFile(file)){
+  if(file.size>MEDIA_MAX_VIDEO_BYTES) throw new Error('big');
+  let meta;
+  try{meta=await readVideoMeta(file)}catch(e){throw new Error('bad-video')}
+  const dur=meta&&isFinite(meta.duration)?meta.duration:0;
+  if(dur>MEDIA_MAX_VIDEO_SEC+0.4) throw new Error('long');
+  return {kind:'video',blob:file,mime:file.type||'video/mp4',duration:dur,w:meta.w||0,h:meta.h||0};
+ }
+ if(isImageFile(file)){
+  let blob;
+  try{blob=await resizeImageFile(file)}catch(e){throw new Error(e.message==='format'?'format':'bad-image')}
+  return {kind:'image',blob:blob,mime:'image/jpeg',duration:0,w:0,h:0};
+ }
+ throw new Error('type');
+}
+function mediaErrorToast(code){
+ if(code==='big') toast('That video is too big. Please pick one under 25 MB.');
+ else if(code==='long') toast('That video is too long. Please pick one under 60 seconds.');
+ else if(code==='format') toast('That photo format isn’t supported. Try a JPEG or PNG.');
+ else if(code==='bad-video'||code==='timeout') toast('Couldn’t read that video. Try an MP4.');
+ else if(code==='type') toast('Please pick a photo or a video.');
+ else toast('Couldn’t add that file. Please try another.');
+}
+function loadUserClips(){
+ try{
+  const extra=JSON.parse(localStorage.getItem(CLIP_KEY)||'null');
+  if(!Array.isArray(extra)){USER_CLIPS=[];return;}
+  USER_CLIPS=extra.filter(c=>c&&c.mediaId&&c.id).map(c=>({id:c.id,u:c.u||'AndersAces',c:String(c.c||'').slice(0,200),l:+c.l||0,liked:!!c.liked,mine:true,mediaId:c.mediaId,mediaType:c.mediaType||'video',mime:c.mime||'video/mp4',t:c.t||'Just now'}));
+ }catch(e){USER_CLIPS=[]}
+}
+function saveUserClips(){
+ try{localStorage.setItem(CLIP_KEY,JSON.stringify(USER_CLIPS.slice(0,30)))}catch(e){}
+}
+function allClips(){return (USER_CLIPS||[]).concat(CLIPS)}
 function clipHTML(c,i,total){
- total=total||CLIPS.length;
+ total=total||allClips().length;
+ const tag='<span class="tagl">▶ CLIP '+(i+1)+'/'+total+'</span>'+(i===0?'<span class="swipe">swipe up ↑</span>':'');
+ const cap='<div class="cap"><b><span class="uav" style="width:30px;height:30px">'+socialAvatar(c.u)+'</span>@'+c.u+'</b><span>'+(c.c||'')+'</span></div>';
+ const acts='<div class="acts"><button class="like" data-n="'+(c.liked?c.l+1:c.l)+'"><span class="ci">❤️</span><span class="cnt">'+(c.liked?c.l+1:c.l)+'</span></button><button onclick="toast(\'💬 Comments are friends-only (demo)\')"><span class="ci">💬</span>12</button><button onclick="toast(\'🔗 Shared with friends (demo)\')"><span class="ci">↗️</span>Share</button></div>';
+ const del=c.mine?'<button class="clip-del" type="button" data-delclip="'+(c.id||'')+'">Delete</button>':'';
+ if(c.mediaId){
+  return '<div class="clip clip-vid" data-media="'+c.mediaId+'" data-clipid="'+(c.id||'')+'" style="background:#04160c">'+
+   '<video class="fl-vid" playsinline loop muted preload="metadata"></video>'+
+   '<span class="mute-hint">🔇 Tap to unmute</span>'+
+   tag+cap+acts+del+'</div>';
+ }
  return '<div class="clip" style="background:'+c.g+'">'+
   '<svg class="fl" viewBox="0 0 390 360" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">'+
   (c.water?'<ellipse cx="190" cy="290" rx="80" ry="18" fill="#3aa0e8"/>':'')+
@@ -2104,30 +2253,89 @@ function clipHTML(c,i,total){
   '<path d="'+c.arc+'" stroke="#fff" stroke-width="3" fill="none" stroke-dasharray="6 8" opacity=".75"/>'+
   '<g transform="translate('+c.arc.split(' ').slice(-2).join(' ')+')"><line x1="0" y1="0" x2="0" y2="-46" stroke="#fff" stroke-width="3"/><path d="M0 -46l22 7-22 7z" fill="#ff4d5e"/><ellipse cx="0" cy="2" rx="10" ry="4" fill="rgba(0,0,0,.35)"/></g>'+
   '<circle r="8" fill="#fff" stroke="#ccc"><animateMotion dur="'+(c.putt?2.4:2)+'s" repeatCount="indefinite" path="'+c.arc+'"/></circle>'+
-  '</svg><span class="tagl">▶ CLIP '+(i+1)+'/'+total+'</span>'+(i===0?'<span class="swipe">swipe up ↑</span>':'')+
-  '<div class="cap"><b><span class="uav" style="width:30px;height:30px">'+socialAvatar(c.u)+'</span>@'+c.u+'</b><span>'+c.c+'</span></div>'+
-  '<div class="acts"><button class="like" data-n="'+(c.liked?c.l+1:c.l)+'"><span class="ci">❤️</span><span class="cnt">'+(c.liked?c.l+1:c.l)+'</span></button><button onclick="toast(\'💬 Comments are friends-only (demo)\')"><span class="ci">💬</span>12</button><button onclick="toast(\'🔗 Shared with friends (demo)\')"><span class="ci">↗️</span>Share</button></div></div>';
+  '</svg>'+tag+cap+acts+'</div>';
 }
 function bindClipLikes(root){
  const box=typeof root==='string'?$(root):root;
  if(!box)return;
+ const list=allClips();
  $$('.like',box).forEach((b,i)=>{
-  if(CLIPS[i]&&CLIPS[i].liked) b.classList.add('liked');
+  const clip=list[i];
+  if(clip&&clip.liked) b.classList.add('liked');
   b.onclick=()=>{
    const on=b.classList.toggle('liked');
-   if(CLIPS[i]) CLIPS[i].liked=on;
+   if(clip){clip.liked=on; if(clip.mine) saveUserClips();}
    b.querySelector('.cnt').textContent=(+b.dataset.n)+(on?1:0);
-   // keep the other feed in sync if it exists
    const other=box.id==='shorts'?$('#actShortsFeed'):$('#shorts');
    if(other){ const ob=$$('.like',other)[i]; if(ob){ ob.classList.toggle('liked',on); const c=ob.querySelector('.cnt'); if(c)c.textContent=(+ob.dataset.n)+(on?1:0);} }
   };
  });
+ $$('[data-delclip]',box).forEach(b=>b.onclick=ev=>{ev.stopPropagation(); confirmDeleteClip(b.dataset.delclip)});
 }
 function renderShorts(sel){
  const el=$(sel||'#shorts'); if(!el)return;
- el.innerHTML=CLIPS.map((c,i)=>clipHTML(c,i,CLIPS.length)).join('');
+ const list=allClips();
+ el.innerHTML=list.map((c,i)=>clipHTML(c,i,list.length)).join('');
  bindClipLikes(el);
+ hydrateMedia(el).then(()=>observeShorts(el));
 }
+const shortObsMap=[];
+function observeShorts(root){
+ if(!root)return;
+ shortObsMap.filter(x=>x.root===root).forEach(x=>{try{x.obs.disconnect()}catch(e){}});
+ for(let i=shortObsMap.length-1;i>=0;i--) if(shortObsMap[i].root===root) shortObsMap.splice(i,1);
+ const obs=new IntersectionObserver(ents=>{
+  ents.forEach(e=>{
+   const v=e.target.querySelector('video');
+   if(!v)return;
+   if(e.isIntersecting && e.intersectionRatio>=0.55){ v.muted=true; const hint=e.target.querySelector('.mute-hint'); if(hint) hint.textContent='🔇 Tap to unmute'; v.play().catch(()=>{}); }
+   else { v.pause(); }
+  });
+ },{root:root,threshold:[0.55]});
+ shortObsMap.push({root:root,obs:obs});
+ $$('.clip-vid',root).forEach(c=>{
+  obs.observe(c);
+  const v=c.querySelector('video');
+  if(v) v.onclick=ev=>{
+   ev.stopPropagation();
+   if(v.paused) v.play().catch(()=>{});
+   v.muted=!v.muted;
+   const hint=c.querySelector('.mute-hint');
+   if(hint) hint.textContent=v.muted?'🔇 Tap to unmute':'🔊 Tap to mute';
+  };
+ });
+}
+
+function hydrateMedia(root){
+ const box=typeof root==='string'?$(root):root;
+ if(!box)return Promise.resolve();
+ const nodes=$$('[data-media]',box);
+ return Promise.all(nodes.map(el=>{
+  const id=el.dataset.media; if(!id)return Promise.resolve();
+  return getMedia(id).then(blob=>{
+   if(!blob) return;
+   const url=URL.createObjectURL(blob);
+   const img=el.tagName==='IMG'?el:el.querySelector('img');
+   const vid=el.tagName==='VIDEO'?el:el.querySelector('video');
+   if(img){ img.src=url; el.onclick=el.onclick||(ev=>{if(ev.target.closest&&ev.target.closest('.post-del,.pa,.cform'))return; openMediaLite(url,'image')}); }
+   if(vid){ vid.src=url; vid.setAttribute('playsinline',''); if(el.classList.contains('pvid')||(el.closest&&el.closest('.pvid'))){ el.onclick=el.onclick||(ev=>{if(ev.target.closest&&ev.target.closest('.post-del,.pa,.cform'))return; openMediaLite(url,'video')}); } }
+  }).catch(()=>{});
+ }));
+}
+function openMediaLite(url,kind){
+ const lite=$('#mediaLite'); if(!lite)return;
+ const img=$('#liteImg'), vid=$('#liteVid');
+ if(img){img.style.display=kind==='image'?'block':'none'; img.src=kind==='image'?url:'';}
+ if(vid){vid.style.display=kind==='video'?'block':'none'; if(kind==='video'){vid.src=url;vid.play().catch(()=>{})} else {vid.pause();vid.removeAttribute('src');} }
+ lite.classList.add('show');
+}
+function closeMediaLite(){
+ const lite=$('#mediaLite'); if(!lite)return;
+ lite.classList.remove('show');
+ const vid=$('#liteVid'); if(vid){vid.pause();vid.removeAttribute('src');}
+ const img=$('#liteImg'); if(img) img.removeAttribute('src');
+}
+(function(){const c=$('#liteClose'),l=$('#mediaLite'); if(c)c.onclick=closeMediaLite; if(l)l.addEventListener('click',e=>{if(e.target===l||e.target.id==='liteClose')closeMediaLite()});})();
 
 const POST_KEY='bq_posts';
 const BASE_POSTS=[
@@ -2147,21 +2355,32 @@ function loadUserPosts(){
   if(!Array.isArray(extra))return;
   const mine=[];
   extra.forEach(p=>{
-   if(!p||typeof p.txt!=='string'||!p.txt.trim())return;
+   if(!p)return;
    const id=p.id||('p-'+mine.length);
    if(POSTS.some(x=>x.id===id))return;
-   mine.push({id:id,u:p.u||'AndersAces',t:p.t||'Just now',txt:String(p.txt).slice(0,200),img:p.img||'',bg:p.bg||'',l:+p.l||0,c:Array.isArray(p.c)?p.c:[],mine:true,liked:!!p.liked,open:false});
+   const txt=typeof p.txt==='string'?String(p.txt).slice(0,200):'';
+   if(!txt.trim()&&!p.mediaId)return;
+   mine.push({id:id,u:p.u||'AndersAces',t:p.t||'Just now',txt:txt,img:p.img||'',bg:p.bg||'',l:+p.l||0,c:Array.isArray(p.c)?p.c:[],mine:true,liked:!!p.liked,open:false,mediaId:p.mediaId||'',mediaType:p.mediaType||'',mime:p.mime||''});
   });
   if(mine.length) POSTS=mine.concat(POSTS);
  }catch(e){}
 }
 function saveUserPosts(){
- try{localStorage.setItem(POST_KEY,JSON.stringify(POSTS.filter(p=>p.mine).slice(0,20)))}catch(e){}
+ try{
+  const slim=POSTS.filter(p=>p.mine).slice(0,20).map(p=>({id:p.id,u:p.u,t:p.t,txt:p.txt,img:p.img&&p.img.length<8?p.img:'',bg:p.bg||'',l:p.l||0,c:p.c||[],liked:!!p.liked,mine:true,mediaId:p.mediaId||'',mediaType:p.mediaType||'',mime:p.mime||''}));
+  localStorage.setItem(POST_KEY,JSON.stringify(slim));
+ }catch(e){}
 }
 loadUserPosts();
+loadUserClips();
 function postCardHTML(p,i){
- return '<div class="post"><div class="ph"><span class="uav">'+socialAvatar(p.u)+'</span><div><b>'+p.u+'</b><small>'+p.t+' · 👥 Friends</small></div></div><p>'+p.txt+'</p>'+
-  (p.img?'<div class="pimg" style="background:'+p.bg+'">'+p.img+'</div>':'')+
+ let media='';
+ if(p.mediaId&&p.mediaType==='image') media='<div class="pimg pimg-real" data-media="'+p.mediaId+'"><img alt=""></div>';
+ else if(p.mediaId&&p.mediaType==='video') media='<div class="pvid" data-media="'+p.mediaId+'"><video playsinline muted preload="metadata"></video><span class="playmark">▶</span></div>';
+ else if(p.img) media='<div class="pimg" style="background:'+p.bg+'">'+p.img+'</div>';
+ const del=p.mine?'<button class="post-del" type="button" data-delpost="'+p.id+'">Delete</button>':'';
+ return '<div class="post" data-postid="'+(p.id||'')+'"><div class="ph"><span class="uav">'+socialAvatar(p.u)+'</span><div><b>'+p.u+'</b><small>'+p.t+' · 👥 Friends</small></div>'+del+'</div><p>'+p.txt+'</p>'+
+  media+
   '<div class="pa"><button class="plike '+(p.liked?'liked':'')+'" data-i="'+i+'"><span class="h">'+(p.liked?'❤️':'🤍')+'</span>'+(p.l+(p.liked?1:0))+'</button><button class="pcm" data-i="'+i+'">💬 '+p.c.length+'</button></div>'+
   '<div class="comments '+(p.open?'open':'')+'">'+p.c.map(c=>'<div class="cmt"><b>'+c[0]+'</b> '+c[1]+'</div>').join('')+'<div class="cform"><input placeholder="Say something nice…" data-i="'+i+'" maxlength="80"><button class="btn small" data-send="'+i+'">Send</button></div></div></div>';
 }
@@ -2171,18 +2390,50 @@ function bindPostFeed(root){
  $$('.pcm',box).forEach(b=>b.onclick=()=>{const p=POSTS[b.dataset.i];p.open=!p.open;renderPosts()});
  $$('[data-send]',box).forEach(b=>b.onclick=()=>{const i=b.dataset.send,inp=$('input[data-i="'+i+'"]',box);const v=inp&&inp.value.trim();if(!v)return;POSTS[i].c.push(['AndersAces',v.replace(/</g,'&lt;')]);POSTS[i].open=true;renderPosts();toast('💬 Comment posted (demo)')});
  $$('.cform input',box).forEach(inp=>inp.onkeydown=e=>{if(e.key==='Enter'){const btn=$('[data-send="'+inp.dataset.i+'"]',box); if(btn)btn.click();}});
+ $$('[data-delpost]',box).forEach(b=>b.onclick=ev=>{ev.stopPropagation(); confirmDeletePost(b.dataset.delpost)});
 }
 function renderPostFeed(sel){
  const el=$(sel); if(!el)return;
  el.innerHTML=POSTS.map((p,i)=>postCardHTML(p,i)).join('');
  bindPostFeed(el);
+ hydrateMedia(el);
 }
 function renderPosts(){
  renderPostFeed('#posts');
  renderPostFeed('#actPosts');
 }
+function confirmDeletePost(id){
+ const p=POSTS.find(x=>x.id===id); if(!p||!p.mine)return;
+ openSheet('<h2>Delete this post?</h2><p style="font-weight:800;color:var(--muted)">This removes it from your Posts. Friends on this device will no longer see it.</p>'+
+  '<button class="btn" style="width:100%;background:var(--red)" id="doDelPost">Delete Post</button>'+
+  '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeSheet()">Keep it</button>');
+ const go=$('#doDelPost'); if(go) go.onclick=()=>{deleteUserPost(id);closeSheet();toast('🗑️ Post deleted')};
+}
+function deleteUserPost(id){
+ const p=POSTS.find(x=>x.id===id); if(!p||!p.mine)return;
+ POSTS=POSTS.filter(x=>x.id!==id);
+ saveUserPosts();
+ maybeDeleteMedia(p.mediaId);
+ renderPosts();
+ if(typeof renderSocialLanding==='function') renderSocialLanding();
+}
+function confirmDeleteClip(id){
+ const c=USER_CLIPS.find(x=>x.id===id); if(!c)return;
+ openSheet('<h2>Delete this Short?</h2><p style="font-weight:800;color:var(--muted)">This removes your uploaded clip from Shorts.</p>'+
+  '<button class="btn" style="width:100%;background:var(--red)" id="doDelClip">Delete Short</button>'+
+  '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeSheet()">Keep it</button>');
+ const go=$('#doDelClip'); if(go) go.onclick=()=>{deleteUserClip(id);closeSheet();toast('🗑️ Short deleted')};
+}
+function deleteUserClip(id){
+ const c=USER_CLIPS.find(x=>x.id===id); if(!c)return;
+ USER_CLIPS=USER_CLIPS.filter(x=>x.id!==id);
+ saveUserClips();
+ maybeDeleteMedia(c.mediaId);
+ renderShorts('#shorts');
+ renderShorts('#actShortsFeed');
+ if(typeof renderSocialLanding==='function') renderSocialLanding();
+}
 renderShorts('#shorts');
-
 
 let soTab='friends';
 let actRail='posts';
@@ -2263,7 +2514,7 @@ function openNotifSheet(){
 function renderSocialLanding(){
  const el=$('#soLanding'); if(!el)return;
  const n=(FR&&FR.list)?FR.list.length:0;
- const clips=(typeof CLIPS!=='undefined')?CLIPS.length:0;
+ const clips=typeof allClips==='function'?allClips().length:((typeof CLIPS!=='undefined')?CLIPS.length:0);
  const av=typeof avatarSVG==='function'?avatarSVG(A||{},'front'):'';
  el.innerHTML='<span class="uav">'+av+'</span>'
   +'<div class="meta"><h1>Social</h1><div class="handle">@AndersAces</div>'
@@ -2317,42 +2568,176 @@ function openPlusMenu(){
  w.classList.add('show');
  const btn=$('#recBtn'); if(btn) btn.setAttribute('aria-expanded','true');
 }
+function previewBlock(kind){
+ return '<div class="so-prev" id="mediaPrev" hidden>'+
+  '<img id="mediaPrevImg" alt="Preview">'+
+  '<video id="mediaPrevVid" controls playsinline></video>'+
+  '<div class="so-prev-acts"><button type="button" id="mediaPrevRm">Remove</button><button type="button" id="mediaPrevRep">Replace</button></div>'+
+  '</div>';
+}
+function showFilePreview(prepared, fileInput){
+ const wrap=$('#mediaPrev'), img=$('#mediaPrevImg'), vid=$('#mediaPrevVid');
+ if(!wrap||!prepared)return;
+ wrap.hidden=false;
+ const url=URL.createObjectURL(prepared.blob);
+ wrap.dataset.url=url;
+ if(prepared.kind==='image'){
+  if(img){img.style.display='block';img.src=url;}
+  if(vid){vid.style.display='none';vid.removeAttribute('src');}
+ }else{
+  if(img){img.style.display='none';img.removeAttribute('src');}
+  if(vid){vid.style.display='block';vid.src=url;}
+ }
+ const rm=$('#mediaPrevRm'), rep=$('#mediaPrevRep');
+ if(rm) rm.onclick=()=>{
+  wrap.hidden=true;
+  if(img){img.removeAttribute('src');img.style.display='none';}
+  if(vid){vid.pause();vid.removeAttribute('src');vid.style.display='none';}
+  try{URL.revokeObjectURL(url)}catch(e){}
+  wrap.dataset.url='';
+  wrap.dataset.ready='0';
+  if(fileInput) fileInput.value='';
+  window.__pendingMedia=null;
+  const addBtn=$('#postPhoto'); if(addBtn) addBtn.style.display='';
+ };
+ if(rep) rep.onclick=()=>{ if(fileInput) fileInput.click(); };
+ const addHide=$('#postPhoto'); if(addHide) addHide.style.display='none';
+ wrap.dataset.ready='1';
+}
+function bindFilePicker(input, opts){
+ opts=opts||{};
+ if(!input)return;
+ input.onchange=()=>{
+  const f=input.files&&input.files[0];
+  if(!f)return;
+  if(opts.videoOnly&&!isVideoFile(f)){toast('Please pick a video.');input.value='';return;}
+  prepareMediaFile(f).then(prep=>{
+   window.__pendingMedia=prep;
+   if(opts.onReady) opts.onReady(prep);
+   else showFilePreview(prep,input);
+  }).catch(err=>{
+   window.__pendingMedia=null;
+   mediaErrorToast(err&&err.message);
+   input.value='';
+  });
+ };
+}
+
 function openRecordSheet(){
  closePlusMenu();
- openSheet('<h2>🎬 Record a Clip</h2><div class="rec-view"><span class="rec-dot"><i></i> REC 0:03</span><div style="font-size:70px">🏌️</div><div style="position:absolute;bottom:12px;font-weight:800;font-size:13px;color:#aaa">Camera preview (demo)</div></div>'+
+ window.__pendingMedia=null;
+ openSheet('<h2>🎬 Post a Short</h2>'+
   '<div class="parent-note" style="margin-top:0"><span style="font-size:24px">🔒</span><span>Clips are shared with <b>friends only</b>. Your parent can change who sees your posts in Parent Controls.</span></div>'+
-  '<button class="btn" style="width:100%" onclick="closeSheet();toast(\'🎬 Demo only: no clip recorded\')">● Start Recording</button>');
+  '<div class="rec-view"><span class="rec-dot"><i></i> REC 0:03</span><div style="font-size:70px">🏌️</div><div style="position:absolute;bottom:12px;font-weight:800;font-size:13px;color:#aaa">Camera preview (demo)</div></div>'+
+  '<button class="btn" style="width:100%" onclick="closeSheet();toast(\'🎬 Demo only: no clip recorded\')">● Start Recording</button>'+
+  '<div class="so-or">or</div>'+
+  '<button class="btn white" style="width:100%" type="button" id="uploadShortBtn">📤 Upload a video</button>'+
+  '<input class="so-file" type="file" id="shortFile" accept="video/*">');
+ const inp=$('#shortFile');
+ const btn=$('#uploadShortBtn');
+ if(btn&&inp) btn.onclick=()=>inp.click();
+ bindFilePicker(inp,{videoOnly:true,onReady:prep=>{ openShortCompose(prep,inp); }});
 }
+function openShortCompose(prep, fileInput){
+ const keepInput=true;
+ openSheet('<h2>🎬 Post a Short</h2>'+
+  '<div class="parent-note" style="margin-top:0"><span style="font-size:24px">🔒</span><span>This Short is shared with <b>friends only</b>.</span></div>'+
+  previewBlock('video')+
+  '<textarea class="su-in so-compose" id="shortTxt" maxlength="200" placeholder="Add a caption…" aria-label="Short caption"></textarea>'+
+  '<button class="btn green" style="width:100%" id="doShort">Post Short</button>'+
+  '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeSheet()">Cancel</button>'+
+  '<input class="so-file" type="file" id="shortFile" accept="video/*">');
+ const inp=$('#shortFile')||fileInput;
+ window.__pendingMedia=prep;
+ showFilePreview(prep,inp);
+ bindFilePicker(inp,{videoOnly:true});
+ const go=$('#doShort');
+ if(go) go.onclick=()=>{ publishShort(); };
+}
+async function publishShort(){
+ const prep=window.__pendingMedia;
+ if(!prep||prep.kind!=='video'){toast('Upload a video first');return;}
+ const txt=(($('#shortTxt')&&$('#shortTxt').value)||'').trim().replace(/</g,'&lt;').slice(0,200);
+ const id='c-'+Date.now().toString(36);
+ const mediaId=newMediaId();
+ try{ await saveMedia(mediaId,prep.blob); }
+ catch(e){ toast('Couldn’t save that video on this device.'); return; }
+ const clip={id:id,u:'AndersAces',c:txt||'New short',l:0,liked:false,mine:true,mediaId:mediaId,mediaType:'video',mime:prep.mime||'video/mp4',t:'Just now'};
+ USER_CLIPS.unshift(clip);
+ saveUserClips();
+ window.__pendingMedia=null;
+ closeSheet();
+ setSoTab('shorts',{quiet:true});
+ renderShorts('#shorts');
+ renderShorts('#actShortsFeed');
+ if(typeof renderSocialLanding==='function') renderSocialLanding();
+ toast('🎬 Short posted to Friends');
+}
+
 function openComposeSheet(){
  closePlusMenu();
+ window.__pendingMedia=null;
  openSheet('<h2>✍️ Write a Post</h2>'+
   '<div class="parent-note" style="margin-top:0"><span style="font-size:24px">🔒</span><span>This post is shared with <b>friends only</b>.</span></div>'+
   '<textarea class="su-in so-compose" id="postTxt" maxlength="200" placeholder="What\'s happening on the course?" aria-label="Post text"></textarea>'+
-  '<button class="so-photo" id="postPhoto" type="button">📷 Add a photo (optional)</button>'+
+  previewBlock()+
+  '<button class="so-photo" id="postPhoto" type="button">📷 Add photo/video</button>'+
+  '<input class="so-file" type="file" id="postFile" accept="image/*,video/*">'+
   '<button class="btn green" style="width:100%" id="doPost">Post to Friends</button>'+
   '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeSheet()">Cancel</button>');
- let photo=null;
+ const inp=$('#postFile');
  const ph=$('#postPhoto');
- if(ph) ph.onclick=()=>{
-  if(photo){ photo=null; ph.classList.remove('on'); ph.textContent='📷 Add a photo (optional)'; }
-  else { photo={img:'⛳',bg:'linear-gradient(135deg,#7fd6ff,#4cc95e)'}; ph.classList.add('on'); ph.textContent='⛳'; }
+ if(ph&&inp) ph.onclick=()=>inp.click();
+ bindFilePicker(inp,{onReady:prep=>{
+  window.__pendingMedia=prep;
+  showFilePreview(prep,inp);
+  if(ph) ph.style.display='none';
+ }});
+ const rmHook=()=>{
+  const wrap=$('#mediaPrev');
+  const realRm=$('#mediaPrevRm');
+  if(!realRm)return;
+  const prev=realRm.onclick;
+  realRm.onclick=()=>{ if(typeof prev==='function') prev(); if(ph) ph.style.display=''; };
  };
- const inp=$('#postTxt'); if(inp)inp.focus();
+ // bind after preview first appears: also hook now so Replace works
+ const origShow=null;
+ const inp2=inp;
  const goBtn=$('#doPost');
- if(goBtn) goBtn.onclick=()=>{
-  const txt=(($('#postTxt')&&$('#postTxt').value)||'').trim();
-  if(!txt){toast('Write a little something first');return;}
-  const safe=txt.replace(/</g,'&lt;').slice(0,200);
-  const post={id:'p-'+Date.now().toString(36),u:'AndersAces',t:'Just now',txt:safe,l:0,c:[],mine:true};
-  if(photo){post.img=photo.img;post.bg=photo.bg;}
-  POSTS.unshift(post);
-  saveUserPosts();
-  closeSheet();
-  setSoTab('posts',{quiet:true});
-  if(typeof renderSocialLanding==='function') renderSocialLanding();
-  toast('🎉 Posted to Friends');
- };
+ if(goBtn) goBtn.onclick=()=>{ publishPost(); };
+ const ta=$('#postTxt'); if(ta)ta.focus();
 }
+async function publishPost(){
+ const txt=(($('#postTxt')&&$('#postTxt').value)||'').trim();
+ const prep=window.__pendingMedia;
+ if(!txt&&!prep){toast('Write a little something or add a photo');return;}
+ const safe=txt.replace(/</g,'&lt;').slice(0,200);
+ const post={id:'p-'+Date.now().toString(36),u:'AndersAces',t:'Just now',txt:safe||(prep&&prep.kind==='video'?'New video':'New photo'),l:0,c:[],mine:true};
+ if(prep){
+  const mediaId=newMediaId();
+  try{ await saveMedia(mediaId,prep.blob); }
+  catch(e){ toast('Couldn’t save that file on this device.'); return; }
+  post.mediaId=mediaId;
+  post.mediaType=prep.kind;
+  post.mime=prep.mime||'';
+  if(prep.kind==='video'){
+   const clip={id:'c-'+post.id,u:'AndersAces',c:safe||'New short',l:0,liked:false,mine:true,mediaId:mediaId,mediaType:'video',mime:prep.mime||'video/mp4',t:'Just now'};
+   USER_CLIPS.unshift(clip);
+   saveUserClips();
+  }
+ }
+ POSTS.unshift(post);
+ saveUserPosts();
+ window.__pendingMedia=null;
+ closeSheet();
+ setSoTab('posts',{quiet:true});
+ renderPosts();
+ renderShorts('#shorts');
+ renderShorts('#actShortsFeed');
+ if(typeof renderSocialLanding==='function') renderSocialLanding();
+ toast('🎉 Posted to Friends');
+}
+
 function setSoTab(id,opts){
  opts=opts||{};
  if(!id||['friends','shorts','activity','posts'].indexOf(id)<0)id='friends';
@@ -2383,7 +2768,7 @@ function bindSocialTabs(){
  renderSocialLanding();
  setSoTab(soTab,{quiet:true});
 }
-window.__social={setTab:setSoTab,get tab(){return soTab},render:renderSocialLanding,openPlus:openPlusMenu,closePlus:closePlusMenu,openRecord:openRecordSheet,openCompose:openComposeSheet,setRail:setActRail,get rail(){return actRail},openNotifs:openNotifSheet};
+window.__social={setTab:setSoTab,get tab(){return soTab},render:renderSocialLanding,openPlus:openPlusMenu,closePlus:closePlusMenu,openRecord:openRecordSheet,openCompose:openComposeSheet,setRail:setActRail,get rail(){return actRail},openNotifs:openNotifSheet,deletePost:deleteUserPost,deleteClip:deleteUserClip,getClips:allClips};
 
 /* ================= PROFILE ================= */
 const BADGES=[['🐦','First Birdie','#3fb8ff'],['🔥','7-Day Streak','#ff8a3d'],['🎯','Pin Seeker','#ff4d5e'],['🚀','200+ Drive','#9b6bff'],['🗺️','Explorer','#14954a'],['⛳','10 Rounds','#ffd23f'],['🦅','Eagle?','rgba(255,255,255,.15)']];
@@ -2797,7 +3182,7 @@ function classify(el){
  if(el.matches('#shorts .like,.plike'))return el.classList.contains('liked')?['tick']:['chime'];
  if(el.matches('#buyBtn,#eqBtn,#saveCur,#savePresetBtn,#presetGrid [data-i],.gear,.av-pick,#doAddFriend,#startPlayBtn,#startRoundBtn,.inv,#openBagBtn'))return['chime'];
  if(el.matches('.slot-row,.cover-sw,.model-sw,#bagPutBack'))return['swoosh'];
- if(el.matches('.tog,.sw,.iconbtn,.pfp,.pcm,.so-tab,.so-act,.so-plus-opt,.so-photo,.so-bell,.act-rail-btn,.so-nitem,.sc-row,.ask'))return['tick'];
+ if(el.matches('.tog,.sw,.iconbtn,.pfp,.pcm,.so-tab,.so-act,.so-plus-opt,.so-photo,.so-bell,.act-rail-btn,.so-nitem,.sc-row,.ask,.post-del,.clip-del,.lite-close,#uploadShortBtn,#mediaPrevRm,#mediaPrevRep'))return['tick'];
  if(el.matches('.btn,.mg-item .play,.item,.bundle,.quest,.pin,.drop,.rrow'))return['pop'];
  return['tick'];
 }

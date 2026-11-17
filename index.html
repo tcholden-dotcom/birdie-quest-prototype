@@ -446,17 +446,36 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .so-tab.on{background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(240,250,245,.84));color:#0b5d2e;border-color:rgba(255,255,255,.55);box-shadow:inset 0 1px 0 #fff,0 4px 12px rgba(0,0,0,.18)}
 .so-pane{display:none}
 .so-pane.on{display:block}
-#s-social.tab-shorts #socialScroll{display:flex;flex-direction:column;overflow:hidden;padding-bottom:calc(var(--navH) + 86px)}
+#s-social #socialScroll{padding-bottom:calc(var(--navH) + 86px)}
+#s-social.tab-shorts #socialScroll{display:flex;flex-direction:column;overflow:hidden}
 #s-social.tab-shorts .so-pane.on{flex:1;min-height:0;display:flex;flex-direction:column}
 #s-social.tab-shorts .shorts{flex:1;height:auto;min-height:240px;max-height:none}
-#s-social .fab-rec{display:none}
-#s-social.tab-shorts .fab-rec{display:grid}
-.so-act{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border-radius:20px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,.10);border:1px solid var(--glass-hi);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:var(--glass-shadow);color:#fff}
-.so-act .uav{width:42px;height:42px;flex:none}
+#s-social .fab-rec{display:grid;z-index:26}
+.so-agroup{margin:0 0 16px}
+.so-ahead{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:900;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);padding:2px 8px 8px}
+.so-ahead em{margin-left:auto;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0;text-transform:none;opacity:.85}
+.so-alist{border-radius:22px;overflow:hidden;background:rgba(255,255,255,.08);border:1px solid var(--glass-hi);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:var(--glass-shadow)}
+.so-act{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:14px 14px;background:transparent;border:0;border-radius:0;color:#fff;box-shadow:none}
+.so-act + .so-act{border-top:1px solid rgba(255,255,255,.12)}
+.so-act .uav{width:40px;height:40px;flex:none}
 .so-act .nm{flex:1;min-width:0}
-.so-act .nm b{display:block;font-size:14px;font-weight:900}
-.so-act .nm span{display:block;font-size:12px;font-weight:800;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.so-act small{flex:none;font-size:11px;font-weight:800;color:var(--muted)}
+.so-act .nm b{display:block;font-size:14px;font-weight:900;line-height:1.2}
+.so-act .nm span{display:block;font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
+.so-act .so-meta{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.so-act .so-kind{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;font-size:13px;background:rgba(255,255,255,.14)}
+.so-act small{font-size:11px;font-weight:800;color:var(--muted)}
+.so-plus-wrap{display:none;position:absolute;inset:0;z-index:25}
+.so-plus-wrap.show{display:block}
+.so-plus-back{position:absolute;inset:0;background:rgba(0,0,0,.42);border:0}
+.so-plus-sheet{position:absolute;right:16px;bottom:calc(var(--navH) + 92px);width:min(270px,calc(100% - 40px));border-radius:22px;padding:8px;background:linear-gradient(180deg,rgba(22,100,52,.96),rgba(8,52,28,.96));border:1px solid rgba(255,255,255,.28);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 14px 32px rgba(0,0,0,.4)}
+.so-plus-opt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:12px 12px;border-radius:16px;background:transparent;color:#fff}
+.so-plus-opt:active{background:rgba(255,255,255,.14)}
+.so-plus-opt .ic{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;font-size:20px;flex:none;background:rgba(255,255,255,.16)}
+.so-plus-opt b{display:block;font-size:15px;font-weight:900}
+.so-plus-opt small{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-top:1px}
+.so-compose{min-height:110px;resize:none;line-height:1.4}
+.so-photo{width:100%;border-radius:18px;padding:16px 14px;margin:0 0 12px;background:rgba(255,255,255,.12);border:2px dashed rgba(255,255,255,.4);color:#fff;font-weight:800;font-size:14px}
+.so-photo.on{border-style:solid;min-height:88px;font-size:42px;background:linear-gradient(135deg,#7fd6ff,#4cc95e)}
 @media (max-height:700px){
   .so-landing{padding:8px 10px;margin-bottom:8px;gap:10px}
   .so-landing .uav{width:44px;height:44px}
@@ -905,7 +924,6 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <div class="shorts" id="shorts"></div>
       </div>
       <div class="so-pane" data-so-pane="activity" role="tabpanel" id="soPaneActivity">
-        <div class="sec-title" style="margin-top:4px">👟 Friend Activity</div>
         <div id="soActivity"></div>
       </div>
       <div class="so-pane" data-so-pane="posts" role="tabpanel" id="soPanePosts">
@@ -913,7 +931,14 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <div id="posts"></div>
       </div>
     </div>
-    <button class="fab-rec" id="recBtn" aria-label="Record a clip"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+    <div class="so-plus-wrap" id="soPlusWrap">
+      <button class="so-plus-back" id="soPlusBack" type="button" aria-label="Close"></button>
+      <div class="so-plus-sheet" role="menu" aria-label="Create">
+        <button class="so-plus-opt" id="plusShort" type="button" role="menuitem"><span class="ic">🎬</span><span><b>Post a Short</b><small>Record a clip for friends</small></span></button>
+        <button class="so-plus-opt" id="plusPost" type="button" role="menuitem"><span class="ic">✍️</span><span><b>Write a Post</b><small>Share an update with friends</small></span></button>
+      </div>
+    </div>
+    <button class="fab-rec" id="recBtn" aria-label="Create a post or short"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
   </section>
 
   <!-- PROFILE -->
@@ -1561,7 +1586,7 @@ function back(){ if(stack.length>1){stack.pop();go(stack[stack.length-1],'back')
 window.go=go;
 $$('.nav button').forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.tab===cur&&stack.length===1)return; go(b.dataset.tab,'tab')}));
 $$('.back').forEach(b=>b.addEventListener('click',back));
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){ if($('#sheetWrap').classList.contains('show'))closeSheet(); else back(); }});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){ if($('#sheetWrap').classList.contains('show'))closeSheet(); else if($('#soPlusWrap')&&$('#soPlusWrap').classList.contains('show'))closePlusMenu(); else back(); }});
 
 let toastT;
 function toast(msg){const t=$('#toast');t.innerHTML=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200)}
@@ -1999,13 +2024,37 @@ $('#shorts').innerHTML=CLIPS.map((c,i)=>'<div class="clip" style="background:'+c
  '<div class="cap"><b><span class="uav" style="width:30px;height:30px">'+avatarSVG(FRIENDS[c.u])+'</span>@'+c.u+'</b><span>'+c.c+'</span></div>'+
  '<div class="acts"><button class="like" data-n="'+c.l+'"><span class="ci">❤️</span><span class="cnt">'+c.l+'</span></button><button onclick="toast(\'💬 Comments are friends-only (demo)\')"><span class="ci">💬</span>12</button><button onclick="toast(\'🔗 Shared with friends (demo)\')"><span class="ci">↗️</span>Share</button></div></div>').join('');
 $$('#shorts .like').forEach(b=>b.onclick=()=>{const on=b.classList.toggle('liked');b.querySelector('.cnt').textContent=(+b.dataset.n)+(on?1:0)});
-const POSTS=[
+const POST_KEY='bq_posts';
+const BASE_POSTS=[
  {u:'FairwayFox',t:'2h ago',txt:'Shot a 41 at Pebble Creek today! New personal best 🎉',img:'🏆',bg:'linear-gradient(135deg,#ffd23f,#ff8a3d)',l:24,c:[['PutterPup','LETS GOOO 🔥'],['EagleOtter','gg!! rematch saturday?']]},
  {u:'PutterPup',t:'5h ago',txt:'Anyone want to do the Putting Challenge Saturday morning? 🐶⛳',l:11,c:[['BirdieBear','im in!']]},
  {u:'EagleOtter',t:'Yesterday',txt:'Finally unlocked the Gold Crown 👑 5,000 points saved up!!',img:'👑',bg:'linear-gradient(135deg,#a8b8ff,#5b5bd6)',l:57,c:[]},
  {u:'BirdieBear',t:'2d ago',txt:'Completed the "Sunrise Golfer" side quest 🌅 so tired lol',l:19,c:[['FairwayFox','respect 😂']]}
 ];
-function renderPosts(){$('#posts').innerHTML=POSTS.map((p,i)=>'<div class="post"><div class="ph"><span class="uav">'+avatarSVG(FRIENDS[p.u])+'</span><div><b>'+p.u+'</b><small>'+p.t+' · 👥 Friends</small></div></div><p>'+p.txt+'</p>'+
+let POSTS=BASE_POSTS.map(p=>Object.assign({c:[]},p));
+function socialAvatar(u){
+ if(typeof FRIENDS!=='undefined'&&FRIENDS[u]) return avatarSVG(FRIENDS[u],'front');
+ return avatarSVG(A||{},'front');
+}
+function loadUserPosts(){
+ try{
+  const extra=JSON.parse(localStorage.getItem(POST_KEY)||'null');
+  if(!Array.isArray(extra))return;
+  const mine=[];
+  extra.forEach(p=>{
+   if(!p||typeof p.txt!=='string'||!p.txt.trim())return;
+   const id=p.id||('p-'+mine.length);
+   if(POSTS.some(x=>x.id===id))return;
+   mine.push({id:id,u:p.u||'AndersAces',t:p.t||'Just now',txt:String(p.txt).slice(0,200),img:p.img||'',bg:p.bg||'',l:+p.l||0,c:Array.isArray(p.c)?p.c:[],mine:true,liked:!!p.liked,open:false});
+  });
+  if(mine.length) POSTS=mine.concat(POSTS);
+ }catch(e){}
+}
+function saveUserPosts(){
+ try{localStorage.setItem(POST_KEY,JSON.stringify(POSTS.filter(p=>p.mine).slice(0,20)))}catch(e){}
+}
+loadUserPosts();
+function renderPosts(){$('#posts').innerHTML=POSTS.map((p,i)=>'<div class="post"><div class="ph"><span class="uav">'+socialAvatar(p.u)+'</span><div><b>'+p.u+'</b><small>'+p.t+' · 👥 Friends</small></div></div><p>'+p.txt+'</p>'+
  (p.img?'<div class="pimg" style="background:'+p.bg+'">'+p.img+'</div>':'')+
  '<div class="pa"><button class="plike '+(p.liked?'liked':'')+'" data-i="'+i+'"><span class="h">'+(p.liked?'❤️':'🤍')+'</span>'+(p.l+(p.liked?1:0))+'</button><button class="pcm" data-i="'+i+'">💬 '+p.c.length+'</button></div>'+
  '<div class="comments '+(p.open?'open':'')+'">'+p.c.map(c=>'<div class="cmt"><b>'+c[0]+'</b> '+c[1]+'</div>').join('')+'<div class="cform"><input placeholder="Say something nice…" data-i="'+i+'" maxlength="80"><button class="btn small" data-send="'+i+'">Send</button></div></div></div>').join('');
@@ -2026,23 +2075,88 @@ function renderSocialLanding(){
   +'<div class="hi">'+n+' friend'+(n===1?'':'s')+' · '+clips+' short'+(clips===1?'':'s')+' · 🔒 Friends only</div></div>'
   +'<div class="so-code"><small>My code</small><b>'+((FR&&FR.code)||'BQ-AND1')+'</b></div>';
 }
+function shortTime(t){
+ if(!t)return '';
+ t=String(t);
+ if(/just now/i.test(t))return 'Now';
+ const m=t.match(/^(\d+)\s*h/i); if(m)return m[1]+'h';
+ if(/yesterday/i.test(t))return 'Yday';
+ const d=t.match(/^(\d+)\s*d/i); if(d)return d[1]+'d';
+ const mon=t.match(/([A-Z][a-z]{2})\s+(\d{1,2})/); if(mon)return mon[1]+' '+mon[2];
+ return t;
+}
 function renderActivity(){
  const box=$('#soActivity'); if(!box)return;
- const items=[];
- (POSTS||[]).forEach((p,i)=>items.push({kind:'post',i:i,u:p.u,txt:p.txt,t:p.t,e:'📝'}));
- (CLIPS||[]).forEach((c,i)=>items.push({kind:'clip',i:i,u:c.u,txt:c.c,t:'New short',e:'🎬'}));
- if(!items.length){box.innerHTML='<div class="parent-note">No friend activity yet.</div>';return;}
- box.innerHTML=items.map((it,idx)=>{
-  const fr=(typeof FRIENDS!=='undefined'&&FRIENDS[it.u])?FRIENDS[it.u]:(A||{});
+ function row(it){
   return '<button class="so-act" data-kind="'+it.kind+'" data-i="'+it.i+'">'
-   +'<span class="uav">'+avatarSVG(fr,'front')+'</span>'
-   +'<div class="nm"><b>@'+it.u+'</b><span>'+it.e+' '+it.txt+'</span></div>'
-   +'<small>'+it.t+'</small></button>';
- }).join('');
+   +'<span class="uav">'+socialAvatar(it.u)+'</span>'
+   +'<div class="nm"><b>'+it.u+'</b><span>'+it.txt+'</span></div>'
+   +'<div class="so-meta"><span class="so-kind">'+it.e+'</span><small>'+it.t+'</small></div></button>';
+ }
+ function group(title,icon,items){
+  if(!items.length)return '';
+  return '<div class="so-agroup"><div class="so-ahead">'+icon+' '+title+'<em>'+items.length+'</em></div><div class="so-alist">'
+   +items.map(row).join('')+'</div></div>';
+ }
+ const posts=(POSTS||[]).map((p,i)=>({kind:'post',i:i,u:p.u,txt:p.txt,t:shortTime(p.t),e:'📝'}));
+ const shorts=(CLIPS||[]).map((c,i)=>({kind:'clip',i:i,u:c.u,txt:c.c,t:'New',e:'🎬'}));
+ const rounds=(typeof ROUNDS!=='undefined'?ROUNDS:[]).slice(0,3).map((r,i)=>{
+  const tot=typeof totals==='function'?totals(r):null;
+  const line=tot?('Shot a '+tot.s+(tot.d>0?' (+'+tot.d+')':tot.d<0?(' ('+tot.d+')'):' (E)')+' at '+r.c):('Logged a round at '+r.c);
+  return {kind:'round',i:i,u:'AndersAces',txt:line,t:shortTime(r.d),e:'⛳'};
+ });
+ const html=group('Posts','📝',posts)+group('Shorts','🎬',shorts)+group('Rounds','⛳',rounds);
+ box.innerHTML=html||'<div class="parent-note">No friend activity yet.</div>';
  $$('#soActivity .so-act').forEach(b=>b.onclick=()=>{
   if(b.dataset.kind==='clip') setSoTab('shorts');
+  else if(b.dataset.kind==='round'){ go('rounds','tab'); setTimeout(()=>{ if(typeof setR==='function') setR(+b.dataset.i); },60); }
   else setSoTab('posts');
  });
+}
+function closePlusMenu(){
+ const w=$('#soPlusWrap'); if(w) w.classList.remove('show');
+ const btn=$('#recBtn'); if(btn) btn.setAttribute('aria-expanded','false');
+}
+function openPlusMenu(){
+ const w=$('#soPlusWrap'); if(!w)return;
+ w.classList.add('show');
+ const btn=$('#recBtn'); if(btn) btn.setAttribute('aria-expanded','true');
+}
+function openRecordSheet(){
+ closePlusMenu();
+ openSheet('<h2>🎬 Record a Clip</h2><div class="rec-view"><span class="rec-dot"><i></i> REC 0:03</span><div style="font-size:70px">🏌️</div><div style="position:absolute;bottom:12px;font-weight:800;font-size:13px;color:#aaa">Camera preview (demo)</div></div>'+
+  '<div class="parent-note" style="margin-top:0"><span style="font-size:24px">🔒</span><span>Clips are shared with <b>friends only</b>. Your parent can change who sees your posts in Parent Controls.</span></div>'+
+  '<button class="btn" style="width:100%" onclick="closeSheet();toast(\'🎬 Demo only: no clip recorded\')">● Start Recording</button>');
+}
+function openComposeSheet(){
+ closePlusMenu();
+ openSheet('<h2>✍️ Write a Post</h2>'+
+  '<div class="parent-note" style="margin-top:0"><span style="font-size:24px">🔒</span><span>This post is shared with <b>friends only</b>.</span></div>'+
+  '<textarea class="su-in so-compose" id="postTxt" maxlength="200" placeholder="What\'s happening on the course?" aria-label="Post text"></textarea>'+
+  '<button class="so-photo" id="postPhoto" type="button">📷 Add a photo (optional)</button>'+
+  '<button class="btn green" style="width:100%" id="doPost">Post to Friends</button>'+
+  '<button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeSheet()">Cancel</button>');
+ let photo=null;
+ const ph=$('#postPhoto');
+ if(ph) ph.onclick=()=>{
+  if(photo){ photo=null; ph.classList.remove('on'); ph.textContent='📷 Add a photo (optional)'; }
+  else { photo={img:'⛳',bg:'linear-gradient(135deg,#7fd6ff,#4cc95e)'}; ph.classList.add('on'); ph.textContent='⛳'; }
+ };
+ const inp=$('#postTxt'); if(inp)inp.focus();
+ const goBtn=$('#doPost');
+ if(goBtn) goBtn.onclick=()=>{
+  const txt=(($('#postTxt')&&$('#postTxt').value)||'').trim();
+  if(!txt){toast('Write a little something first');return;}
+  const safe=txt.replace(/</g,'&lt;').slice(0,200);
+  const post={id:'p-'+Date.now().toString(36),u:'AndersAces',t:'Just now',txt:safe,l:0,c:[],mine:true};
+  if(photo){post.img=photo.img;post.bg=photo.bg;}
+  POSTS.unshift(post);
+  saveUserPosts();
+  closeSheet();
+  setSoTab('posts',{quiet:true});
+  if(typeof renderSocialLanding==='function') renderSocialLanding();
+  toast('🎉 Posted to Friends');
+ };
 }
 function setSoTab(id,opts){
  opts=opts||{};
@@ -2064,14 +2178,15 @@ function setSoTab(id,opts){
 }
 function bindSocialTabs(){
  $$('.so-tab').forEach(b=>b.onclick=()=>setSoTab(b.dataset.so));
+ const rec=$('#recBtn');
+ if(rec) rec.onclick=()=>{ if($('#soPlusWrap')&&$('#soPlusWrap').classList.contains('show')) closePlusMenu(); else openPlusMenu(); };
+ const back=$('#soPlusBack'); if(back) back.onclick=closePlusMenu;
+ const ps=$('#plusShort'); if(ps) ps.onclick=openRecordSheet;
+ const pp=$('#plusPost'); if(pp) pp.onclick=openComposeSheet;
  renderSocialLanding();
  setSoTab(soTab,{quiet:true});
 }
-window.__social={setTab:setSoTab,get tab(){return soTab},render:renderSocialLanding};
-
-$('#recBtn').onclick=()=>{openSheet('<h2>🎬 Record a Clip</h2><div class="rec-view"><span class="rec-dot"><i></i> REC 0:03</span><div style="font-size:70px">🏌️</div><div style="position:absolute;bottom:12px;font-weight:800;font-size:13px;color:#aaa">Camera preview (demo)</div></div>'+
- '<div class="parent-note" style="margin-top:0"><span style="font-size:24px">🔒</span><span>Clips are shared with <b>friends only</b>. Your parent can change who sees your posts in Parent Controls.</span></div>'+
- '<button class="btn" style="width:100%" onclick="closeSheet();toast(\'🎬 Demo only: no clip recorded\')">● Start Recording</button>')};
+window.__social={setTab:setSoTab,get tab(){return soTab},render:renderSocialLanding,openPlus:openPlusMenu,closePlus:closePlusMenu,openRecord:openRecordSheet,openCompose:openComposeSheet};
 
 /* ================= PROFILE ================= */
 const BADGES=[['🐦','First Birdie','#3fb8ff'],['🔥','7-Day Streak','#ff8a3d'],['🎯','Pin Seeker','#ff4d5e'],['🚀','200+ Drive','#9b6bff'],['🗺️','Explorer','#14954a'],['⛳','10 Rounds','#ffd23f'],['🦅','Eagle?','rgba(255,255,255,.15)']];
@@ -2440,7 +2555,7 @@ function classify(el){
  if(el.matches('#shorts .like,.plike'))return el.classList.contains('liked')?['tick']:['chime'];
  if(el.matches('#buyBtn,#eqBtn,#saveCur,#savePresetBtn,#presetGrid [data-i],.gear,.av-pick,#doAddFriend,#startPlayBtn,#startRoundBtn,.inv,#openBagBtn'))return['chime'];
  if(el.matches('.slot-row,.cover-sw,.model-sw,#bagPutBack'))return['swoosh'];
- if(el.matches('.tog,.sw,.iconbtn,.pfp,.pcm,.so-tab,.so-act'))return['tick'];
+ if(el.matches('.tog,.sw,.iconbtn,.pfp,.pcm,.so-tab,.so-act,.so-plus-opt,.so-photo'))return['tick'];
  if(el.matches('.btn,.mg-item .play,.item,.bundle,.quest,.pin,.drop,.rrow'))return['pop'];
  return['tick'];
 }

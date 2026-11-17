@@ -429,6 +429,42 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .mg-card{bottom:calc(var(--navH) + 12px)}
 .mg-fab{bottom:calc(var(--navH) + 16px)}
 .fab-rec{bottom:calc(var(--navH) + 16px)}
+/* ===== SOCIAL TABS ===== */
+.so-top{flex:none;padding:8px 16px 0;z-index:3;background:transparent}
+.so-landing{display:flex;align-items:center;gap:12px;margin-bottom:10px;border-radius:22px;padding:10px 12px;background:rgba(255,255,255,.10);border:1px solid var(--glass-hi);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:var(--glass-shadow),var(--glass-hi)}
+.so-landing .uav{width:52px;height:52px;flex:none;border:2px solid rgba(255,255,255,.45)}
+.so-landing .meta{flex:1;min-width:0}
+.so-landing .meta h1{font-size:22px;margin:0;font-weight:900;letter-spacing:-.3px;line-height:1.1;text-shadow:0 2px 0 rgba(0,0,0,.2)}
+.so-landing .handle{font-size:12px;font-weight:800;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.so-landing .hi{font-size:11px;font-weight:800;color:var(--muted);margin-top:3px}
+.so-code{flex:none;text-align:right}
+.so-code small{display:block;font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.3px;text-transform:uppercase}
+.so-code b{display:block;font-size:13px;font-weight:900;letter-spacing:.2px}
+.so-tabs{display:flex;gap:6px;padding:0 0 10px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.so-tabs::-webkit-scrollbar{display:none}
+.so-tab{flex:1 1 0;min-width:0;padding:8px 4px;border-radius:999px;font-weight:900;font-size:12px;color:#fff;background:rgba(255,255,255,.14);border:1px solid var(--glass-hi);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:var(--glass-shadow);white-space:nowrap}
+.so-tab.on{background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(240,250,245,.84));color:#0b5d2e;border-color:rgba(255,255,255,.55);box-shadow:inset 0 1px 0 #fff,0 4px 12px rgba(0,0,0,.18)}
+.so-pane{display:none}
+.so-pane.on{display:block}
+#s-social.tab-shorts #socialScroll{display:flex;flex-direction:column;overflow:hidden;padding-bottom:calc(var(--navH) + 86px)}
+#s-social.tab-shorts .so-pane.on{flex:1;min-height:0;display:flex;flex-direction:column}
+#s-social.tab-shorts .shorts{flex:1;height:auto;min-height:240px;max-height:none}
+#s-social .fab-rec{display:none}
+#s-social.tab-shorts .fab-rec{display:grid}
+.so-act{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border-radius:20px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,.10);border:1px solid var(--glass-hi);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:var(--glass-shadow);color:#fff}
+.so-act .uav{width:42px;height:42px;flex:none}
+.so-act .nm{flex:1;min-width:0}
+.so-act .nm b{display:block;font-size:14px;font-weight:900}
+.so-act .nm span{display:block;font-size:12px;font-weight:800;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.so-act small{flex:none;font-size:11px;font-weight:800;color:var(--muted)}
+@media (max-height:700px){
+  .so-landing{padding:8px 10px;margin-bottom:8px;gap:10px}
+  .so-landing .uav{width:44px;height:44px}
+  .so-landing .meta h1{font-size:19px}
+  .so-tabs{padding-bottom:8px}
+  .so-tab{padding:7px 4px;font-size:11.5px}
+}
+
 .btn.gold{background:linear-gradient(180deg,rgba(255,232,130,.94),rgba(255,198,40,.88))}
 .nav button.home.on .ni{background:linear-gradient(180deg,rgba(255,232,130,.85),rgba(255,195,35,.75))}
 /* ===== Scoreboard ===== */
@@ -849,15 +885,33 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
   <!-- SOCIAL -->
   <section class="screen" id="s-social">
-    <div class="hdr"><h1>Social</h1><span class="fo-badge">🔒 Friends only</span></div>
+    <div class="so-top">
+      <div class="so-landing" id="soLanding"></div>
+      <div class="so-tabs" role="tablist" aria-label="Social sections">
+        <button class="so-tab on" role="tab" aria-selected="true" data-so="friends">Friends</button>
+        <button class="so-tab" role="tab" aria-selected="false" data-so="shorts">Shorts</button>
+        <button class="so-tab" role="tab" aria-selected="false" data-so="activity">Activity</button>
+        <button class="so-tab" role="tab" aria-selected="false" data-so="posts">Posts</button>
+      </div>
+    </div>
     <div class="scroll" id="socialScroll">
-      <div class="sec-title" style="margin-top:4px">👥 Friends <span class="free-tag">FRIENDS ONLY</span></div>
-      <div id="friendsList"></div>
-      <button class="btn white" style="width:100%;margin:4px 0 10px" id="addFriendBtn">＋ Add a Friend</button>
-      <div class="shorts" id="shorts"></div>
-      <div class="parent-note"><span style="font-size:26px">👪</span><span>Only your friends can see your clips and posts. <b>A parent toggle</b> controls who can see them, and new friends need a parent OK.</span></div>
-      <div class="sec-title">👟 Friend Activity</div>
-      <div id="posts"></div>
+      <div class="so-pane on" data-so-pane="friends" role="tabpanel" id="soPaneFriends">
+        <div class="sec-title" style="margin-top:4px">👥 Friends <span class="free-tag">FRIENDS ONLY</span></div>
+        <div id="friendsList"></div>
+        <button class="btn white" style="width:100%;margin:4px 0 10px" id="addFriendBtn">＋ Add a Friend</button>
+        <div class="parent-note"><span style="font-size:26px">👪</span><span>Only your friends can see your clips and posts. <b>A parent toggle</b> controls who can see them, and new friends need a parent OK.</span></div>
+      </div>
+      <div class="so-pane" data-so-pane="shorts" role="tabpanel" id="soPaneShorts">
+        <div class="shorts" id="shorts"></div>
+      </div>
+      <div class="so-pane" data-so-pane="activity" role="tabpanel" id="soPaneActivity">
+        <div class="sec-title" style="margin-top:4px">👟 Friend Activity</div>
+        <div id="soActivity"></div>
+      </div>
+      <div class="so-pane" data-so-pane="posts" role="tabpanel" id="soPanePosts">
+        <div class="sec-title" style="margin-top:4px">Posts</div>
+        <div id="posts"></div>
+      </div>
     </div>
     <button class="fab-rec" id="recBtn" aria-label="Record a clip"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
   </section>
@@ -1501,6 +1555,7 @@ function go(id,mode){
  if(id==='minigames'||id==='quests') setTimeout(()=>{},0);
  if(leaving==='bag'&&window.__bag) window.__bag.leave();
  if(id==='bag'&&window.__bag) window.__bag.enter();
+ if(id==='social'&&typeof renderSocialLanding==='function'){renderSocialLanding();setSoTab(soTab||'friends',{quiet:true});}
 }
 function back(){ if(stack.length>1){stack.pop();go(stack[stack.length-1],'back')} else if(cur!=='home'){go('home','back')} }
 window.go=go;
@@ -1959,6 +2014,61 @@ function renderPosts(){$('#posts').innerHTML=POSTS.map((p,i)=>'<div class="post"
  $$('[data-send]').forEach(b=>b.onclick=()=>{const i=b.dataset.send,inp=$('input[data-i="'+i+'"]');const v=inp.value.trim();if(!v)return;POSTS[i].c.push(['AndersAces',v.replace(/</g,'&lt;')]);POSTS[i].open=true;renderPosts();toast('💬 Comment posted (demo)')});
  $$('.cform input').forEach(inp=>inp.onkeydown=e=>{if(e.key==='Enter')$('[data-send="'+inp.dataset.i+'"]').click()});
 }
+
+let soTab='friends';
+function renderSocialLanding(){
+ const el=$('#soLanding'); if(!el)return;
+ const n=(FR&&FR.list)?FR.list.length:0;
+ const clips=(typeof CLIPS!=='undefined')?CLIPS.length:0;
+ const av=typeof avatarSVG==='function'?avatarSVG(A||{},'front'):'';
+ el.innerHTML='<span class="uav">'+av+'</span>'
+  +'<div class="meta"><h1>Social</h1><div class="handle">@AndersAces</div>'
+  +'<div class="hi">'+n+' friend'+(n===1?'':'s')+' · '+clips+' short'+(clips===1?'':'s')+' · 🔒 Friends only</div></div>'
+  +'<div class="so-code"><small>My code</small><b>'+((FR&&FR.code)||'BQ-AND1')+'</b></div>';
+}
+function renderActivity(){
+ const box=$('#soActivity'); if(!box)return;
+ const items=[];
+ (POSTS||[]).forEach((p,i)=>items.push({kind:'post',i:i,u:p.u,txt:p.txt,t:p.t,e:'📝'}));
+ (CLIPS||[]).forEach((c,i)=>items.push({kind:'clip',i:i,u:c.u,txt:c.c,t:'New short',e:'🎬'}));
+ if(!items.length){box.innerHTML='<div class="parent-note">No friend activity yet.</div>';return;}
+ box.innerHTML=items.map((it,idx)=>{
+  const fr=(typeof FRIENDS!=='undefined'&&FRIENDS[it.u])?FRIENDS[it.u]:(A||{});
+  return '<button class="so-act" data-kind="'+it.kind+'" data-i="'+it.i+'">'
+   +'<span class="uav">'+avatarSVG(fr,'front')+'</span>'
+   +'<div class="nm"><b>@'+it.u+'</b><span>'+it.e+' '+it.txt+'</span></div>'
+   +'<small>'+it.t+'</small></button>';
+ }).join('');
+ $$('#soActivity .so-act').forEach(b=>b.onclick=()=>{
+  if(b.dataset.kind==='clip') setSoTab('shorts');
+  else setSoTab('posts');
+ });
+}
+function setSoTab(id,opts){
+ opts=opts||{};
+ if(!id||['friends','shorts','activity','posts'].indexOf(id)<0)id='friends';
+ soTab=id;
+ const root=$('#s-social');
+ if(root){root.classList.remove('tab-friends','tab-shorts','tab-activity','tab-posts');root.classList.add('tab-'+id);}
+ $$('.so-tab').forEach(b=>{
+  const on=b.dataset.so===id;
+  b.classList.toggle('on',on);
+  b.setAttribute('aria-selected',on?'true':'false');
+ });
+ $$('.so-pane').forEach(p=>p.classList.toggle('on',p.dataset.soPane===id));
+ const sc=$('#socialScroll'); if(sc) sc.scrollTop=0;
+ if(id==='friends'&&typeof renderFriends==='function') renderFriends();
+ if(id==='posts'&&typeof renderPosts==='function') renderPosts();
+ if(id==='activity') renderActivity();
+ if(!opts.quiet&&typeof sfx==='function') sfx('tick');
+}
+function bindSocialTabs(){
+ $$('.so-tab').forEach(b=>b.onclick=()=>setSoTab(b.dataset.so));
+ renderSocialLanding();
+ setSoTab(soTab,{quiet:true});
+}
+window.__social={setTab:setSoTab,get tab(){return soTab},render:renderSocialLanding};
+
 $('#recBtn').onclick=()=>{openSheet('<h2>🎬 Record a Clip</h2><div class="rec-view"><span class="rec-dot"><i></i> REC 0:03</span><div style="font-size:70px">🏌️</div><div style="position:absolute;bottom:12px;font-weight:800;font-size:13px;color:#aaa">Camera preview (demo)</div></div>'+
  '<div class="parent-note" style="margin-top:0"><span style="font-size:24px">🔒</span><span>Clips are shared with <b>friends only</b>. Your parent can change who sees your posts in Parent Controls.</span></div>'+
  '<button class="btn" style="width:100%" onclick="closeSheet();toast(\'🎬 Demo only: no clip recorded\')">● Start Recording</button>')};
@@ -2269,6 +2379,7 @@ function enhanceRoundCard(){
 }
 
 const _addFr=$('#addFriendBtn'); if(_addFr)_addFr.onclick=addFriendSheet;
+if(typeof bindSocialTabs==='function')bindSocialTabs();
 const _st=$('#startRoundBtn'); if(_st)_st.onclick=()=>setupRound();
 enhanceRoundCard();
 loadRoundHistory();
@@ -2329,7 +2440,7 @@ function classify(el){
  if(el.matches('#shorts .like,.plike'))return el.classList.contains('liked')?['tick']:['chime'];
  if(el.matches('#buyBtn,#eqBtn,#saveCur,#savePresetBtn,#presetGrid [data-i],.gear,.av-pick,#doAddFriend,#startPlayBtn,#startRoundBtn,.inv,#openBagBtn'))return['chime'];
  if(el.matches('.slot-row,.cover-sw,.model-sw,#bagPutBack'))return['swoosh'];
- if(el.matches('.tog,.sw,.iconbtn,.pfp,.pcm'))return['tick'];
+ if(el.matches('.tog,.sw,.iconbtn,.pfp,.pcm,.so-tab,.so-act'))return['tick'];
  if(el.matches('.btn,.mg-item .play,.item,.bundle,.quest,.pin,.drop,.rrow'))return['pop'];
  return['tick'];
 }

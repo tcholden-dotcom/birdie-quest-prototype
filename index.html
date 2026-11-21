@@ -775,6 +775,34 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .pl-tpl .e{font-size:30px;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:rgba(255,255,255,.15);flex:none}
 .pl-tpl b{font-size:16px;font-weight:900;display:block}
 .pl-tpl span{font-size:12px;font-weight:800;color:var(--muted)}
+
+/* Practice hub + Me tab */
+.pr-lead{font-size:13px;font-weight:800;color:var(--muted);margin:0 0 14px;line-height:1.4}
+.pr-card{display:flex;align-items:center;gap:12px;width:100%;text-align:left;color:#fff;padding:14px 14px;margin-bottom:10px;border-radius:22px;background:rgba(255,255,255,.12);border:1px solid var(--glass-hi);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:var(--glass-shadow),var(--glass-hi)}
+.pr-card .em{width:48px;height:48px;border-radius:16px;flex:none;display:grid;place-items:center;font-size:24px;background:rgba(255,255,255,.16)}
+.pr-card .txt{flex:1;min-width:0}
+.pr-card .t{display:block;font-size:17px;font-weight:900;letter-spacing:-.2px}
+.pr-card .s{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-top:2px}
+.pr-card .go{font-size:24px;color:var(--muted);flex:none}
+.pr-card .free-tag{flex:none;margin-left:auto}
+.pr-games{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px}
+.pr-game{display:flex;align-items:center;gap:8px;padding:12px 10px;border-radius:18px;color:#fff;text-align:left;background:rgba(255,255,255,.10);border:1px solid var(--glass-hi);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:var(--glass-shadow)}
+.pr-game .em{font-size:22px;flex:none}
+.pr-game b{display:block;font-size:13px;font-weight:900;line-height:1.2}
+.pr-game span{display:block;font-size:11px;font-weight:800;color:var(--muted)}
+.pr-today{margin-bottom:12px}
+.me-hero{text-align:center;padding:8px 0 14px}
+.me-hero .av-wrap{width:120px;height:120px;margin:0 auto 8px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.45);background:linear-gradient(160deg,var(--skyL),var(--sky));box-shadow:0 8px 0 rgba(0,0,0,.18),0 16px 28px rgba(0,0,0,.25);position:relative}
+.me-hero .av-wrap svg{width:100%;height:auto;transform:translateY(8px) scale(1.15);transform-origin:50% 0}
+.me-hero h2{margin:8px 0 0;font-size:24px;font-weight:900;letter-spacing:-.3px;text-shadow:0 2px 0 rgba(0,0,0,.2)}
+.me-hero .handle{font-size:13px;font-weight:800;color:var(--muted);margin-top:2px}
+.me-actions{display:flex;flex-direction:column;gap:10px;margin:14px 0 8px}
+.me-actions .btn{width:100%;justify-content:flex-start;gap:12px;text-align:left}
+.me-actions .btn .go{margin-left:auto;font-size:22px;opacity:.7}
+@media (max-height:760px){
+ .me-hero .av-wrap{width:88px;height:88px}
+ .pr-card{padding:12px}
+}
 .free-tag{display:inline-block;font-size:10px;font-weight:900;letter-spacing:.5px;padding:3px 7px;border-radius:8px;background:rgba(109,255,143,.25);color:var(--pts);vertical-align:middle}
 .pro-link{display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin-top:14px}
 
@@ -967,7 +995,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
     <div class="home-top">
       <div class="hi"><b>Hey, Anders! 👋</b><span>Ready to crush some golf?</span></div>
       <span class="chip pts"><i class="ball"></i><span class="ptsval">2,450</span></span>
-      <button class="pfp" data-avatar="head" onclick="go('profile','push')" aria-label="Profile"></button>
+      <button class="pfp" data-avatar="head" onclick="go('me','tab')" aria-label="Profile"></button>
     </div>
     <div class="globe-area">
       <div class="level-pill">⭐ Lv 12<small>Birdie Hunter</small></div>
@@ -995,14 +1023,14 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
     <div class="home-btns">
       <button class="btn wide" onclick="go('minigames','push')"><span class="em">🎯</span><span class="txt"><span class="t">Mini-Games</span><span class="s">Closest to the Pin, Longest Drive & more</span></span><span class="go">›</span></button>
       <button class="btn gold half" onclick="go('quests','push')"><span class="em">🗺️</span><span class="txt"><span class="t">Side Quests</span><span class="s">3 active</span></span></button>
-      <button class="btn white half" onclick="go('profile','push')"><span class="em">🏅</span><span class="txt"><span class="t">Profile</span><span class="s">Lv 12 · 68%</span></span></button>
-      <button class="btn green wide slim" onclick="go('practice','push')"><span class="em">📝</span><span class="txt"><span class="t">My Practice Week</span><span class="s" id="plHomeSub">Build your at-home routine</span></span><span class="go">›</span></button>
+      <button class="btn white half" onclick="go('me','tab')"><span class="em">🏅</span><span class="txt"><span class="t">Profile</span><span class="s">Lv 12 · 68%</span></span></button>
+      <button class="btn green wide slim" onclick="go('plog','push')"><span class="em">📝</span><span class="txt"><span class="t">My Practice Week</span><span class="s" id="plHomeSub">Build your at-home routine</span></span><span class="go">›</span></button>
     </div>
   </section>
 
   <!-- ROUNDS -->
   <section class="screen" id="s-rounds">
-    <div class="hdr"><h1>My Rounds</h1><span class="chip pts"><i class="ball"></i><span class="ptsval">2,450</span></span><button class="pfp" data-avatar="head" onclick="go('profile','push')"></button></div>
+    <div class="hdr"><h1>My Rounds</h1><span class="chip pts"><i class="ball"></i><span class="ptsval">2,450</span></span><button class="pfp" data-avatar="head" onclick="go('me','tab')"></button></div>
     <div class="scroll">
       <div class="carousel" id="carousel"><div class="track" id="track"></div></div>
       <div class="car-ctrl">
@@ -1215,7 +1243,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <div class="lb"><div class="lt">Birdie Hunter <span>68%</span></div><div class="bar"><i style="width:68%"></i></div><div class="lt" style="margin-top:6px"><span>680 / 1,000 XP → 🦅 Eagle Elite</span></div></div>
         <div class="hcp"><b>18.4</b><span>HANDICAP</span></div>
       </div>
-      <button class="btn green pro-link" onclick="go('practice','push')"><span style="font-size:24px">📝</span><span style="flex:1">My Practice Week</span><span>›</span></button>
+      <button class="btn green pro-link" onclick="go('plog','push')"><span style="font-size:24px">📝</span><span style="flex:1">My Practice Week</span><span>›</span></button>
       <div class="sec-title">🏆 Scoreboard</div>
       <div class="sb-grid" id="profSb"></div>
       <div class="sec-title">🏅 Badges</div>
@@ -1225,8 +1253,59 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
     </div>
   </section>
 
-  <!-- PRACTICE LOG -->
+  <!-- PRACTICE HUB (tab) -->
   <section class="screen" id="s-practice">
+    <div class="hdr"><h1>Practice</h1><span class="free-tag">FREE</span></div>
+    <div class="scroll" style="padding-bottom:calc(var(--navH) + 24px)">
+      <p class="pr-lead">Your practice log, mini-games, and daily challenges live here. The practice log stays free.</p>
+      <button class="pr-card" id="prOpenLog" type="button">
+        <span class="em">📝</span>
+        <span class="txt"><span class="t">My Practice Week</span><span class="s" id="plHubSub">Build your at-home routine</span></span>
+        <span class="free-tag">FREE</span>
+        <span class="go">›</span>
+      </button>
+      <div class="sec-title">🎮 Mini-Games</div>
+      <div class="pr-games" id="prGames"></div>
+      <button class="pr-card" id="prOpenGames" type="button">
+        <span class="em">🎯</span>
+        <span class="txt"><span class="t">All mini-games</span><span class="s">Closest to the Pin, Longest Drive &amp; more</span></span>
+        <span class="go">›</span>
+      </button>
+      <div class="sec-title">🗺️ Today</div>
+      <button class="pr-card pr-today" id="prToday" type="button">
+        <span class="em" id="prTodayEm">🐦</span>
+        <span class="txt"><span class="t" id="prTodayN">Daily challenge</span><span class="s" id="prTodayS">Open Side Quests</span></span>
+        <span class="go">›</span>
+      </button>
+      <button class="pr-card" id="prOpenQuests" type="button">
+        <span class="em">🗺️</span>
+        <span class="txt"><span class="t">Side Quests</span><span class="s" id="prQuestSub">3 active</span></span>
+        <span class="go">›</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ME (tab) -->
+  <section class="screen" id="s-me">
+    <div class="hdr"><h1>Me</h1><button class="iconbtn" id="meGear" type="button" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a1.7 1.7 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1-.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1-.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
+    <div class="scroll" style="padding-bottom:calc(var(--navH) + 24px)">
+      <div class="me-hero">
+        <button class="av-wrap" id="meAvBtn" type="button" aria-label="Open avatar closet" data-avatar="full"></button>
+        <h2>Anders</h2>
+        <div class="handle">@AndersAces · Lv 12 · Birdie Hunter</div>
+      </div>
+      <div class="pstats" id="meStats"></div>
+      <div class="me-actions">
+        <button class="btn green" type="button" id="meBag"><span style="font-size:22px">⛳</span><span style="flex:1">My Bag</span><span class="go">›</span></button>
+        <button class="btn white" type="button" id="meAvatar"><span style="font-size:22px">🎭</span><span style="flex:1">Avatar closet</span><span class="go">›</span></button>
+        <button class="btn gold" type="button" id="meSettings"><span style="font-size:22px">⚙️</span><span style="flex:1">Settings</span><span class="go">›</span></button>
+        <button class="btn ghost" type="button" id="meProfile"><span style="font-size:22px">🏅</span><span style="flex:1">Full profile &amp; badges</span><span class="go">›</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRACTICE LOG -->
+  <section class="screen" id="s-plog">
     <div class="hdr"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h1 style="font-size:23px">My Practice Week</h1><span class="free-tag">FREE</span></div>
     <div class="scroll">
       <div class="glass-card pl-week" id="plWeek"></div>
@@ -1245,8 +1324,10 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
   <nav class="nav" id="nav">
     <button data-tab="rounds"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V3"/><path d="M6 4h11l-2.5 4L17 12H6"/></svg></span>Rounds</button>
+    <button data-tab="practice"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4.5h6v3H9z"/><path d="M9 13l2 2 4-4"/></svg></span>Practice</button>
     <button data-tab="home" class="home on"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span>Home</button>
     <button data-tab="social" id="navSocial"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></svg></span>Social<span class="nav-badge" id="navSocialBadge"></span></button>
+    <button data-tab="me"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span>Me</button>
   </nav>
 
   <div class="toast" id="toast"></div>
@@ -1809,7 +1890,7 @@ function renderAvatars(){
 }
 
 /* ================= NAV / UI ================= */
-const ROOTS=['home','rounds','social'];
+const ROOTS=['home','rounds','practice','social','me'];
 let stack=['home'], cur='home';
 function go(id,mode){
  if(id===cur)return;
@@ -1833,6 +1914,9 @@ function go(id,mode){
  if(leaving==='bag'&&window.__bag) window.__bag.leave();
  if(id==='bag'&&window.__bag) window.__bag.enter();
  if(id==='social'&&typeof renderSocialLanding==='function'){renderSocialLanding();setSoTab(soTab||'friends',{quiet:true});}
+ if(id==='practice'&&typeof renderPracticeHub==='function') renderPracticeHub();
+ if(id==='me'&&typeof renderMe==='function') renderMe();
+ if(id==='plog'&&typeof renderPractice==='function') renderPractice();
 }
 function back(){ if(stack.length>1){stack.pop();go(stack[stack.length-1],'back')} else if(cur!=='home'){go('home','back')} }
 window.go=go;
@@ -3788,6 +3872,71 @@ if(typeof renderRecent==='function')renderRecent();
 window.__bq=Object.assign(window.__bq||{},{logRound:()=>setupRound(),setupRound:setupRound,inviteToRound:inviteToRound,addFriendSheet:addFriendSheet});
 
 const SETTINGS={parent:true,friends:true,notif:true,sound:true};
+
+function practiceTodayQuest(){
+ const list=(typeof QUESTS!=='undefined'?QUESTS:[]);
+ return list.find(q=>q.t==='challenge'&&q.p<q.of)||list.find(q=>q.t==='challenge')||null;
+}
+function renderPracticeHub(){
+ const games=$('#prGames');
+ if(games&&typeof GAMES!=='undefined'){
+  games.innerHTML=GAMES.map((g,i)=>'<button class="pr-game" type="button" data-g="'+i+'"><span class="em">'+g.e+'</span><span><b>'+g.n+'</b><span>Play ›</span></span></button>').join('');
+  $$('#prGames [data-g]').forEach(b=>b.onclick=()=>{ const i=+b.dataset.g; go('minigames','push'); setTimeout(()=>{ if(typeof playGame==='function') playGame(i); },260); });
+ }
+ const q=practiceTodayQuest();
+ const em=$('#prTodayEm'), n=$('#prTodayN'), sub=$('#prTodayS');
+ if(q){
+  if(em) em.textContent=q.e;
+  if(n) n.textContent=q.n;
+  if(sub) sub.textContent='Today · '+q.d+' · '+q.p+'/'+q.of;
+ }
+ const qs=$('#prQuestSub');
+ if(qs&&typeof QUESTS!=='undefined'){
+  const nAct=QUESTS.filter(x=>x.p<x.of).length;
+  qs.textContent=nAct+' active';
+ }
+ if(typeof renderPractice==='function') renderPractice();
+}
+function bindPracticeHub(){
+ const log=$('#prOpenLog'); if(log) log.onclick=()=>go('plog','push');
+ const all=$('#prOpenGames'); if(all) all.onclick=()=>go('minigames','push');
+ const qq=$('#prOpenQuests'); if(qq) qq.onclick=()=>go('quests','push');
+ const td=$('#prToday'); if(td) td.onclick=()=>{ const q=practiceTodayQuest(); go('quests','push'); if(q&&typeof questSheet==='function') setTimeout(()=>questSheet(q),260); };
+}
+function meComputedStats(){
+ const rounds=(typeof ROUNDS!=='undefined'&&ROUNDS)?ROUNDS:[];
+ let n=0,sum=0,sumD=0,best=null;
+ rounds.forEach(r=>{
+  if(typeof totals!=='function') return;
+  const t=totals(r);
+  if(t.p<=27) return;
+  n++; sum+=t.s; sumD+=t.d;
+  if(!best||t.d<best.d||(t.d===best.d&&t.s<best.s)) best={s:t.s,d:t.d};
+ });
+ const avg=n?Math.round((sum/n)*10)/10:'—';
+ const hcp=n?Math.abs(Math.round((sumD/n)*2*10)/10):'—';
+ return {played:rounds.length, best:best?best.s:'—', bestRel:best?best.d:0, avg, hcp};
+}
+function renderMe(){
+ const st=meComputedStats();
+ const box=$('#meStats');
+ if(box){
+  const rel=st.bestRel>0?('+'+st.bestRel):(st.bestRel===0?'E':String(st.bestRel));
+  box.innerHTML='<div class="stat"><b>'+st.played+'</b><span>Rounds</span></div>'+
+   '<div class="stat"><b>'+st.best+'</b><span>Best 9 · '+rel+'</span></div>'+
+   '<div class="stat"><b>'+st.hcp+'</b><span>HCP (est.)</span></div>';
+ }
+ if(typeof renderAvatars==='function') renderAvatars();
+}
+function bindMe(){
+ const gear=$('#meGear'); if(gear&&typeof settingsSheet==='function') gear.onclick=settingsSheet;
+ const set=$('#meSettings'); if(set&&typeof settingsSheet==='function') set.onclick=settingsSheet;
+ const bag=$('#meBag'); if(bag) bag.onclick=()=>go('bag','push');
+ const av=$('#meAvatar'); if(av) av.onclick=()=>go('avatar','push');
+ const avb=$('#meAvBtn'); if(avb) avb.onclick=()=>go('avatar','push');
+ const pf=$('#meProfile'); if(pf) pf.onclick=()=>go('profile','push');
+}
+
 function settingsSheet(){
  const row=(k,ic,t,s)=>'<div class="set-row"><div class="si">'+ic+'</div><div class="st">'+t+'<small>'+s+'</small></div><button class="tog '+(SETTINGS[k]?'on':'')+'" data-k="'+k+'" aria-label="'+t+'"></button></div>';
  openSheet('<h2>⚙️ Settings</h2>'+row('parent','👪','Parent Controls','Parent PIN needed to buy points or add friends')+row('friends','🔒','Friends-only posts','Managed by Parent Controls')+row('notif','🔔','Notifications','Quest + friend challenge alerts')+row('sound','🔊','Sounds','Swing whooshes & cheers')+
@@ -3803,6 +3952,8 @@ function settingsSheet(){
   if(k==='parent')toast(SETTINGS.parent?'👪 Parent Controls ON':'🔑 Parent PIN accepted (demo): controls OFF')});
 }
 $('#gearBtn').onclick=settingsSheet;
+ if(typeof bindPracticeHub==='function') bindPracticeHub();
+ if(typeof bindMe==='function') bindMe();
 
 /* ================= SOUND FX (Web Audio, synthesized) ================= */
 let soundOn=true;try{soundOn=localStorage.getItem('bq-sound')!=='off'}catch(_){}
@@ -3830,7 +3981,7 @@ const SFX={
 function sfx(name,arg){if(!soundOn)return;ensureAudio();if(!actx)return;const now=performance.now();if(now-lastSnd<70)return;lastSnd=now;
  try{SFX[name](actx.currentTime+0.005,arg)}catch(_){}}
 window.__sfx=sfx;
-const NAVP={rounds:0.84,shop:0.92,home:1,avatar:1.08,social:1.16};
+const NAVP={rounds:0.84,practice:0.92,home:1,social:1.08,me:1.16,shop:0.92,avatar:1.08};
 function classify(el){
  if(el.matches('.nav button'))return['tick',NAVP[el.dataset.tab]];
  if(el.matches('#randBtn'))return['dice'];
@@ -3840,7 +3991,7 @@ function classify(el){
  if(el.matches('#buyBtn,#eqBtn,#saveCur,#savePresetBtn,#presetGrid [data-i],.gear,.av-pick,#doAddFriend,#startPlayBtn,#startRoundBtn,.inv,#openBagBtn'))return['chime'];
  if(el.matches('.slot-row,.cover-sw,.model-sw,#bagPutBack'))return['swoosh'];
  if(el.matches('.tog,.sw,.iconbtn,.pfp,.pcm,.so-tab,.so-act,.so-plus-opt,.so-photo,.so-bell,.so-chat,.act-rail-btn,.so-nitem,.sc-row,.ask,.post-del,.clip-del,.lite-close,#uploadShortBtn,#mediaPrevRm,#mediaPrevRep,.msg-row,.msg-plus,.msg-send,.msg-info,.fl-star,.nm-pick,.inv-accept,.inv-decline'))return['tick'];
- if(el.matches('.btn,.home-tile,.mg-item .play,.item,.bundle,.quest,.pin,.drop,.rrow'))return['pop'];
+ if(el.matches('.btn,.home-tile,.pr-card,.pr-game,.me-hero .av-wrap,.mg-item .play,.item,.bundle,.quest,.pin,.drop,.rrow'))return['pop'];
  return['tick'];
 }
 document.addEventListener('click',e=>{
@@ -4643,7 +4794,9 @@ function renderPractice(){
  $$('#plList [data-up]').forEach(b=>b.onclick=()=>{const j=+b.dataset.up;if(j>0){[day[j-1],day[j]]=[day[j],day[j-1]];plSave();renderPractice()}});
  $$('#plList [data-dn]').forEach(b=>b.onclick=()=>{const j=+b.dataset.dn;if(j<day.length-1){[day[j+1],day[j]]=[day[j],day[j+1]];plSave();renderPractice()}});
  $$('#plList [data-rm]').forEach(b=>b.onclick=()=>{day.splice(+b.dataset.rm,1);plSave();renderPractice()});
- const hc=$('#plHomeSub');if(hc){const td=PL.plan[ti];hc.textContent=td.length?(td.filter(isDone).length+'/'+td.length+' drills today · '+pct+'% this week'):'Rest day · '+pct+'% this week'}
+ const td=PL.plan[ti];
+ const sub=td.length?(td.filter(isDone).length+'/'+td.length+' drills today · '+pct+'% this week'):'Rest day · '+pct+'% this week';
+ ['plHomeSub','plHubSub'].forEach(id=>{const hc=$('#'+id);if(hc)hc.textContent=sub})
 }
 function afterChange(completedOne){
  const day=PL.plan[plSel];plSave();renderPractice();

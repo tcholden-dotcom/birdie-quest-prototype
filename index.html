@@ -118,7 +118,7 @@ button{font-family:inherit;color:inherit;border:0;background:none;cursor:pointer
 .home-tile .txt{flex:1;min-width:0}
 .home-tile .t{display:block;font-size:18px;letter-spacing:-.2px;text-shadow:0 2px 0 rgba(0,0,0,.15)}
 .home-tile .s{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-top:1px}
-.home-btns{flex:none;display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:6px 16px 18px}
+.home-btns{flex:none;display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:6px 16px calc(var(--navH) + 18px)}
 .home-btns .btn{flex-direction:column;gap:2px;padding:14px 10px;min-height:76px}
 .home-btns .btn.wide{grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:14px;padding:14px 18px}
 .home-btns .btn .em{font-size:30px;line-height:1}
@@ -790,6 +790,38 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .pr-game .em{font-size:22px;flex:none}
 .pr-game b{display:block;font-size:13px;font-weight:900;line-height:1.2}
 .pr-game span{display:block;font-size:11px;font-weight:800;color:var(--muted)}
+/* ===== Daily challenge + streak ===== */
+.daily-card{flex:none;margin:4px 16px 8px;padding:14px 14px 12px;border-radius:24px;background:rgba(255,255,255,.14);border:1px solid var(--glass-hi);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:var(--glass-shadow),var(--glass-hi);color:#fff;text-align:left}
+.daily-card.done{background:linear-gradient(180deg,rgba(255,210,63,.18),rgba(255,255,255,.10))}
+.daily-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.daily-kicker{font-size:11px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);flex:1}
+.daily-date{font-size:11px;font-weight:800;color:var(--muted);padding:2px 0;background:none;border:0;color:var(--muted)}
+.daily-xp{flex:none;font-size:12px;font-weight:900;color:#4a3300;background:var(--gold);padding:4px 8px;border-radius:999px;box-shadow:0 2px 0 var(--gold2)}
+.daily-title{font-size:18px;font-weight:900;letter-spacing:-.2px;line-height:1.25;text-shadow:0 2px 0 rgba(0,0,0,.15);margin:2px 0 8px}
+.daily-title .em{margin-right:6px}
+.daily-prog{height:8px;border-radius:8px;background:rgba(0,0,0,.25);overflow:hidden;margin:0 0 6px}
+.daily-prog i{display:block;height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,var(--gold),#ffe48a);transition:width .35s}
+.daily-meta{font-size:11px;font-weight:800;color:var(--muted);margin-bottom:10px}
+.daily-acts{display:flex;gap:8px}
+.daily-acts .btn{flex:1;min-height:42px;padding:10px 12px;font-size:15px;border-radius:16px}
+.daily-tease{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.12);font-size:13px;font-weight:800;color:var(--muted);line-height:1.35}
+.daily-tease b{color:#fff;font-weight:900}
+.daily-dots{display:flex;justify-content:space-between;gap:4px;margin-top:12px;padding:0 2px}
+.daily-dot{flex:1;text-align:center}
+.daily-dot i{display:block;width:10px;height:10px;border-radius:50%;margin:0 auto 3px;background:rgba(255,255,255,.22)}
+.daily-dot.done i{background:var(--gold);box-shadow:0 0 0 3px rgba(255,210,63,.25)}
+.daily-dot.rest i{background:#fff;box-shadow:inset 0 0 0 2px var(--gold)}
+.daily-dot.today i{box-shadow:0 0 0 2px #fff}
+.daily-dot small{display:block;font-size:9px;font-weight:800;color:var(--muted);letter-spacing:.2px}
+.daily-card.nostreak .daily-dots,.streak-pill.hide-streak{display:none}
+#prDaily{margin:0 0 12px}
+#prDaily .daily-card{margin:0}
+@media (max-height:760px){
+ .daily-card{margin:2px 16px 6px;padding:10px 12px}
+ .daily-title{font-size:16px;margin-bottom:6px}
+ .daily-acts .btn{min-height:36px;padding:8px 10px;font-size:14px}
+}
+
 .pr-today{margin-bottom:12px}
 .me-hero{text-align:center;padding:8px 0 14px}
 .me-hero .av-wrap{width:120px;height:120px;margin:0 auto 8px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.45);background:linear-gradient(160deg,var(--skyL),var(--sky));box-shadow:0 8px 0 rgba(0,0,0,.18),0 16px 28px rgba(0,0,0,.25);position:relative}
@@ -999,7 +1031,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
     </div>
     <div class="globe-area">
       <div class="level-pill">⭐ Lv 12<small>Birdie Hunter</small></div>
-      <div class="streak-pill">🔥 7<small>day streak</small></div>
+      <div class="streak-pill" id="streakPill">🔥 0<small>day streak</small></div>
       <span class="spark" style="left:40px;top:90px">✦</span>
       <span class="spark" style="right:52px;top:120px;animation-delay:.7s">✦</span>
       <span class="spark" style="left:70px;bottom:60px;animation-delay:1.3s">✦</span>
@@ -1010,6 +1042,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <div class="globe-hint">👆 drag to spin the world</div>
       </div>
     </div>
+    <div id="homeDaily"></div>
     <div class="home-tiles">
       <button class="home-tile" id="homeShop" type="button" onclick="go('shop','push')">
         <span class="ico" aria-hidden="true"><svg class="shop-ico" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/><circle cx="17.5" cy="6.2" r="3.1" fill="#ffd23f" stroke="#e8a800" stroke-width="1.4"/><path d="M17.5 5.1v2.3" stroke="#7a5a00" stroke-width="1.3"/></svg></span>
@@ -1271,12 +1304,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <span class="txt"><span class="t">All mini-games</span><span class="s">Closest to the Pin, Longest Drive &amp; more</span></span>
         <span class="go">›</span>
       </button>
-      <div class="sec-title">🗺️ Today</div>
-      <button class="pr-card pr-today" id="prToday" type="button">
-        <span class="em" id="prTodayEm">🐦</span>
-        <span class="txt"><span class="t" id="prTodayN">Daily challenge</span><span class="s" id="prTodayS">Open Side Quests</span></span>
-        <span class="go">›</span>
-      </button>
+      <div class="sec-title">⛳ Today</div>
+      <div id="prDaily"></div>
       <button class="pr-card" id="prOpenQuests" type="button">
         <span class="em">🗺️</span>
         <span class="txt"><span class="t">Side Quests</span><span class="s" id="prQuestSub">3 active</span></span>
@@ -1914,6 +1943,7 @@ function go(id,mode){
  if(leaving==='bag'&&window.__bag) window.__bag.leave();
  if(id==='bag'&&window.__bag) window.__bag.enter();
  if(id==='social'&&typeof renderSocialLanding==='function'){renderSocialLanding();setSoTab(soTab||'friends',{quiet:true});}
+ if(id==='home'&&typeof renderDaily==='function') renderDaily();
  if(id==='practice'&&typeof renderPracticeHub==='function') renderPracticeHub();
  if(id==='me'&&typeof renderMe==='function') renderMe();
  if(id==='plog'&&typeof renderPractice==='function') renderPractice();
@@ -3873,23 +3903,225 @@ window.__bq=Object.assign(window.__bq||{},{logRound:()=>setupRound(),setupRound:
 
 const SETTINGS={parent:true,friends:true,notif:true,sound:true};
 
-function practiceTodayQuest(){
- const list=(typeof QUESTS!=='undefined'?QUESTS:[]);
- return list.find(q=>q.t==='challenge'&&q.p<q.of)||list.find(q=>q.t==='challenge')||null;
+/* ================= DAILY CHALLENGE (localStorage 'bq_daily') ================= */
+const DAILY_KEY='bq_daily';
+const DAILY_CHALS=[
+ {id:'putts3',e:'⛳',n:'Make 5 putts in a row from 3 ft',d:'Try the Putting Challenge, then mark it done.',xp:250,go:'putt'},
+ {id:'beatbest',e:'🚀',n:'Play a mini-game and beat your best',d:'Pick any mini-game and try for a new best.',xp:250,go:'minigames'},
+ {id:'chip15',e:'🏌️',n:'Log 15 minutes of chipping',d:'Add it to My Practice Week when you finish.',xp:250,go:'plog'},
+ {id:'ctp',e:'🎯',n:'Closest to the Pin — inside 10 feet',d:'Take a Closest to the Pin swing.',xp:200,go:'ctp'},
+ {id:'drive',e:'🚀',n:'Take a Longest Drive swing',d:'Open Longest Drive and let one fly.',xp:200,go:'drive'},
+ {id:'fairway',e:'🧭',n:'Hit 5 fairways in Fairway Finder',d:'Play Fairway Finder and mark it done.',xp:200,go:'fw'},
+ {id:'drill',e:'📝',n:'Log any drill in Practice Week',d:'Open your free practice log and check one off.',xp:150,go:'plog'},
+ {id:'puttgame',e:'⛳',n:'Play the Putting Challenge',d:'Sink a few in a row in the mini-game.',xp:200,go:'putt'},
+ {id:'range20',e:'⚾',n:'Log 20 range swings',d:'Write it in My Practice Week after you hit.',xp:250,go:'plog'},
+ {id:'anygame',e:'🎮',n:'Play any mini-game today',d:'One quick game counts. Then mark it done.',xp:150,go:'minigames'}
+];
+const DAILY_GO={minigames:['minigames'],putt:['minigames',2],drive:['minigames',1],ctp:['minigames',0],fw:['minigames',3],plog:['plog']};
+let DAILY={offset:0,streak:0,lastClaimDate:null,lastClaimId:null,history:{},restWeek:null,showStreak:true};
+
+function isoDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function parseISO(iso){const p=String(iso).split('-').map(Number);return new Date(p[0],(p[1]||1)-1,p[2]||1)}
+function isoAdd(iso,n){const d=parseISO(iso);d.setDate(d.getDate()+n);return isoDate(d)}
+function daysBetween(a,b){return Math.round((parseISO(b)-parseISO(a))/86400000)}
+function weekStart(iso){const d=parseISO(iso);const day=d.getDay();d.setDate(d.getDate()-(day===0?6:day-1));return isoDate(d)}
+function dailyToday(){const d=new Date();d.setDate(d.getDate()+(DAILY.offset||0));return isoDate(d)}
+function dailyHash(iso){let h=0;const s=String(iso);for(let i=0;i<s.length;i++)h=((h<<5)-h)+s.charCodeAt(i)|0;return Math.abs(h)}
+function challengeFor(iso){
+ const n=DAILY_CHALS.length;
+ const raw=iso=>{return dailyHash(iso)%n};
+ let i=raw(iso);
+ const y=isoAdd(iso,-1), yy=isoAdd(iso,-2);
+ let prev=raw(y); if(prev===raw(yy)) prev=(prev+1)%n;
+ if(i===prev) i=(i+1)%n;
+ return DAILY_CHALS[i];
 }
+function defaultDaily(){return {offset:0,streak:0,lastClaimDate:null,lastClaimId:null,history:{},restWeek:null,showStreak:true}}
+function loadDaily(){
+ try{DAILY=JSON.parse(localStorage.getItem(DAILY_KEY)||'null')}catch(e){DAILY=null}
+ if(!DAILY||typeof DAILY!=='object') DAILY=defaultDaily();
+ DAILY=Object.assign(defaultDaily(),DAILY);
+ if(!DAILY.history||typeof DAILY.history!=='object') DAILY.history={};
+ if(typeof DAILY.showStreak!=='boolean') DAILY.showStreak=true;
+}
+function saveDaily(){try{localStorage.setItem(DAILY_KEY,JSON.stringify(DAILY))}catch(e){}}
+function parseDailyParam(){
+ try{
+  const u=new URL(location.href);
+  const day=u.searchParams.get('day');
+  if(day==null||day==='') return;
+  if(day==='0') DAILY.offset=0;
+  else {const n=parseInt(day,10); if(!isNaN(n)) DAILY.offset=(DAILY.offset||0)+n;}
+  saveDaily();
+ }catch(e){}
+}
+function canUseRest(missedIso){return DAILY.restWeek!==weekStart(missedIso)}
+function gapCovered(last,today){
+ const gap=daysBetween(last,today);
+ if(gap<=1) return true;
+ for(let i=1;i<gap;i++){
+  if((DAILY.history||{})[isoAdd(last,i)]!=='rest') return false;
+ }
+ return true;
+}
+function applyStreakState(){
+ const today=dailyToday();
+ const last=DAILY.lastClaimDate;
+ if(!last) return;
+ const gap=daysBetween(last,today);
+ if(gap<=0) return; // today or future (demo back)
+ if(gap===1 || gapCovered(last,today)) return;
+ if(gap===2){
+  const missed=isoAdd(today,-1);
+  if(canUseRest(missed)){
+   DAILY.history=DAILY.history||{};
+   DAILY.history[missed]='rest';
+   DAILY.restWeek=weekStart(missed);
+   saveDaily();
+   return;
+  }
+ }
+ DAILY.streak=0;
+ saveDaily();
+}
+function isClaimedToday(){return DAILY.lastClaimDate===dailyToday()}
+function startDaily(){
+ const ch=challengeFor(dailyToday());
+ const spec=DAILY_GO[ch.go]||['minigames'];
+ const dest=spec[0];
+ const gi=spec[1];
+ if(dest==='plog') go('plog','push');
+ else {
+  go('minigames','push');
+  if(typeof gi==='number'&&typeof playGame==='function') setTimeout(()=>playGame(gi),280);
+ }
+ toast('When you finish, come back and tap Mark done.');
+}
+function claimDaily(){
+ applyStreakState();
+ const today=dailyToday();
+ if(DAILY.lastClaimDate===today) return false;
+ const ch=challengeFor(today);
+ DAILY.lastClaimDate=today;
+ DAILY.lastClaimId=ch.id;
+ DAILY.history=DAILY.history||{};
+ DAILY.history[today]='done';
+ DAILY.streak=(DAILY.streak||0)+1;
+ saveDaily();
+ if(typeof setPoints==='function') setPoints((typeof points==='number'?points:0)+ch.xp);
+ if(typeof celebrate==='function') celebrate();
+ else if(typeof sfx==='function') sfx('chime');
+ toast('🎉 Nice work! +'+ch.xp+' XP');
+ renderDaily();
+ return true;
+}
+function dailyDateLabel(iso){
+ return parseISO(iso).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+}
+function weekDotsHTML(today){
+ const mon=weekStart(today);
+ const names=['M','T','W','T','F','S','S'];
+ let html='<div class="daily-dots" aria-label="This week">';
+ for(let i=0;i<7;i++){
+  const iso=isoAdd(mon,i);
+  const st=DAILY.history&&DAILY.history[iso];
+  let cls='daily-dot';
+  if(st==='done') cls+=' done';
+  else if(st==='rest') cls+=' rest';
+  if(iso===today) cls+=' today';
+  html+='<span class="'+cls+'"><i></i><small>'+names[i]+'</small></span>';
+ }
+ html+='</div>';
+ return html;
+}
+function dailyCardHTML(){
+ const today=dailyToday();
+ const ch=challengeFor(today);
+ const done=isClaimedToday();
+ const show=DAILY.showStreak!==false;
+ const streak=DAILY.streak||0;
+ const tm=challengeFor(isoAdd(today,1));
+ let html='<div class="daily-card'+(done?' done':'')+(show?'':' nostreak')+'">';
+ html+='<div class="daily-top"><div class="daily-kicker">Today\'s Challenge</div>';
+ html+='<button class="daily-date" type="button" id="dailyDateBtn" title="Hold to preview tomorrow">'+esc(dailyDateLabel(today))+'</button>';
+ html+='<span class="daily-xp">+'+ch.xp+' XP</span></div>';
+ html+='<div class="daily-title"><span class="em">'+ch.e+'</span>'+esc(ch.n)+'</div>';
+ if(done){
+  html+='<div class="daily-prog"><i style="width:100%"></i></div><div class="daily-meta">Done · 1 / 1</div>';
+  html+='<div class="daily-tease">Come back tomorrow for <b>'+tm.e+' '+esc(tm.n)+'</b> · +'+tm.xp+' XP</div>';
+ } else {
+  html+='<div class="daily-prog"><i style="width:0%"></i></div><div class="daily-meta">0 / 1 · '+esc(ch.d)+'</div>';
+  html+='<div class="daily-acts"><button class="btn white daily-start" type="button">Start</button><button class="btn gold daily-claim" type="button">Mark done</button></div>';
+ }
+ if(show) html+=weekDotsHTML(today);
+ html+='</div>';
+ return html;
+}
+function bindDailyDate(btn){
+ if(!btn||btn._bound) return;
+ btn._bound=1;
+ let hold=null;
+ const goNext=()=>{ DAILY.offset=(DAILY.offset||0)+1; saveDaily(); applyStreakState(); renderDaily(); toast('Demo: it\'s now '+dailyDateLabel(dailyToday())); };
+ btn.addEventListener('pointerdown',e=>{ hold=setTimeout(()=>{hold=null; goNext();},500); });
+ const cancel=()=>{ if(hold){clearTimeout(hold);hold=null;} };
+ btn.addEventListener('pointerup',cancel);
+ btn.addEventListener('pointercancel',cancel);
+ btn.addEventListener('pointerleave',cancel);
+}
+function fillDailyHost(host, prefix){
+ if(!host) return;
+ host.innerHTML=dailyCardHTML().replace(/id="dailyDateBtn"/g,'id="'+prefix+'DateBtn"');
+ const start=host.querySelector('.daily-start'); if(start) start.onclick=startDaily;
+ const claim=host.querySelector('.daily-claim'); if(claim) claim.onclick=claimDaily;
+ bindDailyDate(host.querySelector('.daily-date'));
+}
+function renderStreakPill(){
+ const pill=$('#streakPill'); if(!pill) return;
+ const show=DAILY.showStreak!==false;
+ pill.classList.toggle('hide-streak',!show);
+ const n=DAILY.streak||0;
+ pill.innerHTML='🔥 '+n+'<small>day streak</small>';
+}
+function renderDaily(){
+ applyStreakState();
+ fillDailyHost($('#homeDaily'),'homeDaily');
+ fillDailyHost($('#prDaily'),'prDaily');
+ renderStreakPill();
+}
+function dailyShowStreak(){return DAILY.showStreak!==false}
+function toggleDailyStreak(){
+ DAILY.showStreak=!dailyShowStreak();
+ saveDaily();
+ renderDaily();
+ return DAILY.showStreak;
+}
+function practiceTodayQuest(){
+ const ch=challengeFor(dailyToday());
+ const done=isClaimedToday();
+ return {t:'challenge',e:ch.e,n:ch.n,d:ch.d,p:done?1:0,of:1,r:ch.xp,id:ch.id};
+}
+loadDaily();
+parseDailyParam();
+applyStreakState();
+window.__daily={
+ get:()=>DAILY,
+ today:dailyToday,
+ challenge:()=>challengeFor(dailyToday()),
+ render:renderDaily,
+ claim:claimDaily,
+ start:startDaily,
+ advance:function(n){DAILY.offset=(DAILY.offset||0)+(n==null?1:n); saveDaily(); applyStreakState(); renderDaily(); return dailyToday();},
+ setOffset:function(n){DAILY.offset=n||0; saveDaily(); applyStreakState(); renderDaily(); return dailyToday();},
+ toggleStreak:toggleDailyStreak
+};
+
 function renderPracticeHub(){
  const games=$('#prGames');
  if(games&&typeof GAMES!=='undefined'){
   games.innerHTML=GAMES.map((g,i)=>'<button class="pr-game" type="button" data-g="'+i+'"><span class="em">'+g.e+'</span><span><b>'+g.n+'</b><span>Play ›</span></span></button>').join('');
   $$('#prGames [data-g]').forEach(b=>b.onclick=()=>{ const i=+b.dataset.g; go('minigames','push'); setTimeout(()=>{ if(typeof playGame==='function') playGame(i); },260); });
  }
- const q=practiceTodayQuest();
- const em=$('#prTodayEm'), n=$('#prTodayN'), sub=$('#prTodayS');
- if(q){
-  if(em) em.textContent=q.e;
-  if(n) n.textContent=q.n;
-  if(sub) sub.textContent='Today · '+q.d+' · '+q.p+'/'+q.of;
- }
+ if(typeof renderDaily==='function') renderDaily();
  const qs=$('#prQuestSub');
  if(qs&&typeof QUESTS!=='undefined'){
   const nAct=QUESTS.filter(x=>x.p<x.of).length;
@@ -3901,7 +4133,6 @@ function bindPracticeHub(){
  const log=$('#prOpenLog'); if(log) log.onclick=()=>go('plog','push');
  const all=$('#prOpenGames'); if(all) all.onclick=()=>go('minigames','push');
  const qq=$('#prOpenQuests'); if(qq) qq.onclick=()=>go('quests','push');
- const td=$('#prToday'); if(td) td.onclick=()=>{ const q=practiceTodayQuest(); go('quests','push'); if(q&&typeof questSheet==='function') setTimeout(()=>questSheet(q),260); };
 }
 function meComputedStats(){
  const rounds=(typeof ROUNDS!=='undefined'&&ROUNDS)?ROUNDS:[];
@@ -3940,12 +4171,14 @@ function bindMe(){
 function settingsSheet(){
  const row=(k,ic,t,s)=>'<div class="set-row"><div class="si">'+ic+'</div><div class="st">'+t+'<small>'+s+'</small></div><button class="tog '+(SETTINGS[k]?'on':'')+'" data-k="'+k+'" aria-label="'+t+'"></button></div>';
  openSheet('<h2>⚙️ Settings</h2>'+row('parent','👪','Parent Controls','Parent PIN needed to buy points or add friends')+row('friends','🔒','Friends-only posts','Managed by Parent Controls')+row('notif','🔔','Notifications','Quest + friend challenge alerts')+row('sound','🔊','Sounds','Swing whooshes & cheers')+
+  '<div class="set-row"><div class="si">🔥</div><div class="st">Show streak<small>A quiet days-in-a-row count — no reminders</small></div><button class="tog '+(typeof dailyShowStreak==='function'&&dailyShowStreak()?'on':'')+'" data-k="streak" aria-label="Show streak"></button></div>'+
   '<div class="set-row"><div class="si">📏</div><div class="st">Distance units<small>Yards</small></div><span style="color:var(--muted);font-weight:900">›</span></div>'+
   '<div class="set-row"><div class="si">🏆</div><div class="st">Reset scores<small>Clears your bests and logged rounds</small></div><button class="btn small ghost" id="resetSc">Reset</button></div>'+
   '<button class="btn ghost" style="width:100%;margin-top:16px" onclick="closeSheet()">Done</button>');
  const rb=$('#resetSc');rb.onclick=()=>{if(!rb.dataset.arm){rb.dataset.arm='1';rb.textContent='Tap to confirm';rb.classList.add('danger');setTimeout(()=>{if(rb.isConnected&&rb.dataset.arm){delete rb.dataset.arm;rb.textContent='Reset';rb.classList.remove('danger')}},3500);return}
   delete rb.dataset.arm;resetScores();rb.textContent='Done ✓';rb.classList.remove('danger');toast('🏆 Scores reset to starting bests')};
  $$('#sheet .tog').forEach(t=>t.onclick=()=>{const k=t.dataset.k;
+  if(k==='streak'){ const on=typeof toggleDailyStreak==='function'?toggleDailyStreak():true; t.classList.toggle('on',on); return; }
   if(k==='friends'&&SETTINGS.parent){toast('👪 Ask a parent: this is locked by Parent Controls');return}
   SETTINGS[k]=!SETTINGS[k];t.classList.toggle('on',SETTINGS[k]);
   if(k==='sound'){soundOn=SETTINGS.sound;try{localStorage.setItem('bq-sound',soundOn?'on':'off')}catch(_){}if(soundOn){lastSnd=0;sfx('chime')}}
@@ -3954,6 +4187,7 @@ function settingsSheet(){
 $('#gearBtn').onclick=settingsSheet;
  if(typeof bindPracticeHub==='function') bindPracticeHub();
  if(typeof bindMe==='function') bindMe();
+ if(typeof renderDaily==='function') renderDaily();
 
 /* ================= SOUND FX (Web Audio, synthesized) ================= */
 let soundOn=true;try{soundOn=localStorage.getItem('bq-sound')!=='off'}catch(_){}
@@ -3991,7 +4225,7 @@ function classify(el){
  if(el.matches('#buyBtn,#eqBtn,#saveCur,#savePresetBtn,#presetGrid [data-i],.gear,.av-pick,#doAddFriend,#startPlayBtn,#startRoundBtn,.inv,#openBagBtn'))return['chime'];
  if(el.matches('.slot-row,.cover-sw,.model-sw,#bagPutBack'))return['swoosh'];
  if(el.matches('.tog,.sw,.iconbtn,.pfp,.pcm,.so-tab,.so-act,.so-plus-opt,.so-photo,.so-bell,.so-chat,.act-rail-btn,.so-nitem,.sc-row,.ask,.post-del,.clip-del,.lite-close,#uploadShortBtn,#mediaPrevRm,#mediaPrevRep,.msg-row,.msg-plus,.msg-send,.msg-info,.fl-star,.nm-pick,.inv-accept,.inv-decline'))return['tick'];
- if(el.matches('.btn,.home-tile,.pr-card,.pr-game,.me-hero .av-wrap,.mg-item .play,.item,.bundle,.quest,.pin,.drop,.rrow'))return['pop'];
+ if(el.matches('.btn,.home-tile,.pr-card,.pr-game,.me-hero .av-wrap,.daily-start,.daily-claim,.mg-item .play,.item,.bundle,.quest,.pin,.drop,.rrow'))return['pop'];
  return['tick'];
 }
 document.addEventListener('click',e=>{

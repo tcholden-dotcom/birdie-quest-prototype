@@ -1942,7 +1942,7 @@ const AV_L={'bag-mini':'UklGRiwyAABXRUJQVlA4WAoAAAAQAAAAGwIAzwIAQUxQSE4XAAABCUhu
     var im=p2im[key];
     if(im && im.complete && im.naturalWidth) return im;
     if(p2bad[key]) return null;
-    if(!im && typeof location!=='undefined' && /^(https?|file):/.test(location.protocol)){
+    if(!im && typeof location!=='undefined' && /^https?:/.test(location.protocol)){
       im=new Image(); im.decoding='async';
       im.onload=function(){ p2changed(); };
       im.onerror=function(){ p2bad[key]=1; };
@@ -2006,7 +2006,9 @@ const AV_L={'bag-mini':'UklGRiwyAABXRUJQVlA4WAoAAAAQAAAAGwIAzwIAQUxQSE4XAAABCUhu
     var isPolo=L.shirt && L.shirt.type==='polo';
     var HATP={cap:'#1f9d55', beanie:'#ff4d5e'};
     var isCap=!!(L.hat && HATP[L.hat.type]);
+    var isPants=!!(L.pants && L.pants.type==='pants');
     var need=['body-'+char];
+    if(isPants) need.push('pants-'+char+'-pants','perase-'+char,'pskin-'+char+'-pants');
     if(hasStyle) need.push('hair-'+char+'-'+style);
     if(isPolo){ need.push('top-'+char+'-polo','terase-'+char,'tskin-'+char+'-polo'); }
     if(isCap) need.push('hat-'+char+'-'+L.hat.type);
@@ -2028,7 +2030,26 @@ const AV_L={'bag-mini':'UklGRiwyAABXRUJQVlA4WAoAAAAQAAAAGwIAzwIAQUxQSE4XAAABCUhu
     } else if(L.club && L.club.type && L.club.type!=='putter'){
       putIt(L.club);
     }
-    putIt(L.pants);
+    if(isPants){
+      erase(p2('perase-'+char));
+      var pp=p2('pants-'+char+'-pants'), psk=p2('pskin-'+char+'-pants');
+      if(skinChanged) pp=maskedRecolor(pp, psk, skinHex);
+      if(!sameHex(L.pants.color,'#1e3a5f')){
+        var pk='pp|'+char+'|'+L.pants.color+'|'+skinHex;
+        if(!recCache[pk]){
+          var rc=canvasOf(recolorHair(p2('pants-'+char+'-pants'), L.pants.color)), rx=rc.getContext('2d');
+          var keep=canvasOf(pp), kx=keep.getContext('2d');
+          kx.globalCompositeOperation='destination-in'; kx.drawImage(psk,0,0);
+          rx.globalCompositeOperation='destination-out'; rx.drawImage(psk,0,0);
+          rx.globalCompositeOperation='source-over'; rx.drawImage(keep,0,0);
+          recCache[pk]=rc;
+        }
+        pp=recCache[pk];
+      }
+      put(pp);
+    } else {
+      putIt(L.pants);
+    }
     var shoeSrc=sourceFor(char, L.shoes);
     if(shoeSrc && shoeSrc.im){
       erase(img('shoe-erase-'+char)||img('shoe-erase-'+(GIRLS[char]?'girl':'boy')));

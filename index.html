@@ -2171,8 +2171,12 @@ const AV_L={'bag-mini':'UklGRiwyAABXRUJQVlA4WAoAAAAQAAAAGwIAzwIAQUxQSE4XAAABCUhu
         // perch the crown on top of tall hair instead of sinking into it
         var cs=hatSpan(hatIm);
         if(cs.x1>cs.x0){
-          var bt=topRow(base, cs.x0, cs.x1, 128), hrt=topRow(hair, cs.x0+(cs.x1-cs.x0)*0.2, cs.x1-(cs.x1-cs.x0)*0.2, 128);
-          if(bt>=0 && hrt>=0 && hrt<bt) hatDy=-Math.round((bt-hrt)*0.8);
+          // median per-column hair top across the crown (a narrow bun or ponytail does not lift it)
+          var colTops=function(src){ var c=canvasOf(src), w=c.width, h=c.height, d=c.getContext('2d').getImageData(0,0,w,Math.round(h*0.4)).data, out=[];
+            for(var xq=cs.x0; xq<=cs.x1; xq+=2){ var t=-1; for(var yq=0; yq<Math.round(h*0.4); yq++){ if(d[(yq*w+xq)*4+3]>128){ t=yq; break; } } out.push(t<0?1e9:t); }
+            out.sort(function(a,b){return a-b;}); return out[Math.floor(out.length/2)]; };
+          var bt=colTops(base), hrt=colTops(hair);
+          if(bt<1e9 && hrt<bt) hatDy=-Math.round((bt-hrt)*0.8);
         }
       }
       put(hair);

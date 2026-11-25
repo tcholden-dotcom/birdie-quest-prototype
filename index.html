@@ -1935,7 +1935,155 @@ const AV_L={'bag-mini':'UklGRiwyAABXRUJQVlA4WAoAAAAQAAAAGwIAzwIAQUxQSE4XAAABCUhu
     return c;
   }
 
+  /* ---- P2 plate compositor: clean matted body + per-kid hair/hat/shirt plates (lazy WebP files) ---- */
+  var P2_DIR='av/', p2im={}, p2bad={}, p2timer=null;
+  var P2_STYLES={short:1,curly:1,afro:1,wavy:1,long:1,ponytail:1,braids:1,bun:1,spiky:1};
+  function p2(key){
+    var im=p2im[key];
+    if(im && im.complete && im.naturalWidth) return im;
+    if(p2bad[key]) return null;
+    if(!im && typeof location!=='undefined' && /^(https?|file):/.test(location.protocol)){
+      im=new Image(); im.decoding='async';
+      im.onload=function(){ p2changed(); };
+      im.onerror=function(){ p2bad[key]=1; };
+      im.src=P2_DIR+key+'.webp';
+      p2im[key]=im;
+    }
+    return null;
+  }
+  function p2changed(){
+    if(p2timer) return;
+    p2timer=setTimeout(function(){
+      p2timer=null; lastKey=''; snapCache={}; snapOrder=[];
+      try{ paintMounted(); }catch(e){}
+      try{ global.dispatchEvent(new Event('av3plates')); }catch(e){}
+    },150);
+  }
+  function p2Need(keys){ var ok=true; keys.forEach(function(k){ if(!p2(k) && !p2bad[k]) ok=false; }); return ok; }
+  function maskedRecolor(src, mask, hex, tag){
+    // recolor skin pixels of a plate (same Lab shift as the body) using its own skin mask
+    return recolorSkin(src, mask, null, hex, null);
+  }
+  function tintKeepSkin(src, skinMask, fromHex, toHex){
+    var c=tintCanvas(src, fromHex, toHex);
+    if(!skinMask) return c;
+    var x=c.getContext('2d');
+    var s=canvasOf(src), sx=s.getContext('2d');
+    sx.globalCompositeOperation='destination-in'; sx.drawImage(skinMask,0,0);
+    x.globalCompositeOperation='destination-out'; x.drawImage(skinMask,0,0);
+    x.globalCompositeOperation='source-over'; x.drawImage(s,0,0);
+    return c;
+  }
+  var hairPunchCache={};
+  function hairPunchFor(hatIm, key){
+    if(hairPunchCache[key]) return hairPunchCache[key];
+    var c=canvasOf(hatIm), x=c.getContext('2d'), w=c.width, h=c.height;
+    var d=x.getImageData(0,0,w,h).data, lim=Math.round(h*0.45);
+    var bot=new Int32Array(w).fill(-1), top=h, X0=w, X1=-1, i, y, xx;
+    for(xx=0;xx<w;xx++){ for(y=0;y<lim;y++){ if(d[(y*w+xx)*4+3]>140){ bot[xx]=y; if(y<top) top=y; } } if(bot[xx]>=0){ if(xx<X0) X0=xx; if(xx>X1) X1=xx; } }
+    var o=x.createImageData(w,h), od=o.data;
+    if(X1>=X0){
+      var lb=bot[X0], rb=bot[X1], pad=Math.round((X1-X0)*0.22);
+      for(xx=0; xx<w; xx++){
+        var b;
+        if(xx<X0) b=lb-2;
+        else if(xx>X1) b=rb-2;
+        else b=bot[xx]>=0 ? bot[xx]-3 : Math.min(lb,rb);
+        for(y=0;y<=b;y++){ i=(y*w+xx)*4; od[i]=od[i+1]=od[i+2]=255; od[i+3]=255; }
+      }
+    }
+    x.clearRect(0,0,w,h); x.putImageData(o,0,0);
+    hairPunchCache[key]=c;
+    return c;
+  }
+  function composeP2(ctx, cfg, w, h, head){
+    var L=resolveLook(cfg), char=L.id, nat=nativeOf(char);
+    if(!GIRLS[char] && !{anders:1,jamal:1,kai:1,leo:1}[char]) return false;
+    var style=hairStyleOf(cfg, char);
+    var skinHex=(cfg && cfg.skin) || nat.skin, hairHex=(cfg && cfg.hair) || nat.hair;
+    var skinChanged=!sameHex(skinHex, nat.skin), hairChanged=!sameHex(hairHex, nat.hair);
+    var hasStyle=P2_STYLES[style];
+    var isPolo=L.shirt && L.shirt.type==='polo';
+    var HATP={cap:'#1f9d55', beanie:'#ff4d5e'};
+    var isCap=!!(L.hat && HATP[L.hat.type]);
+    var need=['body-'+char];
+    if(hasStyle) need.push('hair-'+char+'-'+style);
+    if(isPolo){ need.push('top-'+char+'-polo','terase-'+char,'tskin-'+char+'-polo'); }
+    if(isCap) need.push('hat-'+char+'-'+L.hat.type);
+    if(!p2Need(need)) return false;
+    if(need.some(function(k){ return !p2(k); })) return false;
+    var base=p2('body-'+char);
+    if(skinChanged){
+      var sk=img('skin-'+char), lp=img('lip-'+char);
+      if(sk) base=recolorSkin(base, sk, lp, skinHex, img('feat-'+char));
+    }
+    ctx.clearRect(0,0,w,h);
+    function put(src){ if(src) drawContain(ctx, src, w, h, head); }
+    function erase(src){ if(!src) return; ctx.save(); ctx.globalCompositeOperation='destination-out'; put(src); ctx.restore(); }
+    function putIt(it){ var s=sourceFor(char, it); if(s && s.im) put(s.im); }
+    put(base);
+    if(L.club && L.club.type==='none'){
+      var er=img('erase-'+char)||img('club-erase');
+      if(er){ erase(er); put(img('hand-'+char)); }
+    } else if(L.club && L.club.type && L.club.type!=='putter'){
+      putIt(L.club);
+    }
+    putIt(L.pants);
+    var shoeSrc=sourceFor(char, L.shoes);
+    if(shoeSrc && shoeSrc.im){
+      erase(img('shoe-erase-'+char)||img('shoe-erase-'+(GIRLS[char]?'girl':'boy')));
+      put(shoeSrc.im);
+    }
+    if(isPolo){
+      erase(p2('terase-'+char));
+      var top=p2('top-'+char+'-polo'), tsk=p2('tskin-'+char+'-polo');
+      if(skinChanged) top=maskedRecolor(top, tsk, skinHex);
+      if(!sameHex(L.shirt.color,'#1f9d55')){
+        var tk='tp|'+char+'|'+L.shirt.color+'|'+skinHex;
+        if(!recCache[tk]) recCache[tk]=tintKeepSkin(top, tsk, '#1f9d55', L.shirt.color);
+        top=recCache[tk];
+      }
+      put(top);
+    } else {
+      putIt(L.shirt);
+    }
+    var hatIm=null, punchKey='';
+    if(L.hat && L.hat.type!=='none'){
+      if(isCap){
+        hatIm=p2('hat-'+char+'-'+L.hat.type); punchKey=L.hat.type+'|'+char;
+        if(!sameHex(L.hat.color,HATP[L.hat.type])){
+          var hk='hc|'+L.hat.type+'|'+char+'|'+L.hat.color;
+          if(!recCache[hk]) recCache[hk]=tintCanvas(hatIm, HATP[L.hat.type], L.hat.color);
+          hatIm=recCache[hk];
+        }
+      } else {
+        var hs=sourceFor(char, L.hat); hatIm=hs && hs.im; punchKey=(L.hat.id||L.hat.type)+'|'+char;
+        if(hatIm){
+          // old generic hat layers: keep only the head band (drops stray body fragments)
+          var ck='hclip|'+punchKey+'|'+(L.hat.color||'');
+          if(!recCache[ck]){ var cc=canvasOf(hatIm), cx2=cc.getContext('2d'); cx2.clearRect(0,Math.round(cc.height*0.36),cc.width,cc.height); recCache[ck]=cc; }
+          hatIm=recCache[ck];
+        }
+      }
+    }
+    if(hasStyle){
+      var hair=p2('hair-'+char+'-'+style);
+      if(hairChanged) hair=recolorHair(hair, hairHex);
+      if(hatIm && L.hat.type!=='visor' && L.hat.type!=='crown'){
+        var hc=canvasOf(hair), hx=hc.getContext('2d');
+        hx.globalCompositeOperation='destination-out';
+        hx.drawImage(hairPunchFor(hatIm, punchKey),0,0,hc.width,hc.height);
+        hair=hc;
+      }
+      put(hair);
+    }
+    L.acc.forEach(putIt);
+    if(hatIm) put(hatIm);
+    putIt(L.bag);
+    return true;
+  }
   function composeTo(ctx, cfg, w, h, head){
+    try{ if(composeP2(ctx, cfg, w, h, head)) return true; }catch(e){ try{ console.warn('P2 compose failed', e); }catch(e2){} }
     var L=resolveLook(cfg);
     var char=L.id;
     var nat=nativeOf(char);
@@ -6724,6 +6872,7 @@ window.__onboard={
 
 /* ================= INIT ================= */
 function renderAll(){renderAvatars();renderShop();renderGear();renderPresets();renderAvatarPicker();tickCountdown();avSave()}
+window.addEventListener('av3plates',()=>{try{renderAll()}catch(e){}});
 avLoad();ownLoad();outfitsLoad();
 if(typeof loadProfile==='function') loadProfile();
 ownLoad();
